@@ -1,3 +1,4 @@
+import 'package:ekilibra_spa/app/config/theme/app_theme.dart';
 import 'package:ekilibra_spa/app/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -12,10 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.purple,
-      ),
+      theme: AppTheme().theme(),
       home: const Profile(),
     );
   }
