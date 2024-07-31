@@ -1,5 +1,5 @@
 import 'package:ekilibra_spa/app/config/theme/app_theme.dart';
-import 'package:ekilibra_spa/app/pages/profile/profile.dart';
+import 'package:ekilibra_spa/app/pages/profile/page/profile_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme().theme(),
-      home: const Profile(),
+      home: const ProfilePage(isRegister: true),
     );
   }
 }
