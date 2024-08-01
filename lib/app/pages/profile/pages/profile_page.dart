@@ -11,6 +11,16 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(isRegister ? 'Registro' : 'Mi perfil'),
       ),
+      body: const _ProfileView(),
     );
+  }
+}
+
+class _ProfileView extends StatelessWidget {
+  const _ProfileView();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
