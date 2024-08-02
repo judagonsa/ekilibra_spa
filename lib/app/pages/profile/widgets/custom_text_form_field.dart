@@ -7,7 +7,7 @@ class CustomTextFormField extends StatelessWidget {
     this.errorMessage,
     this.onChanged,
     this.validator,
-    required this.obscureText,
+    this.obscureText = false,
   });
 
   final String? label;

@@ -34,50 +34,63 @@ class _ProfileView extends StatelessWidget {
   }
 }
 
-class _InputForm extends StatelessWidget {
+class _InputForm extends StatefulWidget {
   const _InputForm({required this.isRegister});
 
   final bool isRegister;
+
+  @override
+  State<_InputForm> createState() => _InputFormState();
+}
+
+class _InputFormState extends State<_InputForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String name = '';
+  String email = '';
+  String bithDay = '';
+  String password = '';
+  String confirmPassword = '';
+
   @override
   Widget build(BuildContext context) {
     return Form(
+        key: _formKey,
         child: Column(
-      children: [
-        Column(
           children: [
-            if (isRegister) const FlutterLogo(size: 200),
-            CustomTextFormField(
-              label: 'Nombre y apellido',
-              obscureText: false,
+            Column(
+              children: [
+                if (widget.isRegister) const FlutterLogo(size: 200),
+                CustomTextFormField(
+                  label: 'Nombre y apellido',
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  label: 'Correo',
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  label: 'Fecha de nacimiento',
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  label: 'Contraseña',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  label: 'Confirmar contraseña',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 10),
+                FilledButton.tonalIcon(
+                    onPressed: () {},
+                    label:
+                        Text(widget.isRegister ? 'Crear usuario' : 'Guardar')),
+                const SizedBox(height: 20)
+              ],
             ),
-            const SizedBox(height: 10),
-            CustomTextFormField(
-              label: 'Correo',
-              obscureText: false,
-            ),
-            const SizedBox(height: 10),
-            CustomTextFormField(
-              label: 'Fecha de nacimiento',
-              obscureText: false,
-            ),
-            const SizedBox(height: 10),
-            CustomTextFormField(
-              label: 'Contrseña',
-              obscureText: true,
-            ),
-            const SizedBox(height: 10),
-            CustomTextFormField(
-              label: 'Confirmar contraseña',
-              obscureText: true,
-            ),
-            const SizedBox(height: 10),
-            FilledButton.tonalIcon(
-                onPressed: () {},
-                label: Text(isRegister ? 'Crear usuario' : 'Guardar')),
-            const SizedBox(height: 20)
           ],
-        ),
-      ],
-    ));
+        ));
   }
 }
