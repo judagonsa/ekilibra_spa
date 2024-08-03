@@ -48,7 +48,7 @@ class _InputFormState extends State<_InputForm> {
 
   String name = '';
   String email = '';
-  String bithDay = '';
+  String birthDay = '';
   String password = '';
   String confirmPassword = '';
 
@@ -63,30 +63,88 @@ class _InputFormState extends State<_InputForm> {
                 if (widget.isRegister) const FlutterLogo(size: 200),
                 CustomTextFormField(
                   label: 'Nombre y apellido',
+                  onChanged: (value) => name = value,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'El nombre y apellido es requerido.';
+                    }
+                    if (value.length < 6) return 'Más de 6 caracteres.';
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
                   label: 'Correo',
+                  onChanged: (value) => email = value,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'El correo es requerido.';
+                    }
+
+                    final emailRegExp = RegExp(
+                      r'[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,64}',
+                    );
+
+                    if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
-                  label: 'Fecha de nacimiento',
-                ),
+                    label: 'Fecha de nacimiento',
+                    onChanged: (value) => birthDay = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'La fecha de nacimiento es requerido.';
+                      }
+                      //TODO: validar mayor de 15 años, tipo date, seleccionable
+                      return null;
+                    }),
                 const SizedBox(height: 10),
                 CustomTextFormField(
                   label: 'Contraseña',
                   obscureText: true,
+                  onChanged: (value) => password = value,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'La contraseña es requerida.';
+                    }
+                    final passwordRegExp = RegExp(
+                      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*)[a-zA-Z]{6,}',
+                    );
+
+                    if (!passwordRegExp.hasMatch(value)) {
+                      return 'Contraseña no segura, debe tener una mayúscula y una letra';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
-                  label: 'Confirmar contraseña',
-                  obscureText: true,
-                ),
+                    label: 'Confirmar contraseña',
+                    obscureText: true,
+                    onChanged: (value) => confirmPassword = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Confirmar contraseña es requerido.';
+                      }
+                      if (value != password) {
+                        return 'las contraseñas no coinciden';
+                      }
+                      return null;
+                    }),
                 const SizedBox(height: 10),
                 FilledButton.tonalIcon(
-                    onPressed: () {},
-                    label:
-                        Text(widget.isRegister ? 'Crear usuario' : 'Guardar')),
+                  onPressed: () {
+                    final isValid = _formKey.currentState!.validate();
+                    if (isValid) {
+                      print("guardar modelo");
+                    }
+                  },
+                  label: Text(
+                    widget.isRegister ? 'Crear usuario' : 'Guardar',
+                  ),
+                ),
                 const SizedBox(height: 20)
               ],
             ),

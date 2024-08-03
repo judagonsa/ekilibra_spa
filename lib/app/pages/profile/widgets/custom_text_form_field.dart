@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
 
   final String? label;
   final String? errorMessage;
-  final Function(String?)? onChanged;
+  final Function(String)? onChanged;
   final String? Function(String?)? validator;
   final bool obscureText;
 
