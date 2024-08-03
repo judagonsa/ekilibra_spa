@@ -6,15 +6,19 @@ class CustomTextFormField extends StatelessWidget {
     this.label,
     this.errorMessage,
     this.onChanged,
+    this.onTap,
     this.validator,
     this.obscureText = false,
     this.isPhone = false,
     this.isEmail = false,
+    this.textEditingController,
   });
 
   final String? label;
   final String? errorMessage;
-  final Function(String)? onChanged;
+  final dynamic Function(String)? onChanged;
+  final GestureTapCallback? onTap;
+  final TextEditingController? textEditingController;
   final String? Function(String?)? validator;
   final bool obscureText;
   final bool isPhone;
@@ -25,6 +29,8 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: textEditingController,
+      onTap: onTap,
       onChanged: onChanged,
       validator: validator,
       obscureText: obscureText,

@@ -46,6 +46,7 @@ class _InputForm extends StatefulWidget {
 class _InputFormState extends State<_InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  DateTime dateBirthDate = DateTime.now();
   String name = '';
   String email = '';
   String phone = '';
@@ -53,119 +54,150 @@ class _InputFormState extends State<_InputForm> {
   String password = '';
   String confirmPassword = '';
 
+  final TextEditingController _controllerDate = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Column(
-              children: [
-                if (widget.isRegister) const FlutterLogo(size: 200),
-                CustomTextFormField(
-                  label: 'Nombre y apellido',
-                  onChanged: (value) => name = value,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'El nombre y apellido es requerido.';
-                    }
-                    if (value.length < 6) return 'Más de 6 caracteres.';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                  label: 'Correo',
-                  isEmail: true,
-                  onChanged: (value) => email = value,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'El correo es requerido.';
-                    }
+      key: _formKey,
+      child: Column(
+        children: [
+          Column(
+            children: [
+              if (widget.isRegister) const FlutterLogo(size: 200),
+              CustomTextFormField(
+                label: 'Nombre y apellido',
+                onChanged: (value) => name = value,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'El nombre y apellido es requerido.';
+                  }
+                  if (value.length < 6) return 'Más de 6 caracteres.';
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              CustomTextFormField(
+                label: 'Correo',
+                isEmail: true,
+                onChanged: (value) => email = value,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'El correo es requerido.';
+                  }
 
-                    final emailRegExp = RegExp(
-                      r'[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,64}',
-                    );
+                  final emailRegExp = RegExp(
+                    r'[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,64}',
+                  );
 
-                    if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                  label: 'Número de teléfono',
-                  isPhone: true,
-                  onChanged: (value) => phone = value,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'El número de teléfono es requerido.';
-                    }
+                  if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              CustomTextFormField(
+                label: 'Número de teléfono',
+                isPhone: true,
+                onChanged: (value) => phone = value,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'El número de teléfono es requerido.';
+                  }
 
-                    if (value.length != 10)
-                      return 'Número de teléfono inválido';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                    label: 'Fecha de nacimiento',
-                    onChanged: (value) => birthDay = value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'La fecha de nacimiento es requerido.';
-                      }
-                      //TODO: validar mayor de 15 años, tipo date, seleccionable
-                      return null;
-                    }),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                  label: 'Contraseña',
+                  if (value.length != 10) return 'Número de teléfono inválido';
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              CustomTextFormField(
+                textEditingController: _controllerDate,
+                label: 'Fecha de nacimiento',
+                onChanged: (value) async {
+                  if (birthDay.isNotEmpty) {
+                    _controllerDate.text = '';
+                    birthDay = '';
+                  }
+                  final date = await pickDate();
+                  if (date == null) return;
+                  setState(() {
+                    _controllerDate.text =
+                        '${date.day}/${date.month}/${date.year}';
+                    birthDay = _controllerDate.text;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'La fecha de nacimiento es requerido.';
+                  }
+                  return null;
+                },
+                onTap: () async {
+                  final date = await pickDate();
+                  if (date == null) return;
+                  setState(() {
+                    _controllerDate.text =
+                        '${date.day}/${date.month}/${date.year}';
+                    birthDay = _controllerDate.text;
+                  });
+                },
+              ),
+              const SizedBox(height: 10),
+              CustomTextFormField(
+                label: 'Contraseña',
+                obscureText: true,
+                onChanged: (value) => password = value,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'La contraseña es requerida.';
+                  }
+                  final passwordRegExp = RegExp(
+                    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*)[a-zA-Z]{6,}',
+                  );
+
+                  if (!passwordRegExp.hasMatch(value)) {
+                    return 'Contraseña no segura, debe tener una mayúscula y una letra';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              CustomTextFormField(
+                  label: 'Confirmar contraseña',
                   obscureText: true,
-                  onChanged: (value) => password = value,
+                  onChanged: (value) => confirmPassword = value,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'La contraseña es requerida.';
+                      return 'Confirmar contraseña es requerido.';
                     }
-                    final passwordRegExp = RegExp(
-                      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*)[a-zA-Z]{6,}',
-                    );
-
-                    if (!passwordRegExp.hasMatch(value)) {
-                      return 'Contraseña no segura, debe tener una mayúscula y una letra';
+                    if (value != password) {
+                      return 'las contraseñas no coinciden';
                     }
                     return null;
-                  },
+                  }),
+              const SizedBox(height: 10),
+              FilledButton.tonalIcon(
+                onPressed: () {
+                  final isValid = _formKey.currentState!.validate();
+                  if (isValid) {
+                    print("guardar modelo");
+                  }
+                },
+                label: Text(
+                  widget.isRegister ? 'Crear usuario' : 'Guardar',
                 ),
-                const SizedBox(height: 10),
-                CustomTextFormField(
-                    label: 'Confirmar contraseña',
-                    obscureText: true,
-                    onChanged: (value) => confirmPassword = value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Confirmar contraseña es requerido.';
-                      }
-                      if (value != password) {
-                        return 'las contraseñas no coinciden';
-                      }
-                      return null;
-                    }),
-                const SizedBox(height: 10),
-                FilledButton.tonalIcon(
-                  onPressed: () {
-                    final isValid = _formKey.currentState!.validate();
-                    if (isValid) {
-                      print("guardar modelo");
-                    }
-                  },
-                  label: Text(
-                    widget.isRegister ? 'Crear usuario' : 'Guardar',
-                  ),
-                ),
-                const SizedBox(height: 20)
-              ],
-            ),
-          ],
-        ));
+              ),
+              const SizedBox(height: 20)
+            ],
+          ),
+        ],
+      ),
+    );
   }
+
+  Future<DateTime?> pickDate() => showDatePicker(
+        context: context,
+        helpText: 'Debes ser mayor de 15 años.',
+        firstDate: DateTime(1900),
+        lastDate: DateTime(DateTime.now().year - 15),
+      );
 }
