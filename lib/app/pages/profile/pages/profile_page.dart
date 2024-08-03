@@ -48,6 +48,7 @@ class _InputFormState extends State<_InputForm> {
 
   String name = '';
   String email = '';
+  String phone = '';
   String birthDay = '';
   String password = '';
   String confirmPassword = '';
@@ -75,6 +76,7 @@ class _InputFormState extends State<_InputForm> {
                 const SizedBox(height: 10),
                 CustomTextFormField(
                   label: 'Correo',
+                  isEmail: true,
                   onChanged: (value) => email = value,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -86,6 +88,21 @@ class _InputFormState extends State<_InputForm> {
                     );
 
                     if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  label: 'Número de teléfono',
+                  isPhone: true,
+                  onChanged: (value) => phone = value,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'El número de teléfono es requerido.';
+                    }
+
+                    if (value.length != 10)
+                      return 'Número de teléfono inválido';
                     return null;
                   },
                 ),

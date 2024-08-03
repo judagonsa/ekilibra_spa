@@ -8,6 +8,8 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.obscureText = false,
+    this.isPhone = false,
+    this.isEmail = false,
   });
 
   final String? label;
@@ -15,6 +17,8 @@ class CustomTextFormField extends StatelessWidget {
   final Function(String)? onChanged;
   final String? Function(String?)? validator;
   final bool obscureText;
+  final bool isPhone;
+  final bool isEmail;
 
   final border = OutlineInputBorder(borderRadius: BorderRadius.circular(10));
 
@@ -24,6 +28,11 @@ class CustomTextFormField extends StatelessWidget {
       onChanged: onChanged,
       validator: validator,
       obscureText: obscureText,
+      keyboardType: isEmail
+          ? TextInputType.emailAddress
+          : isPhone
+              ? TextInputType.phone
+              : TextInputType.name,
       decoration: InputDecoration(
         enabledBorder: border,
         focusedBorder:
@@ -37,6 +46,7 @@ class CustomTextFormField extends StatelessWidget {
             border.copyWith(borderSide: BorderSide(color: Colors.red.shade800)),
         label: label != null ? Text(label!) : null,
         errorText: errorMessage,
+        errorMaxLines: 2,
       ),
     );
   }
