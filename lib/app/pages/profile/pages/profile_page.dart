@@ -93,7 +93,7 @@ class _InputFormState extends State<_InputForm> {
                   }
 
                   final emailRegExp = RegExp(
-                    r'[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,64}',
+                    r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$',
                   );
 
                   if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
