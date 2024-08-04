@@ -1,13 +1,10 @@
 part of 'profile_cubit.dart';
 
-class ProfileState extends Equatable {
+class ProfileState {
   final DataProfile data;
   final bool loading = true;
 
   const ProfileState(this.data);
-
-  @override
-  List<Object> get props => [DataProfile];
 }
 
 final class ProfileInitial extends ProfileState {
@@ -18,19 +15,25 @@ final class UpdateProfile extends ProfileState {
   const UpdateProfile(super.data);
 }
 
+final class VerifyPasswords extends ProfileState {
+  final String confirmPassword;
+
+  const VerifyPasswords(super.data, this.confirmPassword);
+}
+
 class DataProfile {
-  final String userName;
-  final String email;
-  final String bithDate;
-  final String phone;
-  final String password;
+  final String? userName;
+  final String? email;
+  final String? bithDate;
+  final String? phone;
+  final String? password;
 
   DataProfile({
-    this.userName = '',
-    this.email = '',
-    this.bithDate = '',
-    this.phone = '',
-    this.password = '',
+    this.userName,
+    this.email,
+    this.bithDate,
+    this.phone,
+    this.password,
   });
 
   DataProfile copyWith({
@@ -39,12 +42,13 @@ class DataProfile {
     String? bithDate,
     String? phone,
     String? password,
-  }) =>
-      DataProfile(
-        userName: userName ?? this.userName,
-        email: email ?? this.email,
-        bithDate: bithDate ?? this.bithDate,
-        phone: phone ?? this.phone,
-        password: password ?? this.password,
-      );
+  }) {
+    return DataProfile(
+      userName: userName ?? this.userName,
+      email: email ?? this.email,
+      bithDate: bithDate ?? this.bithDate,
+      phone: phone ?? this.phone,
+      password: password ?? this.password,
+    );
+  }
 }

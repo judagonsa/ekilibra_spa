@@ -1,5 +1,7 @@
+import 'package:ekilibra_spa/app/pages/profile/bloc/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key, required this.isRegister});
@@ -12,7 +14,10 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(isRegister ? 'Registro' : 'Mi perfil'),
       ),
-      body: _ProfileView(isRegister: isRegister),
+      body: BlocProvider(
+        create: (context) => ProfileCubit(),
+        child: _ProfileView(isRegister: isRegister),
+      ),
     );
   }
 }
@@ -47,17 +52,12 @@ class _InputFormState extends State<_InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   DateTime dateBirthDate = DateTime.now();
-  String name = '';
-  String email = '';
-  String phone = '';
-  String birthDay = '';
-  String password = '';
-  String confirmPassword = '';
 
   final TextEditingController _controllerDate = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final profileCubit = context.watch<ProfileCubit>();
     return Form(
       key: _formKey,
       child: Column(
@@ -67,7 +67,10 @@ class _InputFormState extends State<_InputForm> {
               if (widget.isRegister) const FlutterLogo(size: 200),
               CustomTextFormField(
                 label: 'Nombre y apellido',
-                onChanged: (value) => name = value,
+                onChanged: (value) {
+                  profileCubit.usernameChanged(value);
+                  _formKey.currentState?.validate();
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'El nombre y apellido es requerido.';
@@ -80,7 +83,10 @@ class _InputFormState extends State<_InputForm> {
               CustomTextFormField(
                 label: 'Correo',
                 isEmail: true,
-                onChanged: (value) => email = value,
+                onChanged: (value) {
+                  profileCubit.emailChanged(value);
+                  _formKey.currentState?.validate();
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'El correo es requerido.';
@@ -98,7 +104,10 @@ class _InputFormState extends State<_InputForm> {
               CustomTextFormField(
                 label: 'Número de teléfono',
                 isPhone: true,
-                onChanged: (value) => phone = value,
+                onChanged: (value) {
+                  profileCubit.phoneChanged(value);
+                  _formKey.currentState?.validate();
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'El número de teléfono es requerido.';
@@ -113,16 +122,19 @@ class _InputFormState extends State<_InputForm> {
                 textEditingController: _controllerDate,
                 label: 'Fecha de nacimiento',
                 onChanged: (value) async {
-                  if (birthDay.isNotEmpty) {
+                  if (profileCubit.state.data.bithDate?.isNotEmpty == false) {
                     _controllerDate.text = '';
-                    birthDay = '';
+                    profileCubit.bithDateChanged(value);
+                    _formKey.currentState?.validate();
                   }
                   final date = await pickDate();
                   if (date == null) return;
                   setState(() {
                     _controllerDate.text =
                         '${date.day}/${date.month}/${date.year}';
-                    birthDay = _controllerDate.text;
+
+                    profileCubit.bithDateChanged(_controllerDate.text);
+                    _formKey.currentState?.validate();
                   });
                 },
                 validator: (value) {
@@ -137,7 +149,8 @@ class _InputFormState extends State<_InputForm> {
                   setState(() {
                     _controllerDate.text =
                         '${date.day}/${date.month}/${date.year}';
-                    birthDay = _controllerDate.text;
+                    profileCubit.bithDateChanged(_controllerDate.text);
+                    _formKey.currentState?.validate();
                   });
                 },
               ),
@@ -145,7 +158,10 @@ class _InputFormState extends State<_InputForm> {
               CustomTextFormField(
                 label: 'Contraseña',
                 obscureText: true,
-                onChanged: (value) => password = value,
+                onChanged: (value) {
+                  profileCubit.passwordChanged(value);
+                  _formKey.currentState?.validate();
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'La contraseña es requerida.';
@@ -164,12 +180,16 @@ class _InputFormState extends State<_InputForm> {
               CustomTextFormField(
                   label: 'Confirmar contraseña',
                   obscureText: true,
-                  onChanged: (value) => confirmPassword = value,
+                  onChanged: (value) {
+                    profileCubit.verifyPasswords(value);
+                    _formKey.currentState?.validate();
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Confirmar contraseña es requerido.';
                     }
-                    if (value != password) {
+                    if (profileCubit.state.data.password != '' &&
+                        value != profileCubit.state.data.password) {
                       return 'las contraseñas no coinciden';
                     }
                     return null;
@@ -179,7 +199,7 @@ class _InputFormState extends State<_InputForm> {
                 onPressed: () {
                   final isValid = _formKey.currentState!.validate();
                   if (isValid) {
-                    print("guardar modelo");
+                    profileCubit.onSubmit();
                   }
                 },
                 label: Text(
