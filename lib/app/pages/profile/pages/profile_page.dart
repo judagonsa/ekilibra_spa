@@ -30,7 +30,7 @@ class _ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           child: _InputForm(isRegister: isRegister),
         ),
@@ -55,6 +55,16 @@ class _InputFormState extends State<_InputForm> {
 
   final TextEditingController _controllerDate = TextEditingController();
 
+  final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+    foregroundColor: Colors.white,
+    backgroundColor: Colors.red,
+    minimumSize: const Size(88, 36),
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     final profileCubit = context.watch<ProfileCubit>();
@@ -64,7 +74,16 @@ class _InputFormState extends State<_InputForm> {
         children: [
           Column(
             children: [
-              if (widget.isRegister) const FlutterLogo(size: 200),
+              if (widget.isRegister)
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ClipOval(
+                    child: SizedBox.fromSize(
+                      size: const Size.fromRadius(80), // Image radius
+                      child: const FlutterLogo(size: 80),
+                    ),
+                  ),
+                ),
               CustomTextFormField(
                 label: 'Nombre y apellido',
                 onChanged: (value) {
@@ -195,15 +214,23 @@ class _InputFormState extends State<_InputForm> {
                     return null;
                   }),
               const SizedBox(height: 10),
-              FilledButton.tonalIcon(
+              TextButton(
                 onPressed: () {
                   final isValid = _formKey.currentState!.validate();
                   if (isValid) {
                     profileCubit.onSubmit();
                   }
                 },
-                label: Text(
-                  widget.isRegister ? 'Crear usuario' : 'Guardar',
+                // ignore: prefer_const_constructors
+                style: flatButtonStyle,
+                child: SizedBox(
+                  width: 200,
+                  height: 40,
+                  child: Center(
+                    child: Text(
+                      widget.isRegister ? 'Crear usuario' : 'Guardar',
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 20)
