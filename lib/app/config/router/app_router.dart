@@ -10,7 +10,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/profile',
       builder: (context, state) => const ProfilePage(
-        isRegister: true,
+        isRegister: false,
       ),
     )
   ],

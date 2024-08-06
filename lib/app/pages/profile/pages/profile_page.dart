@@ -74,16 +74,15 @@ class _InputFormState extends State<_InputForm> {
         children: [
           Column(
             children: [
-              if (widget.isRegister)
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: ClipOval(
-                    child: SizedBox.fromSize(
-                      size: const Size.fromRadius(80), // Image radius
-                      child: const FlutterLogo(size: 80),
-                    ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: ClipOval(
+                  child: SizedBox.fromSize(
+                    size: const Size.fromRadius(80),
+                    child: const FlutterLogo(size: 80),
                   ),
                 ),
+              ),
               CustomTextFormField(
                 label: 'Nombre y apellido',
                 onChanged: (value) {
@@ -173,46 +172,52 @@ class _InputFormState extends State<_InputForm> {
                   });
                 },
               ),
-              const SizedBox(height: 10),
-              CustomTextFormField(
-                label: 'Contraseña',
-                obscureText: true,
-                onChanged: (value) {
-                  profileCubit.passwordChanged(value);
-                  _formKey.currentState?.validate();
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'La contraseña es requerida.';
-                  }
-                  final passwordRegExp = RegExp(
-                    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*)[a-zA-Z]{6,}',
-                  );
+              if (widget.isRegister)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: CustomTextFormField(
+                    label: 'Contraseña',
+                    obscureText: true,
+                    onChanged: (value) {
+                      profileCubit.passwordChanged(value);
+                      _formKey.currentState?.validate();
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'La contraseña es requerida.';
+                      }
+                      final passwordRegExp = RegExp(
+                        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*)[a-zA-Z]{6,}',
+                      );
 
-                  if (!passwordRegExp.hasMatch(value)) {
-                    return 'Contraseña no segura, debe tener una mayúscula y una letra';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 10),
-              CustomTextFormField(
-                  label: 'Confirmar contraseña',
-                  obscureText: true,
-                  onChanged: (value) {
-                    profileCubit.verifyPasswords(value);
-                    _formKey.currentState?.validate();
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Confirmar contraseña es requerido.';
-                    }
-                    if (profileCubit.state.data.password != '' &&
-                        value != profileCubit.state.data.password) {
-                      return 'las contraseñas no coinciden';
-                    }
-                    return null;
-                  }),
+                      if (!passwordRegExp.hasMatch(value)) {
+                        return 'Contraseña no segura, debe tener una mayúscula y una letra';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              if (widget.isRegister)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: CustomTextFormField(
+                      label: 'Confirmar contraseña',
+                      obscureText: true,
+                      onChanged: (value) {
+                        profileCubit.verifyPasswords(value);
+                        _formKey.currentState?.validate();
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Confirmar contraseña es requerido.';
+                        }
+                        if (profileCubit.state.data.password != '' &&
+                            value != profileCubit.state.data.password) {
+                          return 'las contraseñas no coinciden';
+                        }
+                        return null;
+                      }),
+                ),
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
