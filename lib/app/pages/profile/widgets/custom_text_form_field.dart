@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField({
-    super.key,
-    this.label,
-    this.errorMessage,
-    this.onChanged,
-    this.onTap,
-    this.validator,
-    this.obscureText = false,
-    this.isPhone = false,
-    this.isEmail = false,
-    this.textEditingController,
-  });
+  CustomTextFormField(
+      {super.key,
+      this.label,
+      this.errorMessage,
+      this.onChanged,
+      this.onTap,
+      this.validator,
+      this.obscureText = false,
+      this.isPhone = false,
+      this.isEmail = false,
+      this.textEditingController,
+      this.iconInput,
+      this.iconActtion});
 
   final String? label;
   final String? errorMessage;
   final dynamic Function(String)? onChanged;
   final GestureTapCallback? onTap;
-  final TextEditingController? textEditingController;
+
   final String? Function(String?)? validator;
   final bool obscureText;
   final bool isPhone;
   final bool isEmail;
+  final TextEditingController? textEditingController;
+  final Icon? iconInput;
+  final void Function()? iconActtion;
 
   final border = OutlineInputBorder(borderRadius: BorderRadius.circular(10));
 
@@ -53,6 +57,10 @@ class CustomTextFormField extends StatelessWidget {
         label: label != null ? Text(label!) : null,
         errorText: errorMessage,
         errorMaxLines: 2,
+        suffixIcon: IconButton(
+          onPressed: iconActtion,
+          icon: iconInput != null ? iconInput! : const SizedBox(),
+        ),
       ),
     );
   }

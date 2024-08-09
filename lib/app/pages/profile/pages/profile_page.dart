@@ -26,6 +26,7 @@ class _ProfileView extends StatelessWidget {
   const _ProfileView({required this.isRegister});
 
   final bool isRegister;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -54,6 +55,8 @@ class _InputFormState extends State<_InputForm> {
   DateTime dateBirthDate = DateTime.now();
 
   final TextEditingController _controllerDate = TextEditingController();
+  var obscureTextPassword = true;
+  var obscureTextConfirmPassword = true;
 
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
     foregroundColor: Colors.white,
@@ -177,7 +180,17 @@ class _InputFormState extends State<_InputForm> {
                   padding: const EdgeInsets.only(top: 10),
                   child: CustomTextFormField(
                     label: 'Contraseña',
-                    obscureText: true,
+                    obscureText: obscureTextPassword,
+                    iconInput: Icon(
+                      obscureTextPassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                    iconActtion: () {
+                      setState(() {
+                        obscureTextPassword = !obscureTextPassword;
+                      });
+                    },
                     onChanged: (value) {
                       profileCubit.passwordChanged(value);
                       _formKey.currentState?.validate();
@@ -202,7 +215,18 @@ class _InputFormState extends State<_InputForm> {
                   padding: const EdgeInsets.only(top: 10),
                   child: CustomTextFormField(
                       label: 'Confirmar contraseña',
-                      obscureText: true,
+                      obscureText: obscureTextConfirmPassword,
+                      iconInput: Icon(
+                        obscureTextConfirmPassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      iconActtion: () {
+                        setState(() {
+                          obscureTextConfirmPassword =
+                              !obscureTextConfirmPassword;
+                        });
+                      },
                       onChanged: (value) {
                         profileCubit.verifyPasswords(value);
                         _formKey.currentState?.validate();
