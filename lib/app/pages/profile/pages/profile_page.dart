@@ -1,3 +1,4 @@
+import 'package:ekilibra_spa/app/config/helpers/buttonHelpers.dart';
 import 'package:ekilibra_spa/app/pages/profile/bloc/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -57,16 +58,6 @@ class _InputFormState extends State<_InputForm> {
   final TextEditingController _controllerDate = TextEditingController();
   var obscureTextPassword = true;
   var obscureTextConfirmPassword = true;
-
-  final ButtonStyle flatButtonStyle = TextButton.styleFrom(
-    foregroundColor: Colors.white,
-    backgroundColor: Colors.red,
-    minimumSize: const Size(88, 36),
-    padding: const EdgeInsets.symmetric(horizontal: 16),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +242,7 @@ class _InputFormState extends State<_InputForm> {
                   }
                 },
                 // ignore: prefer_const_constructors
-                style: flatButtonStyle,
+                style: ButtonHelpers().buttonAction(),
                 child: SizedBox(
                   width: 200,
                   height: 40,
