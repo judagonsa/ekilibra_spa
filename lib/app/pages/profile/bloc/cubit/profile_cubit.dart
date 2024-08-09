@@ -29,6 +29,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(VerifyPasswords(state.data, value));
   }
 
+  changeObservation(String value) {
+    emit(UpdateProfile(state.data.copyWith(observation: value)));
+  }
+
   onSubmit() {
     print(state);
   }

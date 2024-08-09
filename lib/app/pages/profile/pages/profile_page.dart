@@ -59,6 +59,8 @@ class _InputFormState extends State<_InputForm> {
   var obscureTextPassword = true;
   var obscureTextConfirmPassword = true;
 
+  final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
+
   @override
   Widget build(BuildContext context) {
     final profileCubit = context.watch<ProfileCubit>();
@@ -91,84 +93,92 @@ class _InputFormState extends State<_InputForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: 10),
-              CustomTextFormField(
-                label: 'Correo',
-                isEmail: true,
-                onChanged: (value) {
-                  profileCubit.emailChanged(value);
-                  _formKey.currentState?.validate();
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'El correo es requerido.';
-                  }
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: CustomTextFormField(
+                  label: 'Correo',
+                  isEmail: true,
+                  onChanged: (value) {
+                    profileCubit.emailChanged(value);
+                    _formKey.currentState?.validate();
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'El correo es requerido.';
+                    }
 
-                  final emailRegExp = RegExp(
-                    r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$',
-                  );
+                    final emailRegExp = RegExp(
+                      r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$',
+                    );
 
-                  if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
-                  return null;
-                },
+                    if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
+                    return null;
+                  },
+                ),
               ),
-              const SizedBox(height: 10),
-              CustomTextFormField(
-                label: 'Número de teléfono',
-                isPhone: true,
-                onChanged: (value) {
-                  profileCubit.phoneChanged(value);
-                  _formKey.currentState?.validate();
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'El número de teléfono es requerido.';
-                  }
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: CustomTextFormField(
+                  label: 'Número de teléfono',
+                  isPhone: true,
+                  onChanged: (value) {
+                    profileCubit.phoneChanged(value);
+                    _formKey.currentState?.validate();
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'El número de teléfono es requerido.';
+                    }
 
-                  if (value.length != 10) return 'Número de teléfono inválido';
-                  return null;
-                },
+                    if (value.length != 10) {
+                      return 'Número de teléfono inválido';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              const SizedBox(height: 10),
-              CustomTextFormField(
-                textEditingController: _controllerDate,
-                label: 'Fecha de nacimiento',
-                onChanged: (value) async {
-                  if (profileCubit.state.data.bithDate?.isNotEmpty == false) {
-                    _controllerDate.text = '';
-                    profileCubit.bithDateChanged(value);
-                    _formKey.currentState?.validate();
-                  }
-                  final date = await pickDate();
-                  if (date == null) return;
-                  setState(() {
-                    _controllerDate.text =
-                        '${date.day}/${date.month}/${date.year}';
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: CustomTextFormField(
+                  textEditingController: _controllerDate,
+                  label: 'Fecha de nacimiento',
+                  onChanged: (value) async {
+                    if (profileCubit.state.data.bithDate?.isNotEmpty == false) {
+                      _controllerDate.text = '';
+                      profileCubit.bithDateChanged(value);
+                      _formKey.currentState?.validate();
+                    }
+                    final date = await pickDate();
+                    if (date == null) return;
+                    setState(() {
+                      _controllerDate.text =
+                          '${date.day}/${date.month}/${date.year}';
 
-                    profileCubit.bithDateChanged(_controllerDate.text);
-                    _formKey.currentState?.validate();
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'La fecha de nacimiento es requerido.';
-                  }
-                  return null;
-                },
-                onTap: () async {
-                  final date = await pickDate();
-                  if (date == null) return;
-                  setState(() {
-                    _controllerDate.text =
-                        '${date.day}/${date.month}/${date.year}';
-                    profileCubit.bithDateChanged(_controllerDate.text);
-                    _formKey.currentState?.validate();
-                  });
-                },
+                      profileCubit.bithDateChanged(_controllerDate.text);
+                      _formKey.currentState?.validate();
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'La fecha de nacimiento es requerido.';
+                    }
+                    return null;
+                  },
+                  onTap: () async {
+                    final date = await pickDate();
+                    if (date == null) return;
+                    setState(() {
+                      _controllerDate.text =
+                          '${date.day}/${date.month}/${date.year}';
+                      profileCubit.bithDateChanged(_controllerDate.text);
+                      _formKey.currentState?.validate();
+                    });
+                  },
+                ),
               ),
               if (widget.isRegister)
                 Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 15),
                   child: CustomTextFormField(
                     label: 'Contraseña',
                     obscureText: obscureTextPassword,
@@ -203,52 +213,76 @@ class _InputFormState extends State<_InputForm> {
                 ),
               if (widget.isRegister)
                 Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 15),
                   child: CustomTextFormField(
-                      label: 'Confirmar contraseña',
-                      obscureText: obscureTextConfirmPassword,
-                      iconInput: Icon(
-                        obscureTextConfirmPassword
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      iconActtion: () {
-                        setState(() {
-                          obscureTextConfirmPassword =
-                              !obscureTextConfirmPassword;
-                        });
-                      },
-                      onChanged: (value) {
-                        profileCubit.verifyPasswords(value);
-                        _formKey.currentState?.validate();
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Confirmar contraseña es requerido.';
-                        }
-                        if (profileCubit.state.data.password != '' &&
-                            value != profileCubit.state.data.password) {
-                          return 'las contraseñas no coinciden';
-                        }
-                        return null;
-                      }),
+                    label: 'Confirmar contraseña',
+                    obscureText: obscureTextConfirmPassword,
+                    iconInput: Icon(
+                      obscureTextConfirmPassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                    iconActtion: () {
+                      setState(() {
+                        obscureTextConfirmPassword =
+                            !obscureTextConfirmPassword;
+                      });
+                    },
+                    onChanged: (value) {
+                      profileCubit.verifyPasswords(value);
+                      _formKey.currentState?.validate();
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Confirmar contraseña es requerido.';
+                      }
+                      if (profileCubit.state.data.password != '' &&
+                          value != profileCubit.state.data.password) {
+                        return 'las contraseñas no coinciden';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
-              const SizedBox(height: 10),
-              TextButton(
-                onPressed: () {
-                  final isValid = _formKey.currentState!.validate();
-                  if (isValid) {
-                    profileCubit.onSubmit();
-                  }
-                },
-                // ignore: prefer_const_constructors
-                style: ButtonHelpers().buttonAction(),
-                child: SizedBox(
-                  width: 200,
-                  height: 40,
-                  child: Center(
-                    child: Text(
-                      widget.isRegister ? 'Crear usuario' : 'Guardar',
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Tooltip(
+                  key: tooltipkey,
+                  triggerMode: TooltipTriggerMode.manual,
+                  showDuration: const Duration(seconds: 1),
+                  message:
+                      'Acá podras agregar información que consideres pertinente, alguna enfermedad, alérgia o lesión a tener en cuenta.',
+                  child: CustomTextFormField(
+                    label: 'Observaciones a tener en cuenta',
+                    isObservation: true,
+                    iconInput: const Icon(Icons.question_mark_outlined),
+                    iconActtion: () {
+                      tooltipkey.currentState?.ensureTooltipVisible();
+                    },
+                    onChanged: (value) {
+                      profileCubit.changeObservation(value);
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: TextButton(
+                  onPressed: () {
+                    final isValid = _formKey.currentState!.validate();
+                    if (isValid) {
+                      profileCubit.onSubmit();
+                    }
+                  },
+                  // ignore: prefer_const_constructors
+                  style: ButtonHelpers().buttonAction(),
+                  child: SizedBox(
+                    width: 200,
+                    height: 40,
+                    child: Center(
+                      child: Text(
+                        widget.isRegister ? 'Crear usuario' : 'Guardar',
+                      ),
                     ),
                   ),
                 ),

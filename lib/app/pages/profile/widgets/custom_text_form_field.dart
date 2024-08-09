@@ -13,7 +13,8 @@ class CustomTextFormField extends StatelessWidget {
       this.isEmail = false,
       this.textEditingController,
       this.iconInput,
-      this.iconActtion});
+      this.iconActtion,
+      this.isObservation = false});
 
   final String? label;
   final String? errorMessage;
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? textEditingController;
   final Icon? iconInput;
   final void Function()? iconActtion;
+  final bool isObservation;
 
   final border = OutlineInputBorder(borderRadius: BorderRadius.circular(10));
 
@@ -59,7 +61,7 @@ class CustomTextFormField extends StatelessWidget {
         errorMaxLines: 2,
         suffixIcon: IconButton(
           onPressed: iconActtion,
-          icon: iconInput != null ? iconInput! : const SizedBox(),
+          icon: iconInput != null ? iconInput! : const SizedBox(width: 10),
         ),
       ),
     );

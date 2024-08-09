@@ -27,6 +27,7 @@ class DataProfile {
   final String? bithDate;
   final String? phone;
   final String? password;
+  final String? observation;
 
   DataProfile({
     this.userName,
@@ -34,21 +35,22 @@ class DataProfile {
     this.bithDate,
     this.phone,
     this.password,
+    this.observation,
   });
 
-  DataProfile copyWith({
-    String? userName,
-    String? email,
-    String? bithDate,
-    String? phone,
-    String? password,
-  }) {
+  DataProfile copyWith(
+      {String? userName,
+      String? email,
+      String? bithDate,
+      String? phone,
+      String? password,
+      String? observation}) {
     return DataProfile(
-      userName: userName ?? this.userName,
-      email: email ?? this.email,
-      bithDate: bithDate ?? this.bithDate,
-      phone: phone ?? this.phone,
-      password: password ?? this.password,
-    );
+        userName: userName ?? this.userName,
+        email: email ?? this.email,
+        bithDate: bithDate ?? this.bithDate,
+        phone: phone ?? this.phone,
+        password: password ?? this.password,
+        observation: observation ?? this.observation);
   }
 }
