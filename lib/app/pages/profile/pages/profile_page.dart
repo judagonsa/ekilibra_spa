@@ -33,8 +33,11 @@ class _ProfileView extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: SingleChildScrollView(
-          child: _InputForm(isRegister: isRegister),
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          child: SingleChildScrollView(
+            child: _InputForm(isRegister: isRegister),
+          ),
         ),
       ),
     );
