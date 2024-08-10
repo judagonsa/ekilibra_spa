@@ -33,7 +33,5 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(UpdateProfile(state.data.copyWith(observation: value)));
   }
 
-  onSubmit() {
-    print(state);
-  }
+  onSubmit() {}
 }

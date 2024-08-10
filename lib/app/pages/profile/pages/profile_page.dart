@@ -1,8 +1,12 @@
-import 'package:ekilibra_spa/app/config/helpers/buttonHelpers.dart';
+import 'dart:io';
+
+import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/pages/profile/bloc/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key, required this.isRegister});
@@ -64,9 +68,12 @@ class _InputFormState extends State<_InputForm> {
 
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
+  File? image;
+
   @override
   Widget build(BuildContext context) {
     final profileCubit = context.watch<ProfileCubit>();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -79,9 +86,22 @@ class _InputFormState extends State<_InputForm> {
                   child: ClipOval(
                     child: SizedBox.fromSize(
                       size: const Size.fromRadius(80),
-                      child: const Icon(
-                        Icons.account_circle,
-                        size: 150,
+                      child: IconButton(
+                        iconSize: 150,
+                        icon: image == null
+                            ? const Icon(
+                                Icons.account_circle,
+                              )
+                            : ClipOval(
+                                child: SizedBox.fromSize(
+                                  size: const Size.fromRadius(75),
+                                  child: Image.file(
+                                    image!,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                        onPressed: () => loadImageProfile(),
                       ),
                     ),
                   ),
@@ -308,4 +328,15 @@ class _InputFormState extends State<_InputForm> {
         firstDate: DateTime(1900),
         lastDate: DateTime(DateTime.now().year - 15),
       );
+
+  Future loadImageProfile() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
 }
