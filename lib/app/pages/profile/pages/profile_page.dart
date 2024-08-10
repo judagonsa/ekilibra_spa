@@ -73,15 +73,19 @@ class _InputFormState extends State<_InputForm> {
         children: [
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: ClipOval(
-                  child: SizedBox.fromSize(
-                    size: const Size.fromRadius(80),
-                    child: const FlutterLogo(size: 80),
+              if (!widget.isRegister)
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ClipOval(
+                    child: SizedBox.fromSize(
+                      size: const Size.fromRadius(80),
+                      child: const Icon(
+                        Icons.account_circle,
+                        size: 150,
+                      ),
+                    ),
                   ),
                 ),
-              ),
               CustomTextFormField(
                 label: 'Nombre y apellido',
                 onChanged: (value) {
