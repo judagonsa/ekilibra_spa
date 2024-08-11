@@ -11,9 +11,12 @@ part 'profile.g.dart';
 @freezed
 class Profile with _$Profile {
   const factory Profile({
-    required String firstName,
-    required String lastName,
-    required int age,
+    String? userName,
+    String? email,
+    String? bithDate,
+    String? phone,
+    String? password,
+    String? observation,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, Object?> json) =>

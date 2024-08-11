@@ -19,9 +19,8 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(isRegister ? 'Registro' : 'Mi perfil'),
       ),
-      body: BlocProvider(
-        create: (context) => ProfileCubit(),
-        child: _ProfileView(isRegister: isRegister),
+      body: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) => _ProfileView(isRegister: isRegister),
       ),
     );
   }
@@ -62,7 +61,12 @@ class _InputFormState extends State<_InputForm> {
 
   DateTime dateBirthDate = DateTime.now();
 
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPhone = TextEditingController();
   final TextEditingController _controllerDate = TextEditingController();
+  final TextEditingController _controllerObservations = TextEditingController();
+
   var obscureTextPassword = true;
   var obscureTextConfirmPassword = true;
 
@@ -73,6 +77,12 @@ class _InputFormState extends State<_InputForm> {
   @override
   Widget build(BuildContext context) {
     final profileCubit = context.watch<ProfileCubit>();
+
+    _controllerName.text = profileCubit.state.data?.userName ?? '';
+    _controllerEmail.text = profileCubit.state.data?.email ?? '';
+    _controllerPhone.text = profileCubit.state.data?.phone ?? '';
+    _controllerDate.text = profileCubit.state.data?.bithDate ?? '';
+    _controllerObservations.text = profileCubit.state.data?.observation ?? '';
 
     return Form(
       key: _formKey,
@@ -108,6 +118,7 @@ class _InputFormState extends State<_InputForm> {
                 ),
               CustomTextFormField(
                 label: 'Nombre y apellido',
+                textEditingController: _controllerName,
                 onChanged: (value) {
                   profileCubit.usernameChanged(value);
                   _formKey.currentState?.validate();
@@ -124,6 +135,7 @@ class _InputFormState extends State<_InputForm> {
                 padding: const EdgeInsets.only(top: 15),
                 child: CustomTextFormField(
                   label: 'Correo',
+                  textEditingController: _controllerEmail,
                   isEmail: true,
                   onChanged: (value) {
                     profileCubit.emailChanged(value);
@@ -147,6 +159,7 @@ class _InputFormState extends State<_InputForm> {
                 padding: const EdgeInsets.only(top: 15),
                 child: CustomTextFormField(
                   label: 'Número de teléfono',
+                  textEditingController: _controllerPhone,
                   isPhone: true,
                   onChanged: (value) {
                     profileCubit.phoneChanged(value);
@@ -170,7 +183,8 @@ class _InputFormState extends State<_InputForm> {
                   textEditingController: _controllerDate,
                   label: 'Fecha de nacimiento',
                   onChanged: (value) async {
-                    if (profileCubit.state.data.bithDate?.isNotEmpty == false) {
+                    if (profileCubit.state.data?.bithDate?.isNotEmpty ==
+                        false) {
                       _controllerDate.text = '';
                       profileCubit.bithDateChanged(value);
                       _formKey.currentState?.validate();
@@ -263,8 +277,8 @@ class _InputFormState extends State<_InputForm> {
                       if (value == null || value.isEmpty) {
                         return 'Confirmar contraseña es requerido.';
                       }
-                      if (profileCubit.state.data.password != '' &&
-                          value != profileCubit.state.data.password) {
+                      if (profileCubit.state.data?.password != '' &&
+                          value != profileCubit.state.data?.password) {
                         return 'las contraseñas no coinciden';
                       }
                       return null;
@@ -280,6 +294,7 @@ class _InputFormState extends State<_InputForm> {
                   message:
                       'Acá podras agregar información que consideres pertinente, alguna enfermedad, alérgia o lesión a tener en cuenta.',
                   child: CustomTextFormField(
+                    textEditingController: _controllerObservations,
                     label: 'Observaciones a tener en cuenta',
                     isObservation: true,
                     iconInput: const Icon(Icons.question_mark_outlined),
@@ -301,7 +316,6 @@ class _InputFormState extends State<_InputForm> {
                       profileCubit.onSubmit();
                     }
                   },
-                  // ignore: prefer_const_constructors
                   style: ButtonHelpers().buttonAction(),
                   child: SizedBox(
                     width: 200,
@@ -338,5 +352,11 @@ class _InputFormState extends State<_InputForm> {
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProfileCubit>().onStartProfile();
   }
 }
