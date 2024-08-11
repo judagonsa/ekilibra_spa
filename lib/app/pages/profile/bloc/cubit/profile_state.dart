@@ -27,9 +27,3 @@ final class ErrorSaveProfile extends ProfileState {
 final class GetProfile extends ProfileState {
   const GetProfile(super.data);
 }
-
-final class VerifyPasswords extends ProfileState {
-  final String confirmPassword;
-
-  const VerifyPasswords(super.data, this.confirmPassword);
-}

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ekilibra_spa/app/config/helpers/banner_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/pages/profile/bloc/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
@@ -270,7 +271,6 @@ class _InputFormState extends State<_InputForm> {
                       });
                     },
                     onChanged: (value) {
-                      profileCubit.verifyPasswords(value);
                       _formKey.currentState?.validate();
                     },
                     validator: (value) {
@@ -314,6 +314,8 @@ class _InputFormState extends State<_InputForm> {
                     final isValid = _formKey.currentState!.validate();
                     if (isValid) {
                       profileCubit.onSubmit();
+                      BannerHelper().showBanner(
+                          context: context, text: 'Perfil guardado con exito');
                     }
                   },
                   style: ButtonHelpers().buttonAction(),
@@ -328,7 +330,7 @@ class _InputFormState extends State<_InputForm> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20)
+              const SizedBox(height: 20),
             ],
           ),
         ],
