@@ -314,8 +314,17 @@ class _InputFormState extends State<_InputForm> {
                     final isValid = _formKey.currentState!.validate();
                     if (isValid) {
                       profileCubit.onSubmit();
-                      BannerHelper().showBanner(
-                          context: context, text: 'Perfil guardado con exito');
+                      if (profileCubit.state is SaveProfile) {
+                        BannerHelper().showBanner(
+                          context: context,
+                          text: 'Perfil guardado con exito.',
+                        );
+                      } else if (profileCubit.state is ErrorSaveProfile) {
+                        BannerHelper().showBanner(
+                          context: context,
+                          text: 'Error guardando perfil.',
+                        );
+                      }
                     }
                   },
                   style: ButtonHelpers().buttonAction(),
