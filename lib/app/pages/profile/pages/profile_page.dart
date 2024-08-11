@@ -74,6 +74,7 @@ class _InputFormState extends State<_InputForm> {
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
   File? image;
+  bool isRealtime = false;
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +123,7 @@ class _InputFormState extends State<_InputForm> {
                 textEditingController: _controllerName,
                 onChanged: (value) {
                   profileCubit.usernameChanged(value);
-                  _formKey.currentState?.validate();
+                  if (isRealtime) _formKey.currentState?.validate();
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -140,7 +141,7 @@ class _InputFormState extends State<_InputForm> {
                   isEmail: true,
                   onChanged: (value) {
                     profileCubit.emailChanged(value);
-                    _formKey.currentState?.validate();
+                    if (isRealtime) _formKey.currentState?.validate();
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -164,7 +165,7 @@ class _InputFormState extends State<_InputForm> {
                   isPhone: true,
                   onChanged: (value) {
                     profileCubit.phoneChanged(value);
-                    _formKey.currentState?.validate();
+                    if (isRealtime) _formKey.currentState?.validate();
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -188,7 +189,7 @@ class _InputFormState extends State<_InputForm> {
                         false) {
                       _controllerDate.text = '';
                       profileCubit.bithDateChanged(value);
-                      _formKey.currentState?.validate();
+                      if (isRealtime) _formKey.currentState?.validate();
                     }
                     final date = await pickDate();
                     if (date == null) return;
@@ -197,7 +198,7 @@ class _InputFormState extends State<_InputForm> {
                           '${date.day}/${date.month}/${date.year}';
 
                       profileCubit.bithDateChanged(_controllerDate.text);
-                      _formKey.currentState?.validate();
+                      if (isRealtime) _formKey.currentState?.validate();
                     });
                   },
                   validator: (value) {
@@ -213,7 +214,7 @@ class _InputFormState extends State<_InputForm> {
                       _controllerDate.text =
                           '${date.day}/${date.month}/${date.year}';
                       profileCubit.bithDateChanged(_controllerDate.text);
-                      _formKey.currentState?.validate();
+                      if (isRealtime) _formKey.currentState?.validate();
                     });
                   },
                 ),
@@ -236,7 +237,7 @@ class _InputFormState extends State<_InputForm> {
                     },
                     onChanged: (value) {
                       profileCubit.passwordChanged(value);
-                      _formKey.currentState?.validate();
+                      if (isRealtime) _formKey.currentState?.validate();
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -271,7 +272,7 @@ class _InputFormState extends State<_InputForm> {
                       });
                     },
                     onChanged: (value) {
-                      _formKey.currentState?.validate();
+                      if (isRealtime) _formKey.currentState?.validate();
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -311,6 +312,7 @@ class _InputFormState extends State<_InputForm> {
                 padding: const EdgeInsets.only(top: 30),
                 child: TextButton(
                   onPressed: () {
+                    isRealtime = true;
                     final isValid = _formKey.currentState!.validate();
                     if (isValid) {
                       profileCubit.onSubmit();
