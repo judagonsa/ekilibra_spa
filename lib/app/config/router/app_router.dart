@@ -5,12 +5,16 @@ final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const HomePage(),
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/welcome',
+      builder: (context, state) => const WelcomePage(),
     ),
     GoRoute(
       path: '/profile',
       builder: (context, state) => const ProfilePage(
-        isRegister: true,
+        isRegister: false,
       ),
     )
   ],

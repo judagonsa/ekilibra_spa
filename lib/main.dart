@@ -1,6 +1,8 @@
 import 'package:ekilibra_spa/app/config/router/app_router.dart';
 import 'package:ekilibra_spa/app/config/theme/app_theme.dart';
+import 'package:ekilibra_spa/app/pages/profile/bloc/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +13,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: appRouter,
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme().theme(),
+    return BlocProvider(
+      create: (_) => ProfileCubit(),
+      child: MaterialApp.router(
+        routerConfig: appRouter,
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme().theme(),
+      ),
     );
   }
 }
