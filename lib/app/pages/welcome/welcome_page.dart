@@ -2,8 +2,8 @@ import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Welcome extends StatelessWidget {
-  const Welcome({super.key});
+class WelcomePage extends StatelessWidget {
+  const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
