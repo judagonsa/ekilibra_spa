@@ -1,6 +1,6 @@
 import 'package:ekilibra_spa/app/config/router/app_router.dart';
 import 'package:ekilibra_spa/app/config/theme/app_theme.dart';
-import 'package:ekilibra_spa/app/pages/profile/bloc/cubit/profile_cubit.dart';
+import 'package:ekilibra_spa/app/pages/profile/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

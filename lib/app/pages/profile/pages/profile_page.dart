@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:ekilibra_spa/app/config/helpers/banner_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
-import 'package:ekilibra_spa/app/pages/profile/bloc/cubit/profile_cubit.dart';
+import 'package:ekilibra_spa/app/pages/profile/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
