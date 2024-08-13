@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
+        appBar: AppBar(),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                           print('revisar datos on firebase');
                         }
                       },
-                      style: ButtonHelpers().primaryButton(),
+                      style: ButtonHelpers().primaryButton(true),
                       child: const Text(
                         'Iniciar sesión',
                         style: TextStyle(fontSize: 16),

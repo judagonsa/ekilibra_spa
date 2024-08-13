@@ -22,7 +22,7 @@ class _HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        context.push('/profile');
+        context.push('/profile', extra: {'isRegister': false});
       },
       child: const Column(
         mainAxisSize: MainAxisSize.min,

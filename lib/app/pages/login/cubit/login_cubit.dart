@@ -5,4 +5,6 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginState(numberPhone: '', password: ''));
+
+  onSubmit() async {}
 }
