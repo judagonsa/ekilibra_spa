@@ -1,15 +1,20 @@
 import 'package:ekilibra_spa/app/pages/pages.dart';
+import 'package:ekilibra_spa/app/pages/quote/pages/quote_page.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const WelcomePage(),
+      builder: (context, state) => const HomePage(),
     ),
     GoRoute(
       path: '/welcome',
       builder: (context, state) => const WelcomePage(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginPage(),
     ),
     GoRoute(
       path: '/profile',
@@ -19,8 +24,8 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginPage(),
+      path: '/quote',
+      builder: (context, state) => const QuotePage(),
     )
   ],
 );

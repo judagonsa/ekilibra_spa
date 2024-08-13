@@ -20,17 +20,33 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        context.push('/profile', extra: {'isRegister': false});
-      },
-      child: const Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.person),
-          Text('Perfil'),
-        ],
-      ),
+    return Row(
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            context.push('/profile', extra: {'isRegister': false});
+          },
+          child: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.person),
+              Text('Perfil'),
+            ],
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            context.push('/quote');
+          },
+          child: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.person),
+              Text('Agendar cita'),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
