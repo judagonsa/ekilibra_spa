@@ -9,14 +9,22 @@ class QuotePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Agendar cita'),
       ),
-      body: const Column(
-        children: [
-          Text('Seleccionar servicio'),
-          Text('Seleccionar fecha'),
-          Text('Seleccionar hora'),
-          Text('Seleccionar lugar'),
-          Text('Observaciones'),
-        ],
+      body: const SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 50),
+              Text('Seleccionar servicio'),
+              Text('Seleccionar fecha'),
+              Text('Seleccionar hora'),
+              Text('Seleccionar lugar'),
+              Text('Observaciones'),
+              Spacer(),
+              Text('Botón de agendar'),
+            ],
+          ),
+        ),
       ),
     );
   }
