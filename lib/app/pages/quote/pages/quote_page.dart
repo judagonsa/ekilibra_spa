@@ -67,9 +67,9 @@ class QuotePage extends StatelessWidget {
                       if (value != null) service = value;
                     },
                     dropdownMenuEntries: DatetimeHelper()
-                        .daysOfWeek()
+                        .getDaysOfWeek()
                         .map<DropdownMenuEntry<String>>((DateTime value) {
-                      final newValue = DatetimeHelper().dayString(value);
+                      final newValue = DatetimeHelper().getDayString(value);
                       return DropdownMenuEntry<String>(
                           value: newValue, label: newValue);
                     }).toList(),
