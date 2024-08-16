@@ -1,4 +1,5 @@
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:flutter/material.dart';
 
 class QuotePage extends StatelessWidget {
@@ -9,6 +10,7 @@ class QuotePage extends StatelessWidget {
     String service;
     final List<String> services = ['Limpieza facial', 'masaje', 'camilla'];
     final List<String> places = ['Sogamoso', 'Duitama', 'Tunja'];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Agendar cita'),
@@ -54,7 +56,26 @@ class QuotePage extends StatelessWidget {
                   ),
                 ],
               ),
-              const Text('Seleccionar día de la semana a partir del actual'),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Día:'),
+                  const SizedBox(width: 20),
+                  DropdownMenu(
+                    onSelected: (value) {
+                      if (value != null) service = value;
+                    },
+                    dropdownMenuEntries: DatetimeHelper()
+                        .daysOfWeek()
+                        .map<DropdownMenuEntry<String>>((DateTime value) {
+                      final newValue = DatetimeHelper().dayString(value);
+                      return DropdownMenuEntry<String>(
+                          value: newValue, label: newValue);
+                    }).toList(),
+                  ),
+                ],
+              ),
               const Text('Seleccionar horas después de la actual'),
               const Text('Observaciones, un textbox'),
               const Spacer(),
