@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 
 class DatetimeHelper {
+  //devolver en español
+  //zona horaria colombiana
   List<DateTime> daysOfWeek() {
     List<DateTime> days = [];
     for (var i = 0; i < 7; i++) {
@@ -11,7 +13,6 @@ class DatetimeHelper {
   }
 
   String dayString(DateTime date) {
-    //devolver en español
     return DateFormat('EEEE, d').format(date);
   }
 }
