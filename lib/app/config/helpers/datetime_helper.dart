@@ -20,7 +20,7 @@ class DatetimeHelper {
       'Wednesday': 'Miércoles',
       'Thursday': 'Jueves',
       'Friday': 'Viernes',
-      'Sunday': 'Sábado',
+      'Sunday': 'Domingo',
     };
     final dayOfWeek = DateFormat('EEEE').format(date);
     final numberOfWeek = DateFormat('d').format(date);
@@ -30,7 +30,7 @@ class DatetimeHelper {
 
   String getHoursOfDay() {
     final now = DateTime.now();
-    final now2 = DateFormat("h:mma").format(now);
+    // final now2 = DateFormat("h:mma").format(now);
     DateFormat.jm().format(now);
     return '';
   }

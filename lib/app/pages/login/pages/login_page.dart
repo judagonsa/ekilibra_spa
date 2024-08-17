@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                           print('revisar datos on firebase');
                         }
                       },
-                      style: ButtonHelpers().primaryButton(true),
+                      style: ButtonHelpers().primaryButton(isLogin: true),
                       child: const Text(
                         'Iniciar sesión',
                         style: TextStyle(fontSize: 16),

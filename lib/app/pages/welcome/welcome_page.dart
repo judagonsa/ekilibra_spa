@@ -46,7 +46,7 @@ class _WelcomeViewState extends State<_WelcomeView> {
                       onPressed: () {
                         context.push('/profile', extra: {'isRegister': true});
                       },
-                      style: ButtonHelpers().primaryButton(true),
+                      style: ButtonHelpers().primaryButton(isLogin: true),
                       child: const Text(
                         'Registrar',
                         style: TextStyle(fontSize: 16),

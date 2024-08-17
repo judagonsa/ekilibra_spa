@@ -327,7 +327,7 @@ class _InputFormState extends State<_InputForm> {
                   }
                 }
               },
-              style: ButtonHelpers().primaryButton(false),
+              style: ButtonHelpers().primaryButton(isLogin: false),
               child: SizedBox(
                 width: 200,
                 height: 40,
