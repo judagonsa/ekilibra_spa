@@ -24,7 +24,15 @@ class DatetimeHelper {
     };
     final dayOfWeek = DateFormat('EEEE').format(date);
     final numberOfWeek = DateFormat('d').format(date);
+    // getHoursOfDay();
     return '${dayWeekArray[dayOfWeek]}, $numberOfWeek';
+  }
+
+  String getHoursOfDay() {
+    final now = DateTime.now();
+    final now2 = DateFormat("h:mma").format(now);
+    DateFormat.jm().format(now);
+    return '';
   }
 
 //función para retornar las horas a partir de la actual, hasta las 6 pm cada hora o cada 30
