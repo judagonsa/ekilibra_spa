@@ -16,7 +16,7 @@ class _QuotePageState extends State<QuotePage> {
     String serviceSelected = '';
 
     final List<String> services = ['Limpieza facial', 'masaje', 'camilla'];
-    // final List<String> places = ['Sogamoso', 'Duitama', 'Tunja']; ajustar más adelante
+    final List<String> places = ['Sogamoso', 'Duitama', 'Tunja'];
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 212, 215, 216),
@@ -48,55 +48,16 @@ class _QuotePageState extends State<QuotePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      placeSelected = 'Sogamoso';
-                                    });
-                                  },
-                                  style: ButtonHelpers().secondaryButton(
-                                    textColor: placeSelected == 'Sogamoso'
-                                        ? Colors.white
-                                        : Colors.purple,
-                                    borderColor: Colors.purple,
-                                    backgrounColor: placeSelected == 'Sogamoso'
-                                        ? Colors.purple
-                                        : null,
-                                  ),
-                                  child: const Text('Sogamoso'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      placeSelected = 'Duitama';
-                                    });
-                                  },
-                                  style: ButtonHelpers().secondaryButton(
-                                      textColor: placeSelected == 'Duitama'
-                                          ? Colors.white
-                                          : Colors.purple,
-                                      borderColor: Colors.purple,
-                                      backgrounColor: placeSelected == 'Duitama'
-                                          ? Colors.purple
-                                          : null),
-                                  child: const Text('Duitama'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      placeSelected = 'Tunja';
-                                    });
-                                  },
-                                  style: ButtonHelpers().secondaryButton(
-                                      textColor: placeSelected == 'Tunja'
-                                          ? Colors.white
-                                          : Colors.purple,
-                                      borderColor: Colors.purple,
-                                      backgrounColor: placeSelected == 'Tunja'
-                                          ? Colors.purple
-                                          : null),
-                                  child: const Text('Tunja'),
-                                )
+                                for (var place in places)
+                                  _ButtonPlace(
+                                    placeSelected: placeSelected,
+                                    place: place,
+                                    action: () {
+                                      setState(() {
+                                        placeSelected = place;
+                                      });
+                                    },
+                                  )
                               ],
                             )
                           ],
@@ -106,8 +67,8 @@ class _QuotePageState extends State<QuotePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             const Text('Servicio:'),
-                            const SizedBox(width: 20),
                             DropdownMenu(
+                              width: 250,
                               // errorText: 'Error',
                               onSelected: (value) {
                                 if (value != null) serviceSelected = value;
@@ -209,5 +170,30 @@ class _QuotePageState extends State<QuotePage> {
 
   _createQuote() {
     //validar items
+  }
+}
+
+class _ButtonPlace extends StatelessWidget {
+  const _ButtonPlace({
+    required this.placeSelected,
+    required this.place,
+    required this.action,
+  });
+
+  final String placeSelected;
+  final String place;
+  final Function()? action;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: action,
+      style: ButtonHelpers().secondaryButton(
+        textColor: placeSelected == place ? Colors.white : Colors.purple,
+        borderColor: Colors.purple,
+        backgrounColor: placeSelected == place ? Colors.purple : null,
+      ),
+      child: Text(place),
+    );
   }
 }
