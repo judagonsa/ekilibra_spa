@@ -1,6 +1,7 @@
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class QuotePage extends StatefulWidget {
   const QuotePage({super.key});
@@ -11,8 +12,11 @@ class QuotePage extends StatefulWidget {
 
 class _QuotePageState extends State<QuotePage> {
   String placeSelected = '';
+  DateTime? dateSelected;
+
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     String serviceSelected = '';
 
     final List<String> services = ['Limpieza facial', 'masaje', 'camilla'];
@@ -50,8 +54,8 @@ class _QuotePageState extends State<QuotePage> {
                               children: [
                                 for (var place in places)
                                   _ButtonPlace(
-                                    placeSelected: placeSelected,
                                     place: place,
+                                    placeSelected: placeSelected,
                                     action: () {
                                       setState(() {
                                         placeSelected = place;
@@ -96,31 +100,33 @@ class _QuotePageState extends State<QuotePage> {
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                       children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text('Día:'),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Día:'),
-                            const SizedBox(width: 20),
-                            DropdownMenu(
-                              onSelected: (value) {
-                                // if (value != null) service = value;
-                              },
-                              dropdownMenuEntries: DatetimeHelper()
-                                  .getDaysOfWeek()
-                                  .map<DropdownMenuEntry<String>>(
-                                      (DateTime value) {
-                                final newValue =
-                                    DatetimeHelper().getDayString(value);
-                                return DropdownMenuEntry<String>(
-                                    value: newValue, label: newValue);
-                              }).toList(),
-                            ),
+                            for (var dateWeek
+                                in DatetimeHelper().getDaysOfWeek())
+                              _DaysWeek(
+                                date: dateWeek,
+                                dateSelected: dateSelected,
+                                action: () {
+                                  setState(() {
+                                    dateSelected = dateWeek;
+                                  });
+                                },
+                              )
                           ],
                         ),
-                        const Text('Seleccionar horas después de la actual'),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text('Seleccionar horas después de la actual'),
+                        ),
                       ],
                     ),
                   ),
@@ -173,15 +179,67 @@ class _QuotePageState extends State<QuotePage> {
   }
 }
 
+class _DaysWeek extends StatelessWidget {
+  const _DaysWeek({
+    required this.date,
+    required this.action,
+    required this.dateSelected,
+  });
+
+  final DateTime date;
+  final Function()? action;
+  final DateTime? dateSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: SizedBox(
+        width: 50,
+        child: Column(
+          children: [
+            TextButton(
+              style: ButtonHelpers().secondaryButton(
+                borderColor: Colors.purple,
+                textColor: dateSelected != null
+                    ? date.day == dateSelected?.day
+                        ? Colors.white
+                        : Colors.purple
+                    : Colors.purple,
+                backgrounColor: dateSelected != null
+                    ? date.day == dateSelected?.day
+                        ? Colors.purple
+                        : Colors.white
+                    : Colors.white,
+              ),
+              onPressed: action,
+              child: Column(
+                children: [
+                  Text(
+                    DatetimeHelper()
+                        .getDayString(DateFormat('EEE').format(date)),
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  Text(DateFormat('d').format(date))
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _ButtonPlace extends StatelessWidget {
   const _ButtonPlace({
-    required this.placeSelected,
     required this.place,
+    required this.placeSelected,
     required this.action,
   });
 
-  final String placeSelected;
   final String place;
+  final String placeSelected;
   final Function()? action;
 
   @override

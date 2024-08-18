@@ -13,19 +13,17 @@ class DatetimeHelper {
     return days;
   }
 
-  String getDayString(DateTime date) {
+  String getDayString(String dayWeek) {
     final Map<String, String> dayWeekArray = {
-      'Monday': 'Lunes',
-      'Tuesday': 'Martes',
-      'Wednesday': 'Miércoles',
-      'Thursday': 'Jueves',
-      'Friday': 'Viernes',
-      'Sunday': 'Domingo',
+      'Mon': 'Lun',
+      'Tue': 'Mar',
+      'Wed': 'Mié',
+      'Thu': 'Jue',
+      'Fri': 'Vie',
+      'Sun': 'Dom',
     };
-    final dayOfWeek = DateFormat('EEEE').format(date);
-    final numberOfWeek = DateFormat('d').format(date);
     // getHoursOfDay();
-    return '${dayWeekArray[dayOfWeek]}, $numberOfWeek';
+    return '${dayWeekArray[dayWeek]}';
   }
 
   String getHoursOfDay() {

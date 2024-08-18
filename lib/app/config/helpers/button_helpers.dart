@@ -31,7 +31,7 @@ class ButtonHelpers {
       backgroundColor: backgrounColor ?? Colors.white,
       elevation: 1,
       foregroundColor: textColor ?? Colors.red,
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+      // padding: const EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
       side: BorderSide(width: 2, color: borderColor ?? Colors.red),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
