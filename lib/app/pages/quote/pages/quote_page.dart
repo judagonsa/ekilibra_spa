@@ -13,6 +13,7 @@ class QuotePage extends StatefulWidget {
 class _QuotePageState extends State<QuotePage> {
   String placeSelected = '';
   DateTime? dateSelected;
+  TimeOfDay? hourSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,8 @@ class _QuotePageState extends State<QuotePage> {
 
     final List<String> services = ['Limpieza facial', 'masaje', 'camilla'];
     final List<String> places = ['Sogamoso', 'Duitama', 'Tunja'];
+
+    final localizations = MaterialLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 212, 215, 216),
@@ -92,9 +95,9 @@ class _QuotePageState extends State<QuotePage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Container(
-                  height: 170,
+                  height: 180,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -124,14 +127,47 @@ class _QuotePageState extends State<QuotePage> {
                           ],
                         ),
                         const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Text('Seleccionar horas después de la actual'),
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text('Hora:'),
                         ),
+                        if (hourSelected == null)
+                          TextButton(
+                            onPressed: _selectedHour,
+                            style: ButtonHelpers().secondaryButton(
+                              textColor: Colors.purple,
+                              borderColor: Colors.purple,
+                            ),
+                            child: const Text('Seleccionar hora'),
+                          ),
+                        if (hourSelected != null)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                localizations.formatTimeOfDay(hourSelected!),
+                              ),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 45,
+                                child: TextButton(
+                                  onPressed: _selectedHour,
+                                  style: ButtonHelpers().secondaryButton(
+                                    textColor: Colors.purple,
+                                    borderColor: Colors.purple,
+                                  ),
+                                  child: const Icon(
+                                    Icons.edit,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Container(
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -176,6 +212,18 @@ class _QuotePageState extends State<QuotePage> {
 
   _createQuote() {
     //validar items
+  }
+  Future<void> _selectedHour() async {
+    TimeOfDay? pickerHour = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (pickerHour != null) {
+      setState(() {
+        hourSelected = pickerHour;
+      });
+    }
   }
 }
 

@@ -26,12 +26,9 @@ class DatetimeHelper {
     return '${dayWeekArray[dayWeek]}';
   }
 
-  String getHoursOfDay() {
+  String getHoursOfDay(DateTime hour) {
     final now = DateTime.now();
-    // final now2 = DateFormat("h:mma").format(now);
     DateFormat.jm().format(now);
     return '';
   }
-
-//función para retornar las horas a partir de la actual, hasta las 6 pm cada hora o cada 30
 }
