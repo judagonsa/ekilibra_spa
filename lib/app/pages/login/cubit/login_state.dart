@@ -5,9 +5,17 @@ class LoginState {
   final Data data;
 }
 
-class ErrorState {}
+class ErrorLoginState extends LoginState {
+  ErrorLoginState(super.data);
+}
 
-class SuccessState {}
+class LoadingLoginState extends LoginState {
+  LoadingLoginState(super.data);
+}
+
+class SuccessLoginState extends LoginState {
+  SuccessLoginState(super.data);
+}
 
 class Data {
   final String numberPhone;
