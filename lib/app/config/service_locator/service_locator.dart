@@ -6,6 +6,7 @@ import 'package:ekilibra_spa/app/pages/profile/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/repositories/profile_repository.dart';
 import 'package:ekilibra_spa/app/pages/profile/repositories/profile_repository_impl.dart';
 import 'package:ekilibra_spa/app/pages/profile/usecases/delete_profile_use_case.dart';
+import 'package:ekilibra_spa/app/pages/profile/usecases/get_profile_use_case.dart';
 import 'package:ekilibra_spa/app/pages/profile/usecases/profile_use_cases.dart';
 import 'package:ekilibra_spa/app/pages/profile/usecases/register_profile_use_case.dart';
 import 'package:ekilibra_spa/app/pages/profile/usecases/update_profile_use_case.dart';
@@ -26,9 +27,11 @@ void serviceLocatorInit() {
   getIt.registerLazySingleton(
     () => ProfileCubit(
       ProfileUseCases(
-        registerProfileUseCase: getIt<RegisterProfileUseCase>(),
-        updateProfileUseCase: getIt<UpdateProfileUseCase>(),
-        deleteProfileUseCase: getIt<DeleteProfileUseCase>(),
+        registerProfileUseCase:
+            RegisterProfileUseCase(getIt<ProfileRepository>()),
+        updateProfileUseCase: UpdateProfileUseCase(getIt<ProfileRepository>()),
+        deleteProfileUseCase: DeleteProfileUseCase(getIt<ProfileRepository>()),
+        getProfileUseCase: GetProfileUseCase(getIt<ProfileRepository>()),
       ),
     ),
   );

@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        BlocProvider(create: (context) => getIt<LoginCubit>(), lazy: false),
-        BlocProvider(create: (context) => getIt<ProfileCubit>(), lazy: false),
+        BlocProvider(create: (context) => getIt<LoginCubit>()),
+        BlocProvider(create: (context) => getIt<ProfileCubit>()),
         BlocProvider(create: (context) => getIt<QuoteBloc>(), lazy: false),
       ],
       child: MaterialApp.router(

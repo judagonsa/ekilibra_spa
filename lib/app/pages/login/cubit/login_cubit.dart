@@ -1,4 +1,4 @@
-import 'package:ekilibra_spa/app/pages/login/usecase/login_user_use_case.dart';
+import 'package:ekilibra_spa/app/pages/login/usecases/login_user_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'login_state.dart';
@@ -41,7 +41,8 @@ class LoginCubit extends Cubit<LoginState> {
 
       resp.fold(
         (l) => emit(ErrorLoginState(state.data)),
-        (r) => emit(SuccessLoginState(state.data)), //retornar data del perfil
+        (r) =>
+            emit(SuccessLoginState(state.data)), //dirijir ala vitsa del login
       );
     } catch (e) {
       emit(ErrorLoginState(state.data));
