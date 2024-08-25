@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:ekilibra_spa/app/pages/profile/model/profile.dart';
+import 'package:ekilibra_spa/app/pages/profile/repositories/profile_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit() : super(const ProfileInitial(Profile()));
+  ProfileCubit(this.profileRepository) : super(const ProfileInitial(Profile()));
+
+  final ProfileRepository profileRepository;
 
   usernameChanged(String value) {
     emit(UpdateProfile(state.data?.copyWith(userName: value)));
