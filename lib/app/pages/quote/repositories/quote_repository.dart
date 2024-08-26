@@ -1,4 +1,4 @@
-import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
+import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
 abstract class QuoteRepository {
   Future<bool> createQuote(Quote quote);

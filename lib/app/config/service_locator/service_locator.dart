@@ -11,7 +11,7 @@ import 'package:ekilibra_spa/app/pages/profile/usecases/profile_use_cases.dart';
 import 'package:ekilibra_spa/app/pages/profile/usecases/register_profile_use_case.dart';
 import 'package:ekilibra_spa/app/pages/profile/usecases/update_profile_use_case.dart';
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
-import 'package:ekilibra_spa/app/pages/quote/repositories/quote%20_repository.dart';
+import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository.dart';
 import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository_impl.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/create_quote_use_case.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/delete_quote_use_case.dart';

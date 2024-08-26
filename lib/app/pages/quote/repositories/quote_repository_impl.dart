@@ -1,5 +1,6 @@
-import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
-import 'package:ekilibra_spa/app/pages/quote/repositories/quote%20_repository.dart';
+import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository.dart';
+
+import '../model/quote.dart';
 
 class QuoteRepositoryImpl implements QuoteRepository {
   @override

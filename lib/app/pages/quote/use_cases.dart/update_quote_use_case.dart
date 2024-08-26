@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart';
-import 'package:ekilibra_spa/app/pages/quote/repositories/quote%20_repository.dart';
+
+import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository.dart';
+
+import '../model/quote.dart';
 
 class UpdateQuoteUseCase {
   final QuoteRepository _quoteRepository;
