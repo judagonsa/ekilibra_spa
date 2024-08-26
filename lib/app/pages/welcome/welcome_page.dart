@@ -1,5 +1,6 @@
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -42,8 +43,10 @@ class _WelcomeViewState extends State<_WelcomeView> {
                 children: [
                   Expanded(
                     child: TextButton(
-                      onPressed: () {},
-                      style: ButtonHelpers().primaryButton(),
+                      onPressed: () {
+                        context.push('/profile', extra: {'isRegister': true});
+                      },
+                      style: ButtonHelpers().primaryButton(true),
                       child: const Text(
                         'Registrar',
                         style: TextStyle(fontSize: 16),
@@ -55,7 +58,9 @@ class _WelcomeViewState extends State<_WelcomeView> {
                   ),
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push('/login');
+                      },
                       style: ButtonHelpers().secondaryButton(),
                       child: const Text(
                         'Iniciar sesión',
