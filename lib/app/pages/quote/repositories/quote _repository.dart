@@ -1,8 +1,8 @@
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
 
 abstract class QuoteRepository {
-  Future<bool> registerProfile(Quote quote);
-  Future<bool> updateProfile(Quote quote);
-  Future<bool> deleteProfile(String quoteId);
-  Future<Quote?> getProfile(String quoteId);
+  Future<bool> createQuote(Quote quote);
+  Future<bool> updateQuote(Quote quote);
+  Future<bool> deleteQuote(String quoteId);
+  Future<List<Quote>> getQuotes();
 }

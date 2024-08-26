@@ -11,6 +11,13 @@ import 'package:ekilibra_spa/app/pages/profile/usecases/profile_use_cases.dart';
 import 'package:ekilibra_spa/app/pages/profile/usecases/register_profile_use_case.dart';
 import 'package:ekilibra_spa/app/pages/profile/usecases/update_profile_use_case.dart';
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
+import 'package:ekilibra_spa/app/pages/quote/repositories/quote%20_repository.dart';
+import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository_impl.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/create_quote_use_case.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/delete_quote_use_case.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/get_quotes_use_case.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/quote_use_cases.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/update_quote_use_case.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt getIt = GetIt.instance;
@@ -36,5 +43,15 @@ void serviceLocatorInit() {
     ),
   );
 
-  getIt.registerSingleton(QuoteBloc());
+  getIt.registerLazySingleton<QuoteRepository>(() => QuoteRepositoryImpl());
+  getIt.registerSingleton(
+    () => QuoteBloc(
+      QuoteUseCases(
+        createQuoteUseCase: CreateQuoteUseCase(getIt<QuoteRepository>()),
+        deleteQuoteUseCase: DeleteQuoteUseCase(getIt<QuoteRepository>()),
+        getQuotesUseCase: GetQuotesUseCase(getIt<QuoteRepository>()),
+        updateQuoteUseCase: UpdateQuoteUseCase(getIt<QuoteRepository>()),
+      ),
+    ),
+  );
 }
