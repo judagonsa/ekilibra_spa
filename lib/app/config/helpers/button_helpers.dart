@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ButtonHelpers {
-  ButtonStyle primaryButton(bool isLogin) {
+  ButtonStyle primaryButton({
+    required bool isLogin,
+    Color? textColor,
+    Color? backgroundColor,
+  }) {
     return TextButton.styleFrom(
       elevation: 1,
-      foregroundColor: Colors.white,
-      backgroundColor: Colors.red,
+      foregroundColor: textColor ?? Colors.white,
+      backgroundColor: backgroundColor ?? Colors.red,
       minimumSize: const Size(88, 36),
       padding: EdgeInsets.only(
           left: isLogin ? 16 : 8,
@@ -18,13 +22,17 @@ class ButtonHelpers {
     );
   }
 
-  ButtonStyle secondaryButton() {
+  ButtonStyle secondaryButton({
+    Color? textColor,
+    Color? borderColor,
+    Color? backgrounColor,
+  }) {
     return OutlinedButton.styleFrom(
+      backgroundColor: backgrounColor ?? Colors.white,
       elevation: 1,
-      foregroundColor: Colors.red,
-      minimumSize: const Size(88, 36),
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
-      side: const BorderSide(width: 2, color: Colors.red),
+      foregroundColor: textColor ?? Colors.red,
+      // padding: const EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
+      side: BorderSide(width: 2, color: borderColor ?? Colors.red),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),

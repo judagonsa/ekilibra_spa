@@ -18,6 +18,10 @@ final class SaveProfile extends ProfileState {
   const SaveProfile(super.data);
 }
 
+final class LoadingSaveProfile extends ProfileState {
+  const LoadingSaveProfile(super.data);
+}
+
 final class ErrorSaveProfile extends ProfileState {
   const ErrorSaveProfile(super.data, this.error);
 

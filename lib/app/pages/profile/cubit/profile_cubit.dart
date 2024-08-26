@@ -1,13 +1,13 @@
-import 'dart:convert';
-
 import 'package:ekilibra_spa/app/pages/profile/model/profile.dart';
+import 'package:ekilibra_spa/app/pages/profile/usecases/profile_use_cases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit() : super(const ProfileInitial(Profile()));
+  ProfileCubit(this.profileUseCases) : super(const ProfileInitial(Profile()));
+
+  final ProfileUseCases profileUseCases;
 
   usernameChanged(String value) {
     emit(UpdateProfile(state.data?.copyWith(userName: value)));
@@ -33,38 +33,39 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(UpdateProfile(state.data?.copyWith(observation: value)));
   }
 
-  onSubmit() async {
-    if (await saveProfile(state.data)) {
-      emit(SaveProfile(state.data));
-    } else {
-      emit(ErrorSaveProfile(state.data, 'Error guardando datos'));
+  onSubmitRegister() async {
+    try {
+      emit(LoadingSaveProfile(state.data));
+
+      final resp = await profileUseCases.registerProfileUseCase.invoke(Profile(
+          userName: state.data?.userName,
+          email: state.data?.email,
+          bithDate: state.data?.bithDate,
+          phone: state.data?.phone,
+          password: state.data?.password,
+          observation: state.data?.observation));
+
+      resp.fold(
+        (l) => emit(ErrorSaveProfile(state.data, 'error guardando profile')),
+        (r) => emit(SaveProfile(state.data)), //retornar data del perfil
+      );
+    } catch (e) {
+      emit(ErrorSaveProfile(state.data, e.toString()));
     }
   }
 
-  onStartProfile() async {
-    final Profile? profile = await getProfile();
-    if (profile != null) {
-      emit(GetProfile(profile));
-    }
-  }
+  getProfile(String phoneNumber) async {
+    try {
+      emit(LoadingSaveProfile(state.data));
 
-  Future<bool> saveProfile(Profile? profile) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (profile != null) {
-      final profileString = json.encode(profile);
-      await prefs.setString('profile', profileString);
-      return true;
-    }
-    return false;
-  }
+      final resp = await profileUseCases.getProfileUseCase.invoke(phoneNumber);
 
-  Future<Profile?> getProfile() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? profileString = prefs.getString('profile');
-    if (profileString != null) {
-      final data = json.decode(profileString);
-      return Profile.fromJson(data);
+      resp.fold(
+        (l) => emit(ErrorSaveProfile(state.data, 'error guardando profile')),
+        (profile) => emit(GetProfile(profile)),
+      );
+    } catch (e) {
+      emit(ErrorSaveProfile(state.data, e.toString()));
     }
-    return null;
   }
 }

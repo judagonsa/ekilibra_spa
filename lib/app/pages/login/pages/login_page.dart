@@ -14,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formLoginKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formLoginKey = GlobalKey<FormState>();
     bool isRealtime = false;
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Form(
-              key: _formLoginKey,
+              key: formLoginKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                       // textEditingController: _controllerName,
                       onChanged: (value) {
                         // profileCubit.usernameChanged(value);
-                        if (isRealtime) _formLoginKey.currentState?.validate();
+                        if (isRealtime) formLoginKey.currentState?.validate();
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       onChanged: (value) {
                         // profileCubit.passwordChanged(value);
-                        if (isRealtime) _formLoginKey.currentState?.validate();
+                        if (isRealtime) formLoginKey.currentState?.validate();
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -89,12 +89,12 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                         isRealtime = true;
-                        final isValid = _formLoginKey.currentState!.validate();
+                        final isValid = formLoginKey.currentState!.validate();
                         if (isValid) {
                           print('revisar datos on firebase');
                         }
                       },
-                      style: ButtonHelpers().primaryButton(true),
+                      style: ButtonHelpers().primaryButton(isLogin: true),
                       child: const Text(
                         'Iniciar sesión',
                         style: TextStyle(fontSize: 16),

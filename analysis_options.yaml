@@ -28,4 +28,5 @@ linter:
 # https://dart.dev/guides/language/analysis-options
 analyzer:
   errors:
+    avoid_function_literals_in_foreach_calls: ignore
     invalid_annotation_target: ignore

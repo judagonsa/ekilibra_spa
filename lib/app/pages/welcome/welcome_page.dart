@@ -46,7 +46,7 @@ class _WelcomeViewState extends State<_WelcomeView> {
                       onPressed: () {
                         context.push('/profile', extra: {'isRegister': true});
                       },
-                      style: ButtonHelpers().primaryButton(true),
+                      style: ButtonHelpers().primaryButton(isLogin: true),
                       child: const Text(
                         'Registrar',
                         style: TextStyle(fontSize: 16),
@@ -62,9 +62,12 @@ class _WelcomeViewState extends State<_WelcomeView> {
                         context.push('/login');
                       },
                       style: ButtonHelpers().secondaryButton(),
-                      child: const Text(
-                        'Iniciar sesión',
-                        style: TextStyle(fontSize: 16),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'Iniciar sesión',
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                     ),
                   ),

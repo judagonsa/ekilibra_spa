@@ -313,7 +313,7 @@ class _InputFormState extends State<_InputForm> {
                 isRealtime = true;
                 final isValid = _formKey.currentState!.validate();
                 if (isValid) {
-                  profileCubit.onSubmit();
+                  profileCubit.onSubmitRegister();
                   if (profileCubit.state is SaveProfile) {
                     BannerHelper().showBanner(
                       context: context,
@@ -327,7 +327,7 @@ class _InputFormState extends State<_InputForm> {
                   }
                 }
               },
-              style: ButtonHelpers().primaryButton(false),
+              style: ButtonHelpers().primaryButton(isLogin: false),
               child: SizedBox(
                 width: 200,
                 height: 40,
@@ -366,7 +366,10 @@ class _InputFormState extends State<_InputForm> {
   @override
   void initState() {
     super.initState();
-    if (!widget.isRegister) context.read<ProfileCubit>().onStartProfile();
+    String phoneNumber = '';
+    if (!widget.isRegister) {
+      context.read<ProfileCubit>().getProfile(phoneNumber);
+    }
   }
 }
 
