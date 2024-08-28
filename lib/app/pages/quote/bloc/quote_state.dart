@@ -2,17 +2,29 @@ part of 'quote_bloc.dart';
 
 abstract class QuoteState {
   List<Quote> quotes;
+  List<String> services;
 
-  QuoteState(this.quotes);
+  QuoteState(this.quotes, this.services);
 }
 
 class QuoteListInitial extends QuoteState {
   final bool loading;
-  QuoteListInitial(this.loading, super.quotes);
+
+  QuoteListInitial(super.quotes, super.services, {required this.loading});
 }
 
 class QuoteListUpdate extends QuoteState {
-  QuoteListUpdate(super.quotes);
+  QuoteListUpdate(super.quotes, super.services);
+}
+
+class LoadServicesState extends QuoteState {
+  LoadServicesState(super.quotes, super.services);
+}
+
+class ErrorLoadServicesState extends QuoteState {
+  final String error;
+
+  ErrorLoadServicesState(this.error, super.quotes, super.services);
 }
 
 class Quote {

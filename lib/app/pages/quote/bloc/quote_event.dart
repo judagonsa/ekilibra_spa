@@ -21,3 +21,5 @@ class UpdateQuote extends QuoteEvent {
 
   UpdateQuote(this.quote);
 }
+
+class LoadServices extends QuoteEvent {}

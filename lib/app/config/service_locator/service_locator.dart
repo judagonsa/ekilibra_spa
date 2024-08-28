@@ -20,9 +20,11 @@ import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/quote_use_cases.dart
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/update_quote_use_case.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../pages/quote/use_cases.dart/load_services_use_case.dart';
+
 GetIt getIt = GetIt.instance;
 
-void serviceLocatorInit() {
+void serviceLocatorInit() async {
   getIt.registerLazySingleton<LoginRepository>(() => LoginRepositoryImpl());
   getIt.registerLazySingleton(
     () => LoginCubit(
@@ -44,13 +46,14 @@ void serviceLocatorInit() {
   );
 
   getIt.registerLazySingleton<QuoteRepository>(() => QuoteRepositoryImpl());
-  getIt.registerSingleton(
+  getIt.registerLazySingleton(
     () => QuoteBloc(
       QuoteUseCases(
         createQuoteUseCase: CreateQuoteUseCase(getIt<QuoteRepository>()),
         deleteQuoteUseCase: DeleteQuoteUseCase(getIt<QuoteRepository>()),
         getQuotesUseCase: GetQuotesUseCase(getIt<QuoteRepository>()),
         updateQuoteUseCase: UpdateQuoteUseCase(getIt<QuoteRepository>()),
+        loadServicesUseCase: LoadServicesUseCase(getIt<QuoteRepository>()),
       ),
     ),
   );

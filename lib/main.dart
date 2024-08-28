@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   serviceLocatorInit();
   runApp(const MyApp());
 }
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => getIt<LoginCubit>()),
         BlocProvider(create: (context) => getIt<ProfileCubit>()),
-        BlocProvider(create: (context) => getIt<QuoteBloc>(), lazy: false),
+        BlocProvider(create: (context) => getIt<QuoteBloc>()),
       ],
       child: MaterialApp.router(
         routerConfig: appRouter,

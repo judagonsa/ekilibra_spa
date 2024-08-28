@@ -22,4 +22,9 @@ class QuoteRepositoryImpl implements QuoteRepository {
   Future<bool> updateQuote(Quote quote) async {
     return false;
   }
+
+  @override
+  Future<List<String>> getServices() async {
+    return ['Limpieza facial', 'masaje', 'camilla'];
+  }
 }
