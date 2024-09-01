@@ -1,16 +1,14 @@
 part of 'quote_bloc.dart';
 
 abstract class QuoteState {
-  List<Quote> quotes;
+  Quote quote;
   List<String> services;
 
-  QuoteState(this.quotes, this.services);
+  QuoteState(this.quote, this.services);
 }
 
 class QuoteListInitial extends QuoteState {
-  final bool loading;
-
-  QuoteListInitial(super.quotes, super.services, {required this.loading});
+  QuoteListInitial(super.quotes, super.services);
 }
 
 class QuoteListUpdate extends QuoteState {
@@ -27,20 +25,26 @@ class ErrorLoadServicesState extends QuoteState {
   ErrorLoadServicesState(this.error, super.quotes, super.services);
 }
 
+class QuoteValidateForm extends QuoteState {
+  final String error;
+
+  QuoteValidateForm(super.quotes, super.services, {required this.error});
+}
+
 class Quote {
-  final String quoteId;
-  final String place;
-  final String serviceId;
-  final DateTime day;
-  final TimeOfDay hour;
-  final String? observations;
+  String? quoteId;
+  String? place;
+  String? serviceId;
+  DateTime? day;
+  TimeOfDay? hour;
+  String? observations;
 
   Quote({
-    required this.quoteId,
-    required this.place,
-    required this.serviceId,
-    required this.day,
-    required this.hour,
+    this.quoteId,
+    this.place,
+    this.serviceId,
+    this.day,
+    this.hour,
     this.observations,
   });
 }

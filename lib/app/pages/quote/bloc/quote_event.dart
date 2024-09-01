@@ -4,16 +4,12 @@ abstract class QuoteEvent {}
 
 class LoadQuotes extends QuoteEvent {}
 
-class CreteQuote extends QuoteEvent {
-  final Quote quote;
-
-  CreteQuote(this.quote);
-}
+class CreteQuote extends QuoteEvent {}
 
 class DeleteQuote extends QuoteEvent {
-  final Quote quote;
+  final String quoteId;
 
-  DeleteQuote(this.quote);
+  DeleteQuote(this.quoteId);
 }
 
 class UpdateQuote extends QuoteEvent {

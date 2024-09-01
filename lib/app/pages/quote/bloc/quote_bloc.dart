@@ -8,8 +8,7 @@ part 'quote_state.dart';
 class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
   QuoteBloc(this.quoteUseCases)
       : super(QuoteListInitial(
-          loading: true,
-          [],
+          Quote(),
           [],
         )) {
     on<CreteQuote>(_createQuote);
@@ -20,7 +19,24 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
   final QuoteUseCases quoteUseCases;
 
   void _loadQuotes(LoadQuotes event, Emitter<QuoteState> emit) {}
-  void _createQuote(CreteQuote event, Emitter<QuoteState> emit) {}
+  void _createQuote(CreteQuote event, Emitter<QuoteState> emit) {
+    if (state.quote.place == null) {
+      emit(QuoteValidateForm(state.quote, state.services,
+          error: 'Favor escoger un lugar'));
+    } else if (state.quote.serviceId == null) {
+      emit(QuoteValidateForm(state.quote, state.services,
+          error: 'Favor escoger un servicio'));
+    } else if (state.quote.day == null) {
+      emit(QuoteValidateForm(state.quote, state.services,
+          error: 'Favor escoger el día del servicio'));
+    } else if (state.quote.hour == null) {
+      emit(QuoteValidateForm(state.quote, state.services,
+          error: 'Favor escoger la hora del servicio'));
+    } else {
+      emit(QuoteValidateForm(state.quote, state.services, error: ''));
+    }
+  }
+
   Future _loadServices(LoadServices event, Emitter<QuoteState> emit) async {
     try {
       // emit(LoadingSaveProfile(state.data));
@@ -29,12 +45,12 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
 
       resp.fold(
         (l) => emit(ErrorLoadServicesState(
-            'error guardando profile', state.quotes, state.services)),
+            'error cargando servicios', state.quote, state.services)),
         (r) =>
-            emit(LoadServicesState(state.quotes, r)), //retornar data del perfil
+            emit(LoadServicesState(state.quote, r)), //retornar data del perfil
       );
     } catch (e) {
-      emit(ErrorLoadServicesState(e.toString(), state.quotes, state.services));
+      emit(ErrorLoadServicesState(e.toString(), state.quote, state.services));
     }
   }
 }
