@@ -1,6 +1,6 @@
+import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/quote_use_cases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/material.dart';
 
 part 'quote_event.dart';
 part 'quote_state.dart';
@@ -8,12 +8,17 @@ part 'quote_state.dart';
 class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
   QuoteBloc(this.quoteUseCases)
       : super(QuoteListInitial(
-          Quote(),
+          const Quote(),
           [],
         )) {
     on<CreteQuote>(_createQuote);
     on<LoadQuotes>(_loadQuotes);
     on<LoadServices>(_loadServices);
+    on<UpdateHourQuote>(_updateHourQuote);
+    on<UpdatePlaceQuote>(_updatePlaceQuote);
+    on<UpdateServiceQuote>(_updateServiceQuote);
+    on<UpdateDayQuote>(_updateDayQuote);
+    on<ReloadQuote>(_reloadQuote);
   }
 
   final QuoteUseCases quoteUseCases;
@@ -52,5 +57,45 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
     } catch (e) {
       emit(ErrorLoadServicesState(e.toString(), state.quote, state.services));
     }
+  }
+
+  void _updateHourQuote(UpdateHourQuote event, Emitter<QuoteState> emit) {
+    emit(UpdateQuoteState(
+      state.quote.copyWith(hour: event.hour),
+      state.services,
+    ));
+  }
+
+  void _updatePlaceQuote(UpdatePlaceQuote event, Emitter<QuoteState> emit) {
+    emit(UpdateQuoteState(
+      state.quote.copyWith(place: event.place),
+      state.services,
+    ));
+  }
+
+  void _updateServiceQuote(UpdateServiceQuote event, Emitter<QuoteState> emit) {
+    emit(UpdateQuoteState(
+      state.quote.copyWith(serviceId: event.service),
+      state.services,
+    ));
+  }
+
+  void _updateDayQuote(UpdateDayQuote event, Emitter<QuoteState> emit) {
+    emit(UpdateQuoteState(
+      state.quote.copyWith(day: event.day),
+      state.services,
+    ));
+  }
+
+  void _reloadQuote(ReloadQuote event, Emitter<QuoteState> emit) {
+    emit(ReloadQuoteState(
+        state.quote.copyWith(
+          place: null,
+          serviceId: null,
+          day: null,
+          hour: null,
+          observation: null,
+        ),
+        state.services));
   }
 }

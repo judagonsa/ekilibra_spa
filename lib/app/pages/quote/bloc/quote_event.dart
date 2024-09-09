@@ -12,10 +12,30 @@ class DeleteQuote extends QuoteEvent {
   DeleteQuote(this.quoteId);
 }
 
-class UpdateQuote extends QuoteEvent {
-  final Quote quote;
+class LoadServices extends QuoteEvent {}
 
-  UpdateQuote(this.quote);
+class ReloadQuote extends QuoteEvent {}
+
+class UpdateHourQuote extends QuoteEvent {
+  final String hour;
+
+  UpdateHourQuote(this.hour);
 }
 
-class LoadServices extends QuoteEvent {}
+class UpdatePlaceQuote extends QuoteEvent {
+  final String place;
+
+  UpdatePlaceQuote(this.place);
+}
+
+class UpdateServiceQuote extends QuoteEvent {
+  final String service;
+
+  UpdateServiceQuote(this.service);
+}
+
+class UpdateDayQuote extends QuoteEvent {
+  final String day;
+
+  UpdateDayQuote(this.day);
+}

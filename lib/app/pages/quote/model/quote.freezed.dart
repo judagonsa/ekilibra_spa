@@ -147,7 +147,7 @@ class __$$QuoteImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$QuoteImpl with DiagnosticableTreeMixin implements _Quote {
+class _$QuoteImpl implements _Quote {
   const _$QuoteImpl(
       {this.place, this.serviceId, this.day, this.hour, this.observation});
 
@@ -166,20 +166,8 @@ class _$QuoteImpl with DiagnosticableTreeMixin implements _Quote {
   final String? observation;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'Quote(place: $place, serviceId: $serviceId, day: $day, hour: $hour, observation: $observation)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'Quote'))
-      ..add(DiagnosticsProperty('place', place))
-      ..add(DiagnosticsProperty('serviceId', serviceId))
-      ..add(DiagnosticsProperty('day', day))
-      ..add(DiagnosticsProperty('hour', hour))
-      ..add(DiagnosticsProperty('observation', observation));
   }
 
   @override

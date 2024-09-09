@@ -31,20 +31,10 @@ class QuoteValidateForm extends QuoteState {
   QuoteValidateForm(super.quotes, super.services, {required this.error});
 }
 
-class Quote {
-  String? quoteId;
-  String? place;
-  String? serviceId;
-  DateTime? day;
-  TimeOfDay? hour;
-  String? observations;
+class UpdateQuoteState extends QuoteState {
+  UpdateQuoteState(super.quotes, super.services);
+}
 
-  Quote({
-    this.quoteId,
-    this.place,
-    this.serviceId,
-    this.day,
-    this.hour,
-    this.observations,
-  });
+class ReloadQuoteState extends QuoteState {
+  ReloadQuoteState(super.quotes, super.services);
 }

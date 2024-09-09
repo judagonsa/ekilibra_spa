@@ -2,10 +2,12 @@ import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart'
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class QuotePage extends StatefulWidget {
   const QuotePage({super.key});
@@ -63,7 +65,8 @@ class _QuotePageState extends State<QuotePage> {
                                             quoteBloc.state.quote.place ?? '',
                                         action: () {
                                           setState(() {
-                                            quoteBloc.state.quote.place = place;
+                                            quoteBloc
+                                                .add(UpdatePlaceQuote(place));
                                           });
                                         },
                                       )
@@ -80,7 +83,7 @@ class _QuotePageState extends State<QuotePage> {
                                   width: 250,
                                   onSelected: (value) {
                                     if (value != null) {
-                                      quoteBloc.state.quote.serviceId = value;
+                                      quoteBloc.add(UpdateServiceQuote(value));
                                     }
                                   },
                                   dropdownMenuEntries: state.services
@@ -120,10 +123,15 @@ class _QuotePageState extends State<QuotePage> {
                                     in DatetimeHelper().getDaysOfWeek())
                                   _DaysWeek(
                                     date: dateWeek,
-                                    dateSelected: quoteBloc.state.quote.day,
+                                    dateSelected:
+                                        quoteBloc.state.quote.day != null
+                                            ? DateTime.parse(
+                                                quoteBloc.state.quote.day!)
+                                            : null,
                                     action: () {
                                       setState(() {
-                                        quoteBloc.state.quote.day = dateWeek;
+                                        quoteBloc.add(UpdateDayQuote(
+                                            dateWeek.toString()));
                                       });
                                     },
                                   )
@@ -148,7 +156,14 @@ class _QuotePageState extends State<QuotePage> {
                                 children: [
                                   Text(
                                     localizations.formatTimeOfDay(
-                                        quoteBloc.state.quote.hour!),
+                                      TimeOfDay(
+                                          hour: int.parse(quoteBloc
+                                              .state.quote.hour!
+                                              .split(":")[0]),
+                                          minute: int.parse(quoteBloc
+                                              .state.quote.hour!
+                                              .split(":")[1])),
+                                    ),
                                   ),
                                   const SizedBox(width: 10),
                                   SizedBox(
@@ -244,7 +259,8 @@ class _QuotePageState extends State<QuotePage> {
 
     if (pickerHour != null) {
       setState(() {
-        quoteBloc.state.quote.hour = pickerHour;
+        quoteBloc
+            .add(UpdateHourQuote('${pickerHour.hour}:${pickerHour.minute}'));
       });
     }
   }
@@ -255,6 +271,12 @@ class _QuotePageState extends State<QuotePage> {
 
     quoteBloc = getIt.get<QuoteBloc>();
     quoteBloc.add(LoadServices());
+  }
+
+  @override
+  void dispose() {
+    quoteBloc.add(ReloadQuote());
+    super.dispose();
   }
 }
 
