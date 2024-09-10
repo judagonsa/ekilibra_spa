@@ -1,40 +1,88 @@
 part of 'quote_bloc.dart';
 
-abstract class QuoteState {
-  Quote quote;
-  List<String> services;
+class QuoteState {
+  final Quote? quote;
+  final bool loading;
+  final List<String>? services;
 
-  QuoteState(this.quote, this.services);
+  const QuoteState({this.quote, this.loading = false, this.services});
+
+  QuoteState copyWith({
+    Quote? quote,
+    bool? loading,
+    List<String>? services,
+  }) =>
+      QuoteState(
+        quote: quote ?? this.quote,
+        loading: loading ?? this.loading,
+        services: services ?? this.services,
+      );
 }
 
-class QuoteListInitial extends QuoteState {
-  QuoteListInitial(super.quotes, super.services);
+class QuoteListInitialState extends QuoteState {
+  final QuoteState state;
+  QuoteListInitialState(this.state)
+      : super(
+          quote: state.quote,
+          loading: state.loading,
+          services: state.services,
+        );
 }
 
-class QuoteListUpdate extends QuoteState {
-  QuoteListUpdate(super.quotes, super.services);
+class QuoteListUpdateState extends QuoteState {
+  final QuoteState state;
+  final Quote quoteUpdate;
+  QuoteListUpdateState(this.state, this.quoteUpdate)
+      : super(
+          quote: state.quote,
+          loading: state.loading,
+          services: state.services,
+        );
 }
 
-class LoadServicesState extends QuoteState {
-  LoadServicesState(super.quotes, super.services);
+class QuoteValidateFormState extends QuoteState {
+  final QuoteState state;
+  final String error;
+
+  QuoteValidateFormState(this.state, this.error)
+      : super(
+          quote: state.quote,
+          loading: state.loading,
+          services: state.services,
+        );
 }
 
 class ErrorLoadServicesState extends QuoteState {
+  final QuoteState state;
   final String error;
 
-  ErrorLoadServicesState(this.error, super.quotes, super.services);
+  ErrorLoadServicesState(this.state, this.error)
+      : super(
+          quote: state.quote,
+          loading: state.loading,
+          services: state.services,
+        );
 }
 
-class QuoteValidateForm extends QuoteState {
+class LoadServicesState extends QuoteState {
+  final QuoteState state;
+
+  LoadServicesState(this.state)
+      : super(
+          quote: state.quote,
+          loading: state.loading,
+          services: state.services,
+        );
+}
+
+class CreateQuoteState extends QuoteState {
+  final QuoteState state;
   final String error;
 
-  QuoteValidateForm(super.quotes, super.services, {required this.error});
-}
-
-class UpdateQuoteState extends QuoteState {
-  UpdateQuoteState(super.quotes, super.services);
-}
-
-class ReloadQuoteState extends QuoteState {
-  ReloadQuoteState(super.quotes, super.services);
+  CreateQuoteState(this.state, this.error)
+      : super(
+          quote: state.quote,
+          loading: state.loading,
+          services: state.services,
+        );
 }
