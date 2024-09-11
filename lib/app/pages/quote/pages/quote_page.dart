@@ -42,204 +42,216 @@ class _QuotePageState extends State<QuotePage> {
       body: BlocBuilder<QuoteBloc, QuoteState>(
         builder: (context, state) {
           return SafeArea(
-            child: Form(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    const Spacer(),
-                    Container(
-                      height: 170,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                          children: [
-                            Column(
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+              child: SingleChildScrollView(
+                child: Form(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 40),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 170,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
                               children: [
-                                const Text('Lugar:'),
+                                Column(
+                                  children: [
+                                    const Text('Lugar:'),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        for (var place in places)
+                                          _ButtonPlace(
+                                            place: place,
+                                            placeSelected: placeSelected,
+                                            action: () {
+                                              setState(() {
+                                                placeSelected = place;
+                                              });
+                                            },
+                                          )
+                                      ],
+                                    )
+                                  ],
+                                ),
                                 const SizedBox(height: 10),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    for (var place in places)
-                                      _ButtonPlace(
-                                        place: place,
-                                        placeSelected: placeSelected,
+                                    const Text('Servicio:'),
+                                    if (services != null)
+                                      DropdownMenu(
+                                        width: 250,
+                                        onSelected: (value) {
+                                          if (value != null) {
+                                            serviceSelected = value;
+                                          }
+                                        },
+                                        dropdownMenuEntries: services
+                                            .map<DropdownMenuEntry<String>>(
+                                                (String value) {
+                                          return DropdownMenuEntry<String>(
+                                            value: value,
+                                            label: value,
+                                          );
+                                        }).toList(),
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Container(
+                          height: 180,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  child: Text('Día:'),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    for (var dateWeek
+                                        in DatetimeHelper().getDaysOfWeek())
+                                      _DaysWeek(
+                                        date: dateWeek,
+                                        dateSelected: daySelected != ''
+                                            ? DateTime.parse(daySelected)
+                                            : null,
                                         action: () {
                                           setState(() {
-                                            placeSelected = place;
+                                            daySelected = dateWeek.toString();
                                           });
                                         },
                                       )
                                   ],
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                const Text('Servicio:'),
-                                if (services != null)
-                                  DropdownMenu(
-                                    width: 250,
-                                    onSelected: (value) {
-                                      if (value != null) {
-                                        serviceSelected = value;
-                                      }
-                                    },
-                                    dropdownMenuEntries: services
-                                        .map<DropdownMenuEntry<String>>(
-                                            (String value) {
-                                      return DropdownMenuEntry<String>(
-                                        value: value,
-                                        label: value,
-                                      );
-                                    }).toList(),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Text('Hora:'),
+                                ),
+                                if (hourSelected.isEmpty)
+                                  TextButton(
+                                    onPressed: _selectedHour,
+                                    style: ButtonHelpers().secondaryButton(
+                                      textColor: Colors.purple,
+                                      borderColor: Colors.purple,
+                                    ),
+                                    child: const Text('Seleccionar hora'),
                                   ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Container(
-                      height: 180,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(bottom: 10),
-                              child: Text('Día:'),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                for (var dateWeek
-                                    in DatetimeHelper().getDaysOfWeek())
-                                  _DaysWeek(
-                                    date: dateWeek,
-                                    dateSelected: daySelected != ''
-                                        ? DateTime.parse(daySelected)
-                                        : null,
-                                    action: () {
-                                      setState(() {
-                                        daySelected = dateWeek.toString();
-                                      });
-                                    },
+                                if (hourSelected.isNotEmpty)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        localizations.formatTimeOfDay(
+                                          TimeOfDay(
+                                              hour: int.parse(
+                                                  hourSelected.split(":")[0]),
+                                              minute: int.parse(
+                                                  hourSelected.split(":")[1])),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      SizedBox(
+                                        width: 45,
+                                        child: TextButton(
+                                          onPressed: _selectedHour,
+                                          style:
+                                              ButtonHelpers().secondaryButton(
+                                            textColor: Colors.purple,
+                                            borderColor: Colors.purple,
+                                          ),
+                                          child: const Icon(
+                                            Icons.edit,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   )
                               ],
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Text('Hora:'),
-                            ),
-                            if (hourSelected.isEmpty)
-                              TextButton(
-                                onPressed: _selectedHour,
-                                style: ButtonHelpers().secondaryButton(
-                                  textColor: Colors.purple,
-                                  borderColor: Colors.purple,
-                                ),
-                                child: const Text('Seleccionar hora'),
-                              ),
-                            if (hourSelected.isNotEmpty)
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    localizations.formatTimeOfDay(
-                                      TimeOfDay(
-                                          hour: int.parse(
-                                              hourSelected.split(":")[0]),
-                                          minute: int.parse(
-                                              hourSelected.split(":")[1])),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Observaciones a tener en cuenta'),
+                                TextField(
+                                  controller: observationController,
+                                  maxLines: 3,
+                                  keyboardType: TextInputType.multiline,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                  const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: 45,
-                                    child: TextButton(
-                                      onPressed: _selectedHour,
-                                      style: ButtonHelpers().secondaryButton(
-                                        textColor: Colors.purple,
-                                        borderColor: Colors.purple,
-                                      ),
-                                      child: const Icon(
-                                        Icons.edit,
-                                        size: 20,
+                                ),
+                                if (errorQuote.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Center(
+                                      child: Text(
+                                        errorQuote,
+                                        maxLines: 2,
+                                        style:
+                                            const TextStyle(color: Colors.red),
                                       ),
                                     ),
                                   ),
-                                ],
-                              )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Observaciones a tener en cuenta'),
-                            TextField(
-                              controller: observationController,
-                              maxLines: 3,
-                              keyboardType: TextInputType.multiline,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
+                              ],
                             ),
-                            if (errorQuote.isNotEmpty)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: Center(
-                                  child: Text(
-                                    errorQuote,
-                                    maxLines: 2,
-                                    style: const TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                              ),
-                          ],
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 30),
+                          child: TextButton(
+                            onPressed: () => _createQuote(),
+                            style: ButtonHelpers().primaryButton(
+                              isLogin: false,
+                              backgroundColor: Colors.purple,
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 30),
+                              child: Text('Agendar'),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: () => _createQuote(),
-                      style: ButtonHelpers().primaryButton(
-                        isLogin: false,
-                        backgroundColor: Colors.purple,
-                      ),
-                      child: const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                        child: Text('Agendar'),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
