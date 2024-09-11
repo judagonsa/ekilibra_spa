@@ -2,6 +2,7 @@ import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart'
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,9 +18,17 @@ class QuotePage extends StatefulWidget {
 class _QuotePageState extends State<QuotePage> {
   late QuoteBloc quoteBloc;
 
+  String placeSelected = '';
+  String serviceSelected = '';
+  String daySelected = '';
+  String hourSelected = '';
+  TextEditingController observationController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final List<String> places = ['Sogamoso', 'Duitama', 'Tunja'];
+
+    final List<String>? services = quoteBloc.state.services;
 
     final localizations = MaterialLocalizations.of(context);
 
@@ -59,11 +68,10 @@ class _QuotePageState extends State<QuotePage> {
                                     for (var place in places)
                                       _ButtonPlace(
                                         place: place,
-                                        placeSelected:
-                                            quoteBloc.state.quote?.place ?? '',
+                                        placeSelected: placeSelected,
                                         action: () {
                                           setState(() {
-                                            //guardar place en variable
+                                            placeSelected = place;
                                           });
                                         },
                                       )
@@ -76,23 +84,23 @@ class _QuotePageState extends State<QuotePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 const Text('Servicio:'),
-                                DropdownMenu(
-                                  width: 250,
-                                  onSelected: (value) {
-                                    if (value != null) {
-                                      // guardar servicio en variable
-                                    }
-                                  },
-                                  dropdownMenuEntries: state.services!
-                                      .map<DropdownMenuEntry<String>>(
-                                          (String value) {
-                                    return DropdownMenuEntry<String>(
-                                      value: value,
-                                      label: value,
-                                    );
-                                    //agregar servicios en variables
-                                  }).toList(),
-                                ),
+                                if (services != null)
+                                  DropdownMenu(
+                                    width: 250,
+                                    onSelected: (value) {
+                                      if (value != null) {
+                                        serviceSelected = value;
+                                      }
+                                    },
+                                    dropdownMenuEntries: services
+                                        .map<DropdownMenuEntry<String>>(
+                                            (String value) {
+                                      return DropdownMenuEntry<String>(
+                                        value: value,
+                                        label: value,
+                                      );
+                                    }).toList(),
+                                  ),
                               ],
                             ),
                           ],
@@ -121,15 +129,12 @@ class _QuotePageState extends State<QuotePage> {
                                     in DatetimeHelper().getDaysOfWeek())
                                   _DaysWeek(
                                     date: dateWeek,
-                                    dateSelected:
-                                        quoteBloc.state.quote?.day != null
-                                            ? DateTime.parse(
-                                                quoteBloc.state.quote!.day!)
-                                            : null,
-                                    //mostrar el día desde la variable
+                                    dateSelected: daySelected != ''
+                                        ? DateTime.parse(daySelected)
+                                        : null,
                                     action: () {
                                       setState(() {
-                                        // guardar día en variable
+                                        daySelected = dateWeek.toString();
                                       });
                                     },
                                   )
@@ -139,7 +144,7 @@ class _QuotePageState extends State<QuotePage> {
                               padding: EdgeInsets.only(top: 10),
                               child: Text('Hora:'),
                             ),
-                            if (quoteBloc.state.quote?.hour == null)
+                            if (hourSelected.isEmpty)
                               TextButton(
                                 onPressed: _selectedHour,
                                 style: ButtonHelpers().secondaryButton(
@@ -148,19 +153,17 @@ class _QuotePageState extends State<QuotePage> {
                                 ),
                                 child: const Text('Seleccionar hora'),
                               ),
-                            if (quoteBloc.state.quote?.hour != null)
+                            if (hourSelected.isNotEmpty)
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     localizations.formatTimeOfDay(
                                       TimeOfDay(
-                                          hour: int.parse(quoteBloc
-                                              .state.quote!.hour!
-                                              .split(":")[0]),
-                                          minute: int.parse(quoteBloc
-                                              .state.quote!.hour!
-                                              .split(":")[1])),
+                                          hour: int.parse(
+                                              hourSelected.split(":")[0]),
+                                          minute: int.parse(
+                                              hourSelected.split(":")[1])),
                                     ),
                                   ),
                                   const SizedBox(width: 10),
@@ -197,6 +200,7 @@ class _QuotePageState extends State<QuotePage> {
                           children: [
                             const Text('Observaciones a tener en cuenta'),
                             TextField(
+                              controller: observationController,
                               maxLines: 3,
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
@@ -246,8 +250,17 @@ class _QuotePageState extends State<QuotePage> {
   }
 
   _createQuote() {
-    // quoteBloc.add(CreteQuoteEvent());
-    //pasar parámetros del evento
+    quoteBloc.add(
+      CreteQuoteEvent(
+        quote: Quote(
+          place: placeSelected,
+          serviceId: serviceSelected,
+          day: daySelected,
+          hour: hourSelected,
+          observation: observationController.text,
+        ),
+      ),
+    );
   }
 
   Future<void> _selectedHour() async {
@@ -258,7 +271,7 @@ class _QuotePageState extends State<QuotePage> {
 
     if (pickerHour != null) {
       setState(() {
-        // guardar hora en variable
+        hourSelected = '${pickerHour.hour} : ${pickerHour.minute}';
       });
     }
   }
@@ -269,13 +282,6 @@ class _QuotePageState extends State<QuotePage> {
 
     quoteBloc = getIt.get<QuoteBloc>();
     quoteBloc.add(LoadServicesEvent());
-  }
-
-  @override
-  void dispose() {
-    // quoteBloc.add(ReloadQuote());
-    //revisar el salir y volver a entrar en quote
-    super.dispose();
   }
 }
 

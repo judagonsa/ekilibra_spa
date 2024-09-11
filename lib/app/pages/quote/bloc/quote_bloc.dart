@@ -13,23 +13,7 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
 
   final QuoteUseCases quoteUseCases;
 
-  void _createQuote(CreteQuoteEvent event, Emitter<QuoteState> emit) {
-    if (state.quote?.place == null) {
-      emit(QuoteValidateFormState(state, 'Favor escoger un lugar'));
-    } else if (state.quote?.serviceId == null) {
-      emit(QuoteValidateFormState(state, 'Favor escoger un servicio'));
-    } else if (state.quote?.day == null) {
-      emit(QuoteValidateFormState(state, 'Favor escoger el día del servicio'));
-    } else if (state.quote?.hour == null) {
-      emit(QuoteValidateFormState(state, 'Favor escoger la hora del servicio'));
-    } else {
-      emit(QuoteValidateFormState(state, ''));
-      //resp
-
-      // fold
-      // emit
-    }
-  }
+  void _createQuote(CreteQuoteEvent event, Emitter<QuoteState> emit) {}
 
   Future _loadServices(
       LoadServicesEvent event, Emitter<QuoteState> emit) async {
