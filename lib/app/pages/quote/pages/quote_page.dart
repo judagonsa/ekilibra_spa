@@ -23,6 +23,7 @@ class _QuotePageState extends State<QuotePage> {
   String daySelected = '';
   String hourSelected = '';
   TextEditingController observationController = TextEditingController();
+  String errorQuote = '';
 
   @override
   Widget build(BuildContext context) {
@@ -209,14 +210,13 @@ class _QuotePageState extends State<QuotePage> {
                                 ),
                               ),
                             ),
-                            if (state is QuoteValidateFormState &&
-                                state.error.isNotEmpty)
+                            if (errorQuote.isNotEmpty)
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10),
                                 child: Center(
                                   child: Text(
-                                    state.error,
+                                    errorQuote,
                                     maxLines: 2,
                                     style: const TextStyle(color: Colors.red),
                                   ),
@@ -250,17 +250,33 @@ class _QuotePageState extends State<QuotePage> {
   }
 
   _createQuote() {
-    quoteBloc.add(
-      CreteQuoteEvent(
-        quote: Quote(
-          place: placeSelected,
-          serviceId: serviceSelected,
-          day: daySelected,
-          hour: hourSelected,
-          observation: observationController.text,
+    if (placeSelected.isEmpty) {
+      setState(() {});
+      errorQuote = 'Favor escoger un lugar';
+    } else if (serviceSelected.isEmpty) {
+      setState(() {});
+      errorQuote = 'Favor escoger un servicio';
+    } else if (daySelected.isEmpty) {
+      setState(() {});
+      errorQuote = 'Favor escoger el día del servicio';
+    } else if (hourSelected.isEmpty) {
+      setState(() {});
+      errorQuote = 'Favor escoger la hora del servicio';
+    } else {
+      setState(() {});
+      errorQuote = '';
+      quoteBloc.add(
+        CreteQuoteEvent(
+          quote: Quote(
+            place: placeSelected,
+            serviceId: serviceSelected,
+            day: daySelected,
+            hour: hourSelected,
+            observation: observationController.text,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Future<void> _selectedHour() async {
