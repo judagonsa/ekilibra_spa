@@ -4,6 +4,7 @@ import 'package:ekilibra_spa/app/config/helpers/banner_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/text_helpers.dart';
 import 'package:ekilibra_spa/app/pages/profile/cubit/profile_cubit.dart';
+import 'package:ekilibra_spa/app/pages/profile/model/profile.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,9 +66,9 @@ class _InputFormState extends State<_InputForm> {
   DateTime dateBirthDate = DateTime.now();
 
   final TextEditingController _controllerName = TextEditingController();
-  final TextEditingController _controllerEmail = TextEditingController();
-  final TextEditingController _controllerPhone = TextEditingController();
   final TextEditingController _controllerDate = TextEditingController();
+  // final TextEditingController _controllerCity = TextEditingController();
+  final TextEditingController _controllerPhone = TextEditingController();
   final TextEditingController _controllerObservations = TextEditingController();
 
   var obscureTextPassword = true;
@@ -83,7 +84,7 @@ class _InputFormState extends State<_InputForm> {
     final profileCubit = context.watch<ProfileCubit>();
 
     _controllerName.text = profileCubit.state.data?.userName ?? '';
-    _controllerEmail.text = profileCubit.state.data?.email ?? '';
+    // _controllerCity.text = profileCubit.state.data?.city ?? '';
     _controllerPhone.text = profileCubit.state.data?.phone ?? '';
     _controllerDate.text = profileCubit.state.data?.bithDate ?? '';
     _controllerObservations.text = profileCubit.state.data?.observation ?? '';
@@ -124,7 +125,6 @@ class _InputFormState extends State<_InputForm> {
             label: 'Nombre y apellido',
             textEditingController: _controllerName,
             onChanged: (value) {
-              profileCubit.usernameChanged(value);
               if (isRealtime) _formKey.currentState?.validate();
             },
             validator: (value) {
@@ -138,35 +138,10 @@ class _InputFormState extends State<_InputForm> {
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: CustomTextFormField(
-              label: 'Correo',
-              textEditingController: _controllerEmail,
-              isEmail: true,
-              onChanged: (value) {
-                profileCubit.emailChanged(value);
-                if (isRealtime) _formKey.currentState?.validate();
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'El correo es requerido.';
-                }
-
-                final emailRegExp = RegExp(
-                  r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$',
-                );
-
-                if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
-                return null;
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: CustomTextFormField(
               label: 'Número de teléfono',
               textEditingController: _controllerPhone,
               isPhone: true,
               onChanged: (value) {
-                profileCubit.phoneChanged(value);
                 if (isRealtime) _formKey.currentState?.validate();
               },
               validator: (value) {
@@ -189,7 +164,6 @@ class _InputFormState extends State<_InputForm> {
               onChanged: (value) async {
                 if (profileCubit.state.data?.bithDate?.isNotEmpty == false) {
                   _controllerDate.text = '';
-                  profileCubit.bithDateChanged(value);
                   if (isRealtime) _formKey.currentState?.validate();
                 }
                 final date = await pickDate();
@@ -198,7 +172,6 @@ class _InputFormState extends State<_InputForm> {
                   _controllerDate.text =
                       '${date.day}/${date.month}/${date.year}';
 
-                  profileCubit.bithDateChanged(_controllerDate.text);
                   if (isRealtime) _formKey.currentState?.validate();
                 });
               },
@@ -214,11 +187,34 @@ class _InputFormState extends State<_InputForm> {
                 setState(() {
                   _controllerDate.text =
                       '${date.day}/${date.month}/${date.year}';
-                  profileCubit.bithDateChanged(_controllerDate.text);
                   if (isRealtime) _formKey.currentState?.validate();
                 });
               },
             ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 15),
+            // child: CustomTextFormField(
+            //   label: 'Correo',
+            //   textEditingController: _controllerEmail,
+            //   isEmail: true,
+            //   onChanged: (value) {
+            //     if (isRealtime) _formKey.currentState?.validate();
+            //   },
+            //   validator: (value) {
+            //     if (value == null || value.isEmpty) {
+            //       return 'El correo es requerido.';
+            //     }
+
+            //     final emailRegExp = RegExp(
+            //       r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$',
+            //     );
+
+            //     if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
+            //     return null;
+            //   },
+            // ),
+            child: Text('Ciudad'),
           ),
           if (widget.isRegister)
             Padding(
@@ -235,7 +231,6 @@ class _InputFormState extends State<_InputForm> {
                   });
                 },
                 onChanged: (value) {
-                  profileCubit.passwordChanged(value);
                   if (isRealtime) _formKey.currentState?.validate();
                 },
                 validator: (value) {
@@ -300,9 +295,6 @@ class _InputFormState extends State<_InputForm> {
                 iconActtion: () {
                   tooltipkey.currentState?.ensureTooltipVisible();
                 },
-                onChanged: (value) {
-                  profileCubit.changeObservation(value);
-                },
               ),
             ),
           ),
@@ -313,7 +305,7 @@ class _InputFormState extends State<_InputForm> {
                 isRealtime = true;
                 final isValid = _formKey.currentState!.validate();
                 if (isValid) {
-                  profileCubit.onSubmitRegister();
+                  profileCubit.onSubmitRegister(Profile());
                   if (profileCubit.state is SaveProfile) {
                     BannerHelper().showBanner(
                       context: context,

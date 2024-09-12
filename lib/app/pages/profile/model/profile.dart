@@ -12,9 +12,9 @@ part 'profile.g.dart';
 class Profile with _$Profile {
   const factory Profile({
     String? userName,
-    String? email,
     String? bithDate,
     String? phone,
+    String? city,
     String? password,
     String? observation,
   }) = _Profile;

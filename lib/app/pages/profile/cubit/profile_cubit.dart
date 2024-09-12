@@ -9,41 +9,11 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   final ProfileUseCases profileUseCases;
 
-  usernameChanged(String value) {
-    emit(UpdateProfile(state.data?.copyWith(userName: value)));
-  }
-
-  emailChanged(String value) {
-    emit(UpdateProfile(state.data?.copyWith(email: value)));
-  }
-
-  bithDateChanged(String value) {
-    emit(UpdateProfile(state.data?.copyWith(bithDate: value)));
-  }
-
-  phoneChanged(String value) {
-    emit(UpdateProfile(state.data?.copyWith(phone: value)));
-  }
-
-  passwordChanged(String value) {
-    emit(UpdateProfile(state.data?.copyWith(password: value)));
-  }
-
-  changeObservation(String value) {
-    emit(UpdateProfile(state.data?.copyWith(observation: value)));
-  }
-
-  onSubmitRegister() async {
+  onSubmitRegister(Profile profile) async {
     try {
       emit(LoadingSaveProfile(state.data));
 
-      final resp = await profileUseCases.registerProfileUseCase.invoke(Profile(
-          userName: state.data?.userName,
-          email: state.data?.email,
-          bithDate: state.data?.bithDate,
-          phone: state.data?.phone,
-          password: state.data?.password,
-          observation: state.data?.observation));
+      final resp = await profileUseCases.registerProfileUseCase.invoke(profile);
 
       resp.fold(
         (l) => emit(ErrorSaveProfile(state.data, 'error guardando profile')),

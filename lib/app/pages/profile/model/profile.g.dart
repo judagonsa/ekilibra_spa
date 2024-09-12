@@ -9,7 +9,7 @@ part of 'profile.dart';
 _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
     _$ProfileImpl(
       userName: json['userName'] as String?,
-      email: json['email'] as String?,
+      city: json['city'] as String?,
       bithDate: json['bithDate'] as String?,
       phone: json['phone'] as String?,
       password: json['password'] as String?,
@@ -19,7 +19,7 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
     <String, dynamic>{
       'userName': instance.userName,
-      'email': instance.email,
+      'city': instance.city,
       'bithDate': instance.bithDate,
       'phone': instance.phone,
       'password': instance.password,
