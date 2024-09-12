@@ -64,7 +64,7 @@ class _InputFormState extends State<_InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   DateTime dateBirthDate = DateTime.now();
-  final List<String> cities = ['Sogamoso', 'Duitama', 'Sogamoso'];
+  final List<String> cities = ['Sogamoso', 'Duitama', 'Tunja'];
 
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerDate = TextEditingController();
@@ -196,25 +196,41 @@ class _InputFormState extends State<_InputForm> {
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: DropdownButtonHideUnderline(
-              child: DropdownMenu(
-                width: MediaQuery.of(context).size.width - 40,
-                inputDecorationTheme: const InputDecorationTheme(
+              child: DropdownButtonFormField(
+                decoration: const InputDecoration(
                   enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                     borderSide: BorderSide(
                       color: Colors.black,
                     ),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                      style: BorderStyle.solid,
+                      width: 1,
+                    ),
+                  ),
                 ),
-                label: const Text('Ciudad'),
-                controller: _controllerCity,
-                dropdownMenuEntries: cities.map<DropdownMenuEntry<String>>(
+                hint: const Text('Ciudad'),
+                onChanged: (value) {
+                  if (value != null) _controllerCity.text = value;
+                },
+                items: cities.map(
                   (String value) {
-                    return DropdownMenuEntry<String>(
+                    return DropdownMenuItem<String>(
                       value: value,
-                      label: value,
+                      child: Text(value),
                     );
                   },
                 ).toList(),
+                validator: (value) {
+                  return value == null ? 'Favor seleccionar la ciudad' : null;
+                },
               ),
             ),
           ),
