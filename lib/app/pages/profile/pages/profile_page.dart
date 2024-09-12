@@ -64,10 +64,11 @@ class _InputFormState extends State<_InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   DateTime dateBirthDate = DateTime.now();
+  final List<String> cities = ['Sogamoso', 'Duitama', 'Sogamoso'];
 
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerDate = TextEditingController();
-  // final TextEditingController _controllerCity = TextEditingController();
+  final TextEditingController _controllerCity = TextEditingController();
   final TextEditingController _controllerPhone = TextEditingController();
   final TextEditingController _controllerObservations = TextEditingController();
 
@@ -84,7 +85,7 @@ class _InputFormState extends State<_InputForm> {
     final profileCubit = context.watch<ProfileCubit>();
 
     _controllerName.text = profileCubit.state.data?.userName ?? '';
-    // _controllerCity.text = profileCubit.state.data?.city ?? '';
+    _controllerCity.text = profileCubit.state.data?.city ?? '';
     _controllerPhone.text = profileCubit.state.data?.phone ?? '';
     _controllerDate.text = profileCubit.state.data?.bithDate ?? '';
     _controllerObservations.text = profileCubit.state.data?.observation ?? '';
@@ -192,29 +193,30 @@ class _InputFormState extends State<_InputForm> {
               },
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 15),
-            // child: CustomTextFormField(
-            //   label: 'Correo',
-            //   textEditingController: _controllerEmail,
-            //   isEmail: true,
-            //   onChanged: (value) {
-            //     if (isRealtime) _formKey.currentState?.validate();
-            //   },
-            //   validator: (value) {
-            //     if (value == null || value.isEmpty) {
-            //       return 'El correo es requerido.';
-            //     }
-
-            //     final emailRegExp = RegExp(
-            //       r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$',
-            //     );
-
-            //     if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
-            //     return null;
-            //   },
-            // ),
-            child: Text('Ciudad'),
+          Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: DropdownButtonHideUnderline(
+              child: DropdownMenu(
+                width: MediaQuery.of(context).size.width - 40,
+                inputDecorationTheme: const InputDecorationTheme(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                label: const Text('Ciudad'),
+                controller: _controllerCity,
+                dropdownMenuEntries: cities.map<DropdownMenuEntry<String>>(
+                  (String value) {
+                    return DropdownMenuEntry<String>(
+                      value: value,
+                      label: value,
+                    );
+                  },
+                ).toList(),
+              ),
+            ),
           ),
           if (widget.isRegister)
             Padding(
@@ -305,17 +307,20 @@ class _InputFormState extends State<_InputForm> {
                 isRealtime = true;
                 final isValid = _formKey.currentState!.validate();
                 if (isValid) {
-                  profileCubit.onSubmitRegister(Profile());
-                  if (profileCubit.state is SaveProfile) {
-                    BannerHelper().showBanner(
-                      context: context,
-                      text: 'Perfil guardado con exito.',
-                    );
-                  } else if (profileCubit.state is ErrorSaveProfile) {
-                    BannerHelper().showBanner(
-                      context: context,
-                      text: 'Error guardando perfil.',
-                    );
+                  if (_controllerCity.text.isEmpty) {
+                  } else {
+                    profileCubit.onSubmitRegister(Profile());
+                    if (profileCubit.state is SaveProfile) {
+                      BannerHelper().showBanner(
+                        context: context,
+                        text: 'Perfil guardado con exito.',
+                      );
+                    } else if (profileCubit.state is ErrorSaveProfile) {
+                      BannerHelper().showBanner(
+                        context: context,
+                        text: 'Error guardando perfil.',
+                      );
+                    }
                   }
                 }
               },
