@@ -24,6 +24,21 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
+  onSubmitUpdate(Profile profile) async {
+    try {
+      emit(LoadingSaveProfile(state.data));
+
+      final resp = await profileUseCases.updateProfileUseCase.invoke(profile);
+
+      resp.fold(
+        (l) => emit(ErrorSaveProfile(state.data, 'error guardando profile')),
+        (r) => emit(SaveProfile(state.data)), //retornar data del perfil
+      );
+    } catch (e) {
+      emit(ErrorSaveProfile(state.data, e.toString()));
+    }
+  }
+
   getProfile(String phoneNumber) async {
     try {
       emit(LoadingSaveProfile(state.data));

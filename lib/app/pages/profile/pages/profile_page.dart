@@ -195,43 +195,43 @@ class _InputFormState extends State<_InputForm> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButtonFormField(
-                decoration: const InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      style: BorderStyle.solid,
-                      width: 1,
-                    ),
-                  ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Selecciona la ciudad más cercana a tu ubicación',
+                  style: TextStyle(fontSize: 13),
                 ),
-                hint: const Text('Ciudad'),
-                onChanged: (value) {
-                  if (value != null) _controllerCity.text = value;
-                },
-                items: cities.map(
-                  (String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
+                DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                  hint: const Text('Ciudad'),
+                  onChanged: (value) {
+                    if (value != null) _controllerCity.text = value;
                   },
-                ).toList(),
-                validator: (value) {
-                  return value == null ? 'Favor seleccionar la ciudad' : null;
-                },
-              ),
+                  value: _controllerCity.text,
+                  items: cities.map(
+                    (String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    },
+                  ).toList(),
+                  validator: (value) {
+                    return value == null ? 'Favor seleccionar la ciudad' : null;
+                  },
+                ),
+              ],
             ),
           ),
           if (widget.isRegister)
@@ -302,7 +302,6 @@ class _InputFormState extends State<_InputForm> {
             child: Tooltip(
               key: tooltipkey,
               triggerMode: TooltipTriggerMode.manual,
-              showDuration: const Duration(seconds: 1),
               message:
                   'Acá podras agregar información que consideres pertinente, alguna enfermedad, alérgia o lesión a tener en cuenta.',
               child: CustomTextFormField(
@@ -323,20 +322,38 @@ class _InputFormState extends State<_InputForm> {
                 isRealtime = true;
                 final isValid = _formKey.currentState!.validate();
                 if (isValid) {
-                  if (_controllerCity.text.isEmpty) {
+                  if (widget.isRegister) {
+                    profileCubit.onSubmitRegister(Profile(
+                      userName: _controllerName.text,
+                      phone: _controllerPhone.text,
+                      bithDate: _controllerDate.text,
+                      city: _controllerCity.text,
+                      observation: _controllerObservations.text,
+                    ));
                   } else {
-                    profileCubit.onSubmitRegister(Profile());
-                    if (profileCubit.state is SaveProfile) {
-                      BannerHelper().showBanner(
-                        context: context,
-                        text: 'Perfil guardado con exito.',
-                      );
-                    } else if (profileCubit.state is ErrorSaveProfile) {
-                      BannerHelper().showBanner(
-                        context: context,
-                        text: 'Error guardando perfil.',
-                      );
-                    }
+                    profileCubit.onSubmitUpdate(Profile(
+                      userName: _controllerName.text,
+                      phone: _controllerPhone.text,
+                      bithDate: _controllerDate.text,
+                      city: _controllerCity.text,
+                      observation: _controllerObservations.text,
+                    ));
+                  }
+
+                  if (profileCubit.state is SaveProfile) {
+                    BannerHelper().showBanner(
+                      context: context,
+                      text: widget.isRegister
+                          ? 'Perfil creado con exito.'
+                          : 'Perfil guardado con exito.',
+                    );
+                  } else if (profileCubit.state is ErrorSaveProfile) {
+                    BannerHelper().showBanner(
+                      context: context,
+                      text: widget.isRegister
+                          ? 'Error creando perfil.'
+                          : 'Error guardando perfil.',
+                    );
                   }
                 }
               },
