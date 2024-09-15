@@ -4,6 +4,7 @@ import 'package:ekilibra_spa/app/config/helpers/banner_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/text_helpers.dart';
 import 'package:ekilibra_spa/app/pages/profile/cubit/profile_cubit.dart';
+import 'package:ekilibra_spa/app/pages/profile/model/profile.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,11 +64,12 @@ class _InputFormState extends State<_InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   DateTime dateBirthDate = DateTime.now();
+  final List<String> cities = ['Sogamoso', 'Duitama', 'Tunja'];
 
   final TextEditingController _controllerName = TextEditingController();
-  final TextEditingController _controllerEmail = TextEditingController();
-  final TextEditingController _controllerPhone = TextEditingController();
   final TextEditingController _controllerDate = TextEditingController();
+  final TextEditingController _controllerCity = TextEditingController();
+  final TextEditingController _controllerPhone = TextEditingController();
   final TextEditingController _controllerObservations = TextEditingController();
 
   var obscureTextPassword = true;
@@ -83,7 +85,7 @@ class _InputFormState extends State<_InputForm> {
     final profileCubit = context.watch<ProfileCubit>();
 
     _controllerName.text = profileCubit.state.data?.userName ?? '';
-    _controllerEmail.text = profileCubit.state.data?.email ?? '';
+    _controllerCity.text = profileCubit.state.data?.city ?? '';
     _controllerPhone.text = profileCubit.state.data?.phone ?? '';
     _controllerDate.text = profileCubit.state.data?.bithDate ?? '';
     _controllerObservations.text = profileCubit.state.data?.observation ?? '';
@@ -124,7 +126,6 @@ class _InputFormState extends State<_InputForm> {
             label: 'Nombre y apellido',
             textEditingController: _controllerName,
             onChanged: (value) {
-              profileCubit.usernameChanged(value);
               if (isRealtime) _formKey.currentState?.validate();
             },
             validator: (value) {
@@ -138,35 +139,10 @@ class _InputFormState extends State<_InputForm> {
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: CustomTextFormField(
-              label: 'Correo',
-              textEditingController: _controllerEmail,
-              isEmail: true,
-              onChanged: (value) {
-                profileCubit.emailChanged(value);
-                if (isRealtime) _formKey.currentState?.validate();
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'El correo es requerido.';
-                }
-
-                final emailRegExp = RegExp(
-                  r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$',
-                );
-
-                if (!emailRegExp.hasMatch(value)) return 'Correo inválido';
-                return null;
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: CustomTextFormField(
               label: 'Número de teléfono',
               textEditingController: _controllerPhone,
               isPhone: true,
               onChanged: (value) {
-                profileCubit.phoneChanged(value);
                 if (isRealtime) _formKey.currentState?.validate();
               },
               validator: (value) {
@@ -189,7 +165,6 @@ class _InputFormState extends State<_InputForm> {
               onChanged: (value) async {
                 if (profileCubit.state.data?.bithDate?.isNotEmpty == false) {
                   _controllerDate.text = '';
-                  profileCubit.bithDateChanged(value);
                   if (isRealtime) _formKey.currentState?.validate();
                 }
                 final date = await pickDate();
@@ -198,7 +173,6 @@ class _InputFormState extends State<_InputForm> {
                   _controllerDate.text =
                       '${date.day}/${date.month}/${date.year}';
 
-                  profileCubit.bithDateChanged(_controllerDate.text);
                   if (isRealtime) _formKey.currentState?.validate();
                 });
               },
@@ -214,10 +188,50 @@ class _InputFormState extends State<_InputForm> {
                 setState(() {
                   _controllerDate.text =
                       '${date.day}/${date.month}/${date.year}';
-                  profileCubit.bithDateChanged(_controllerDate.text);
                   if (isRealtime) _formKey.currentState?.validate();
                 });
               },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Selecciona la ciudad más cercana a tu ubicación',
+                  style: TextStyle(fontSize: 13),
+                ),
+                DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                  hint: const Text('Ciudad'),
+                  onChanged: (value) {
+                    if (value != null) _controllerCity.text = value;
+                  },
+                  value: _controllerCity.text,
+                  items: cities.map(
+                    (String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    },
+                  ).toList(),
+                  validator: (value) {
+                    return value == null ? 'Favor seleccionar la ciudad' : null;
+                  },
+                ),
+              ],
             ),
           ),
           if (widget.isRegister)
@@ -235,7 +249,6 @@ class _InputFormState extends State<_InputForm> {
                   });
                 },
                 onChanged: (value) {
-                  profileCubit.passwordChanged(value);
                   if (isRealtime) _formKey.currentState?.validate();
                 },
                 validator: (value) {
@@ -289,7 +302,6 @@ class _InputFormState extends State<_InputForm> {
             child: Tooltip(
               key: tooltipkey,
               triggerMode: TooltipTriggerMode.manual,
-              showDuration: const Duration(seconds: 1),
               message:
                   'Acá podras agregar información que consideres pertinente, alguna enfermedad, alérgia o lesión a tener en cuenta.',
               child: CustomTextFormField(
@@ -299,9 +311,6 @@ class _InputFormState extends State<_InputForm> {
                 iconInput: const Icon(Icons.question_mark_outlined),
                 iconActtion: () {
                   tooltipkey.currentState?.ensureTooltipVisible();
-                },
-                onChanged: (value) {
-                  profileCubit.changeObservation(value);
                 },
               ),
             ),
@@ -313,16 +322,37 @@ class _InputFormState extends State<_InputForm> {
                 isRealtime = true;
                 final isValid = _formKey.currentState!.validate();
                 if (isValid) {
-                  profileCubit.onSubmitRegister();
+                  if (widget.isRegister) {
+                    profileCubit.onSubmitRegister(Profile(
+                      userName: _controllerName.text,
+                      phone: _controllerPhone.text,
+                      bithDate: _controllerDate.text,
+                      city: _controllerCity.text,
+                      observation: _controllerObservations.text,
+                    ));
+                  } else {
+                    profileCubit.onSubmitUpdate(Profile(
+                      userName: _controllerName.text,
+                      phone: _controllerPhone.text,
+                      bithDate: _controllerDate.text,
+                      city: _controllerCity.text,
+                      observation: _controllerObservations.text,
+                    ));
+                  }
+
                   if (profileCubit.state is SaveProfile) {
                     BannerHelper().showBanner(
                       context: context,
-                      text: 'Perfil guardado con exito.',
+                      text: widget.isRegister
+                          ? 'Perfil creado con exito.'
+                          : 'Perfil guardado con exito.',
                     );
                   } else if (profileCubit.state is ErrorSaveProfile) {
                     BannerHelper().showBanner(
                       context: context,
-                      text: 'Error guardando perfil.',
+                      text: widget.isRegister
+                          ? 'Error creando perfil.'
+                          : 'Error guardando perfil.',
                     );
                   }
                 }

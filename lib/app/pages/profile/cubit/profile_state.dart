@@ -10,10 +10,6 @@ final class ProfileInitial extends ProfileState {
   const ProfileInitial(super.data);
 }
 
-final class UpdateProfile extends ProfileState {
-  const UpdateProfile(super.data);
-}
-
 final class SaveProfile extends ProfileState {
   const SaveProfile(super.data);
 }
