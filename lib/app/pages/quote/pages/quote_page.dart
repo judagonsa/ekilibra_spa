@@ -27,9 +27,8 @@ class _QuotePageState extends State<QuotePage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> places = ['Sogamoso', 'Duitama', 'Tunja'];
-
-    final List<String>? services = quoteBloc.state.services;
+    List<String>? places = quoteBloc.state.places;
+    List<String>? services;
 
     final localizations = MaterialLocalizations.of(context);
 
@@ -41,6 +40,11 @@ class _QuotePageState extends State<QuotePage> {
       ),
       body: BlocBuilder<QuoteBloc, QuoteState>(
         builder: (context, state) {
+          if (state is LoadServicesState) {
+            services = state.services;
+          } else if (state is LoadPlacesEvent) {
+            places = state.places;
+          }
           return SafeArea(
             child: GestureDetector(
               onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -71,7 +75,7 @@ class _QuotePageState extends State<QuotePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
-                                        for (var place in places)
+                                        for (var place in places ?? [])
                                           _ButtonPlace(
                                             place: place,
                                             placeSelected: placeSelected,
@@ -99,7 +103,7 @@ class _QuotePageState extends State<QuotePage> {
                                             serviceSelected = value;
                                           }
                                         },
-                                        dropdownMenuEntries: services
+                                        dropdownMenuEntries: services!
                                             .map<DropdownMenuEntry<String>>(
                                                 (String value) {
                                           return DropdownMenuEntry<String>(
@@ -310,6 +314,7 @@ class _QuotePageState extends State<QuotePage> {
 
     quoteBloc = getIt.get<QuoteBloc>();
     quoteBloc.add(LoadServicesEvent());
+    quoteBloc.add(LoadPlacesEvent());
   }
 }
 

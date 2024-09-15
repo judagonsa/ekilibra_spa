@@ -8,6 +8,7 @@ part 'quote_state.dart';
 class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
   QuoteBloc(this.quoteUseCases) : super(const QuoteState()) {
     on<LoadServicesEvent>(_loadServices);
+    on<LoadPlacesEvent>(_loadPlaces);
     on<CreteQuoteEvent>(_createQuote);
   }
 
@@ -25,6 +26,21 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
       resp.fold(
         (l) => emit(ErrorLoadServicesState(state, 'error cargando servicios')),
         (r) => emit(LoadServicesState(state.copyWith(services: r))),
+      );
+    } catch (e) {
+      emit(ErrorLoadServicesState(state, e.toString()));
+    }
+  }
+
+  Future _loadPlaces(LoadPlacesEvent event, Emitter<QuoteState> emit) async {
+    try {
+      // emit(LoadingSaveProfile(state.data));
+
+      final resp = await quoteUseCases.loadPlacesUseCase.invoke();
+
+      resp.fold(
+        (l) => emit(ErrorLoadServicesState(state, 'error cargando lugares')),
+        (r) => emit(LoadServicesState(state.copyWith(places: r))),
       );
     } catch (e) {
       emit(ErrorLoadServicesState(state, e.toString()));

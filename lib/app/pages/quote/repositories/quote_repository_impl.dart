@@ -27,4 +27,9 @@ class QuoteRepositoryImpl implements QuoteRepository {
   Future<List<String>> getServices() async {
     return ['Limpieza facial', 'masaje', 'camilla'];
   }
+
+  @override
+  Future<List<String>> getPlaces() async {
+    return ['Sogamoso', 'Duitama', 'Tunja'];
+  }
 }

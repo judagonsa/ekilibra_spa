@@ -4,18 +4,26 @@ class QuoteState {
   final Quote? quote;
   final bool loading;
   final List<String>? services;
+  final List<String>? places;
 
-  const QuoteState({this.quote, this.loading = false, this.services});
+  const QuoteState({
+    this.quote,
+    this.loading = false,
+    this.services,
+    this.places,
+  });
 
   QuoteState copyWith({
     Quote? quote,
     bool? loading,
     List<String>? services,
+    List<String>? places,
   }) =>
       QuoteState(
         quote: quote ?? this.quote,
         loading: loading ?? this.loading,
         services: services ?? this.services,
+        places: places ?? this.places,
       );
 }
 
@@ -26,6 +34,7 @@ class QuoteListInitialState extends QuoteState {
           quote: state.quote,
           loading: state.loading,
           services: state.services,
+          places: state.places,
         );
 }
 
@@ -37,6 +46,7 @@ class QuoteListUpdateState extends QuoteState {
           quote: state.quote,
           loading: state.loading,
           services: state.services,
+          places: state.places,
         );
 }
 
@@ -49,6 +59,7 @@ class QuoteValidateFormState extends QuoteState {
           quote: state.quote,
           loading: state.loading,
           services: state.services,
+          places: state.places,
         );
 }
 
@@ -61,6 +72,7 @@ class ErrorLoadServicesState extends QuoteState {
           quote: state.quote,
           loading: state.loading,
           services: state.services,
+          places: state.places,
         );
 }
 
@@ -72,6 +84,7 @@ class LoadServicesState extends QuoteState {
           quote: state.quote,
           loading: state.loading,
           services: state.services,
+          places: state.places,
         );
 }
 
@@ -84,5 +97,6 @@ class CreateQuoteState extends QuoteState {
           quote: state.quote,
           loading: state.loading,
           services: state.services,
+          places: state.places,
         );
 }
