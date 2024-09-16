@@ -16,6 +16,24 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
 
   void _createQuote(CreteQuoteEvent event, Emitter<QuoteState> emit) {}
 
+  Future _loadPlaces(LoadPlacesEvent event, Emitter<QuoteState> emit) async {
+    try {
+      // emit(LoadingSaveProfile(state.data));
+
+      final resp = await quoteUseCases.loadPlacesUseCase.invoke();
+
+      resp.fold(
+        (l) => emit(ErrorLoadServicesState(state, 'Error cargando lugares')),
+        (places) {
+          emit(LoadPlacesState(state.copyWith(places: places)));
+        },
+      );
+      add(LoadServicesEvent());
+    } catch (e) {
+      emit(ErrorLoadServicesState(state, e.toString()));
+    }
+  }
+
   Future _loadServices(
       LoadServicesEvent event, Emitter<QuoteState> emit) async {
     try {
@@ -24,38 +42,12 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
       final resp = await quoteUseCases.loadServicesUseCase.invoke();
 
       resp.fold(
-        (l) => emit(ErrorLoadServicesState(state, 'error cargando servicios')),
-        (r) => emit(LoadServicesState(state.copyWith(services: r))),
+        (l) => emit(ErrorLoadServicesState(state, 'Error cargando servicios')),
+        (services) =>
+            emit(LoadServicesState(state.copyWith(services: services))),
       );
     } catch (e) {
       emit(ErrorLoadServicesState(state, e.toString()));
     }
   }
-
-  Future _loadPlaces(LoadPlacesEvent event, Emitter<QuoteState> emit) async {
-    try {
-      // emit(LoadingSaveProfile(state.data));
-
-      final resp = await quoteUseCases.loadPlacesUseCase.invoke();
-
-      resp.fold(
-        (l) => emit(ErrorLoadServicesState(state, 'error cargando lugares')),
-        (r) => emit(LoadServicesState(state.copyWith(places: r))),
-      );
-    } catch (e) {
-      emit(ErrorLoadServicesState(state, e.toString()));
-    }
-  }
-
-  // void _reloadQuote(ReloadQuote event, Emitter<QuoteState> emit) {
-  //   emit(ReloadQuoteState(
-  //       state.quote.copyWith(
-  //         place: null,
-  //         serviceId: null,
-  //         day: null,
-  //         hour: null,
-  //         observation: null,
-  //       ),
-  //       state.services));
-  // }
 }

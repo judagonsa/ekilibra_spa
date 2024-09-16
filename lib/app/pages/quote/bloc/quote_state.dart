@@ -88,6 +88,18 @@ class LoadServicesState extends QuoteState {
         );
 }
 
+class LoadPlacesState extends QuoteState {
+  final QuoteState state;
+
+  LoadPlacesState(this.state)
+      : super(
+          quote: state.quote,
+          loading: state.loading,
+          services: state.services,
+          places: state.places,
+        );
+}
+
 class CreateQuoteState extends QuoteState {
   final QuoteState state;
   final String error;

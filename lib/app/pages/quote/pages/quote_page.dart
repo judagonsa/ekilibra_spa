@@ -22,15 +22,17 @@ class _QuotePageState extends State<QuotePage> {
   String serviceSelected = '';
   String daySelected = '';
   String hourSelected = '';
+  String minutesSelected = '';
   TextEditingController observationController = TextEditingController();
   String errorQuote = '';
+  String militarHour = '';
+  List<String>? places;
+  List<String>? services;
 
   @override
   Widget build(BuildContext context) {
-    List<String>? places = quoteBloc.state.places;
-    List<String>? services;
-
-    final localizations = MaterialLocalizations.of(context);
+    final hoursQuote = ["09", "10", "11", "02", "03", "04", "05"];
+    final minutesQuote = ["00", "15", "30", "45"];
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 146, 153, 155),
@@ -42,7 +44,6 @@ class _QuotePageState extends State<QuotePage> {
         builder: (context, state) {
           if (state is LoadServicesState) {
             services = state.services;
-          } else if (state is LoadPlacesEvent) {
             places = state.places;
           }
           return SafeArea(
@@ -96,22 +97,16 @@ class _QuotePageState extends State<QuotePage> {
                                   children: [
                                     const Text('Servicio:'),
                                     if (services != null)
-                                      DropdownMenu(
-                                        width: 250,
+                                      _DropdownMenu(
+                                        hintText: 'Servicio',
+                                        dataList: services!,
                                         onSelected: (value) {
                                           if (value != null) {
                                             serviceSelected = value;
                                           }
                                         },
-                                        dropdownMenuEntries: services!
-                                            .map<DropdownMenuEntry<String>>(
-                                                (String value) {
-                                          return DropdownMenuEntry<String>(
-                                            value: value,
-                                            label: value,
-                                          );
-                                        }).toList(),
-                                      ),
+                                        width: 250,
+                                      )
                                   ],
                                 ),
                               ],
@@ -120,7 +115,7 @@ class _QuotePageState extends State<QuotePage> {
                         ),
                         const SizedBox(height: 15),
                         Container(
-                          height: 180,
+                          height: 190,
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -155,46 +150,52 @@ class _QuotePageState extends State<QuotePage> {
                                   padding: EdgeInsets.only(top: 10),
                                   child: Text('Hora:'),
                                 ),
-                                if (hourSelected.isEmpty)
-                                  TextButton(
-                                    onPressed: _selectedHour,
-                                    style: ButtonHelpers().secondaryButton(
-                                      textColor: Colors.purple,
-                                      borderColor: Colors.purple,
-                                    ),
-                                    child: const Text('Seleccionar hora'),
-                                  ),
-                                if (hourSelected.isNotEmpty)
-                                  Row(
+                                Flexible(
+                                  fit: FlexFit.tight,
+                                  child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        localizations.formatTimeOfDay(
-                                          TimeOfDay(
-                                              hour: int.parse(
-                                                  hourSelected.split(":")[0]),
-                                              minute: int.parse(
-                                                  hourSelected.split(":")[1])),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5),
+                                        child: _DropdownMenu(
+                                          hintText:
+                                              'Hora', //Validar si existe hora
+                                          dataList: hoursQuote,
+                                          onSelected: (value) {
+                                            if (value != null) {
+                                              hourSelected = value;
+
+                                              setState(() {
+                                                militarHour =
+                                                    (hoursQuote.indexOf(
+                                                                hourSelected) <=
+                                                            2)
+                                                        ? 'AM'
+                                                        : 'PM';
+                                              });
+                                            }
+                                          },
                                         ),
                                       ),
-                                      const SizedBox(width: 10),
-                                      SizedBox(
-                                        width: 45,
-                                        child: TextButton(
-                                          onPressed: _selectedHour,
-                                          style:
-                                              ButtonHelpers().secondaryButton(
-                                            textColor: Colors.purple,
-                                            borderColor: Colors.purple,
-                                          ),
-                                          child: const Icon(
-                                            Icons.edit,
-                                            size: 20,
-                                          ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5),
+                                        child: _DropdownMenu(
+                                          hintText:
+                                              'Minutos', //Validar si existe hora
+                                          dataList: minutesQuote,
+                                          onSelected: (value) {
+                                            if (value != null) {
+                                              minutesSelected = value;
+                                            }
+                                          },
                                         ),
                                       ),
+                                      Text(militarHour),
                                     ],
-                                  )
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -295,25 +296,11 @@ class _QuotePageState extends State<QuotePage> {
     }
   }
 
-  Future<void> _selectedHour() async {
-    TimeOfDay? pickerHour = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    if (pickerHour != null) {
-      setState(() {
-        hourSelected = '${pickerHour.hour} : ${pickerHour.minute}';
-      });
-    }
-  }
-
   @override
   void initState() {
     super.initState();
 
     quoteBloc = getIt.get<QuoteBloc>();
-    quoteBloc.add(LoadServicesEvent());
     quoteBloc.add(LoadPlacesEvent());
   }
 }
@@ -391,6 +378,36 @@ class _ButtonPlace extends StatelessWidget {
         backgrounColor: placeSelected == place ? Colors.purple : null,
       ),
       child: Text(place),
+    );
+  }
+}
+
+class _DropdownMenu extends StatelessWidget {
+  final void Function(String?) onSelected;
+  final List<String>? dataList;
+  final String hintText;
+  final double? width;
+
+  const _DropdownMenu({
+    required this.onSelected,
+    required this.dataList,
+    required this.hintText,
+    this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownMenu(
+      width: width,
+      hintText: hintText,
+      onSelected: onSelected,
+      dropdownMenuEntries:
+          dataList!.map<DropdownMenuEntry<String>>((String value) {
+        return DropdownMenuEntry<String>(
+          value: value,
+          label: value,
+        );
+      }).toList(),
     );
   }
 }
