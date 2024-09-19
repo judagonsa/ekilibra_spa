@@ -1,6 +1,7 @@
 import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
+import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
@@ -125,7 +126,8 @@ class _QuotePageState extends State<QuotePage> {
                             child: Column(
                               children: [
                                 const Padding(
-                                  padding: EdgeInsets.only(bottom: 10),
+                                  padding: EdgeInsets.only(
+                                      bottom: 10, left: 40, right: 20),
                                   child: Text('Día:'),
                                 ),
                                 Row(
@@ -254,6 +256,21 @@ class _QuotePageState extends State<QuotePage> {
                             ),
                           ),
                         ),
+                        TextButton(
+                            onPressed: () {
+                              PopupHelpers().popupTwoButtons(
+                                context: context,
+                                title: '¿Necesitas ayuda?',
+                                description:
+                                    'Si necesitas ayuda agendando tu cita o quieres consultar si hay disponibilidad para atenderte el día de hoy, no dudes en ponerte en contacto con nosotros:',
+                                titleButtonOne: 'WhatsApp',
+                                titleButtonTwo: "Llamar",
+                                height: 200,
+                                onPressedOne: () {},
+                                onPressedTwo: () {},
+                              );
+                            },
+                            child: const Text('¿Problemas agendando tu cita?'))
                       ],
                     ),
                   ),
