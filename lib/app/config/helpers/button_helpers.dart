@@ -38,4 +38,19 @@ class ButtonHelpers {
       ),
     );
   }
+
+  ButtonStyle generalButton(
+      {Color? textColor,
+      Color? backgroundColor,
+      required BuildContext context}) {
+    return TextButton.styleFrom(
+      elevation: 1,
+      foregroundColor: textColor ?? Colors.white,
+      backgroundColor: backgroundColor ?? Colors.red,
+      minimumSize: Size(MediaQuery.of(context).size.width, 45),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+    );
+  }
 }

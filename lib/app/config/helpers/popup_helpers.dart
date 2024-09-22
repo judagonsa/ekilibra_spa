@@ -1,3 +1,4 @@
+import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:flutter/material.dart';
 
 class PopupHelpers {
@@ -15,7 +16,19 @@ class PopupHelpers {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Center(child: Text(title)),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const SizedBox(),
+              Center(child: Text(title)),
+              GestureDetector(
+                child: const Icon(Icons.close),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          ),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(
@@ -32,12 +45,16 @@ class PopupHelpers {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: onPressedOne,
-                  child: Text(titleButtonOne),
+                SizedBox(
+                  child: TextButton(
+                    onPressed: onPressedOne,
+                    style: ButtonHelpers().generalButton(context: context),
+                    child: Text(titleButtonOne),
+                  ),
                 ),
-                ElevatedButton(
+                TextButton(
                   onPressed: onPressedTwo,
+                  style: ButtonHelpers().generalButton(context: context),
                   child: Text(titleButtonTwo),
                 ),
               ],

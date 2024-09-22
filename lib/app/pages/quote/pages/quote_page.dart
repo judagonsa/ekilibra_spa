@@ -244,7 +244,7 @@ class _QuotePageState extends State<QuotePage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 30),
+                          padding: const EdgeInsets.only(top: 30),
                           child: TextButton(
                             onPressed: () => _createQuote(),
                             style: ButtonHelpers().primaryButton(
@@ -268,9 +268,12 @@ class _QuotePageState extends State<QuotePage> {
                                 titleButtonOne: 'WhatsApp',
                                 titleButtonTwo: "Llamar",
                                 height: 220,
-                                onPressedOne: FunctionsHelper().openWhatsApp(),
+                                onPressedOne: () {
+                                  FunctionsHelper().openWhatsApp();
+                                },
                                 onPressedTwo: () {
-                                  launchUrlString("tel://3114526465");
+                                  launchUrlString(
+                                      FunctionsHelper().numbrePhone());
                                 },
                               );
                             },
