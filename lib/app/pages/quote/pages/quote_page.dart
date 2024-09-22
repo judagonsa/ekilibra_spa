@@ -1,6 +1,7 @@
 import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
+import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
@@ -8,6 +9,7 @@ import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class QuotePage extends StatefulWidget {
   const QuotePage({super.key});
@@ -265,9 +267,11 @@ class _QuotePageState extends State<QuotePage> {
                                     'Si necesitas ayuda agendando tu cita o quieres consultar si hay disponibilidad para atenderte el día de hoy, no dudes en ponerte en contacto con nosotros:',
                                 titleButtonOne: 'WhatsApp',
                                 titleButtonTwo: "Llamar",
-                                height: 200,
-                                onPressedOne: () {},
-                                onPressedTwo: () {},
+                                height: 220,
+                                onPressedOne: FunctionsHelper().openWhatsApp(),
+                                onPressedTwo: () {
+                                  launchUrlString("tel://3114526465");
+                                },
                               );
                             },
                             child: const Text('¿Problemas agendando tu cita?'))
