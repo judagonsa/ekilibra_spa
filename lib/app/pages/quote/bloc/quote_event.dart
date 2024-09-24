@@ -4,6 +4,8 @@ abstract class QuoteEvent {}
 
 class LoadServicesEvent extends QuoteEvent {}
 
+class LoadPlacesEvent extends QuoteEvent {}
+
 class CreteQuoteEvent extends QuoteEvent {
   final Quote quote;
 

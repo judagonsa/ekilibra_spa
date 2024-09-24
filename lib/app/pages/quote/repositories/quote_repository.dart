@@ -6,4 +6,5 @@ abstract class QuoteRepository {
   Future<bool> deleteQuote(String quoteId);
   Future<List<Quote>> getQuotes();
   Future<List<String>> getServices();
+  Future<List<String>> getPlaces();
 }

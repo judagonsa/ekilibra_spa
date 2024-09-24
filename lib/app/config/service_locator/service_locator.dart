@@ -16,6 +16,7 @@ import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository_impl.
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/create_quote_use_case.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/delete_quote_use_case.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/get_quotes_use_case.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/load_places_use_case.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/quote_use_cases.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/update_quote_use_case.dart';
 import 'package:get_it/get_it.dart';
@@ -54,6 +55,7 @@ void serviceLocatorInit() async {
         getQuotesUseCase: GetQuotesUseCase(getIt<QuoteRepository>()),
         updateQuoteUseCase: UpdateQuoteUseCase(getIt<QuoteRepository>()),
         loadServicesUseCase: LoadServicesUseCase(getIt<QuoteRepository>()),
+        loadPlacesUseCase: LoadPlacesUseCase(getIt<QuoteRepository>()),
       ),
     ),
   );

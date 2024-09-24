@@ -5,7 +5,7 @@ class DatetimeHelper {
   //zona horaria colombiana
   List<DateTime> getDaysOfWeek() {
     List<DateTime> days = [];
-    for (var i = 0; i < 7; i++) {
+    for (var i = 1; i <= 7; i++) {
       if (DateTime.now().add(Duration(days: i)).weekday != 6) {
         days.add(DateTime.now().add(Duration(days: i)));
       }
