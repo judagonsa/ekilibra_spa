@@ -8,6 +8,7 @@ import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -306,17 +307,30 @@ class _QuotePageState extends State<QuotePage> {
     } else {
       setState(() {});
       errorQuote = '';
-      quoteBloc.add(
-        CreteQuoteEvent(
-          quote: Quote(
+
+      context.push(
+        '/detail_quote',
+        extra: {
+          'quote': Quote(
             place: placeSelected,
             serviceId: serviceSelected,
             day: daySelected,
-            hour: hourSelected,
+            hour: '$hourSelected:$minutesSelected $militarHour',
             observation: observationController.text,
           ),
-        ),
+        },
       );
+      // quoteBloc.add(
+      //   CreteQuoteEvent(
+      //     quote: Quote(
+      //       place: placeSelected,
+      //       serviceId: serviceSelected,
+      //       day: daySelected,
+      //       hour: hourSelected,
+      //       observation: observationController.text,
+      //     ),
+      //   ),
+      // );
     }
   }
 

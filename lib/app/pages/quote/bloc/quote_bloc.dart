@@ -14,7 +14,17 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
 
   final QuoteUseCases quoteUseCases;
 
-  void _createQuote(CreteQuoteEvent event, Emitter<QuoteState> emit) {}
+  void _createQuote(CreteQuoteEvent event, Emitter<QuoteState> emit) async {
+    final resp = await quoteUseCases.createQuoteUseCase.invoke(event.quote);
+
+    resp.fold(
+      (l) => emit(ErrorCreateQuoteState(state, 'Error creando agendamiento')),
+      (success) {
+        if (success) emit(CreateQuoteState(state.copyWith(quote: event.quote)));
+        // emit(ErrorCreateQuoteState(state, 'Error creando agendamiento'));
+      },
+    );
+  }
 
   Future _loadPlaces(LoadPlacesEvent event, Emitter<QuoteState> emit) async {
     try {

@@ -5,7 +5,7 @@ import '../model/quote.dart';
 class QuoteRepositoryImpl implements QuoteRepository {
   @override
   Future<bool> createQuote(Quote quote) async {
-    return false;
+    return true;
   }
 
   @override

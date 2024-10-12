@@ -102,9 +102,21 @@ class LoadPlacesState extends QuoteState {
 
 class CreateQuoteState extends QuoteState {
   final QuoteState state;
+
+  CreateQuoteState(this.state)
+      : super(
+          quote: state.quote,
+          loading: state.loading,
+          services: state.services,
+          places: state.places,
+        );
+}
+
+class ErrorCreateQuoteState extends QuoteState {
+  final QuoteState state;
   final String error;
 
-  CreateQuoteState(this.state, this.error)
+  ErrorCreateQuoteState(this.state, this.error)
       : super(
           quote: state.quote,
           loading: state.loading,
