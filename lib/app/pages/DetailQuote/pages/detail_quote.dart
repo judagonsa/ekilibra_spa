@@ -1,4 +1,5 @@
 // ignore: file_names
+import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +24,44 @@ class _DetailQuoteState extends State<DetailQuote> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Banners(images: ['', '']), //TODO: enviar imagenes
-            Text(quote.service?.resumen ?? ''),
-            Text(quote.service?.observation ?? ''),
-            Text(quote.service?.duration ?? ''),
-            Text("${quote.place}, botón de cómo llegar o dirección"),
-            Text(quote.hour ?? ''),
-            if (quote.observation?.isNotEmpty == true) Text(quote.observation!),
-            const Text("botón de confirmar, que cree el servicio"),
+            const Banners(
+                images: ['', '']), //TODO: enviar imagenes desde el servicio
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(quote.service?.resumen ?? ''),
+                  Text(quote.service?.observation ?? ''),
+                  Text('Duración:  ${quote.service?.duration ?? ''}'),
+                  Text(
+                      "Lugar: ${quote.place}, botón de cómo llegar o dirección"),
+                  Text('Hora: ${quote.hour ?? ''}'),
+                  if (quote.observation?.isNotEmpty == true)
+                    Text(quote.observation!),
+                ],
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: OutlinedButton(
+                  onPressed: () {
+                    //TODO: crear recordatorio desde el bloc de quote
+                  },
+                  style: ButtonHelpers().secondaryButton(),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      'Confirmar cita',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
