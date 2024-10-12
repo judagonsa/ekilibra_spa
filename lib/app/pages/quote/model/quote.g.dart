@@ -8,7 +8,9 @@ part of 'quote.dart';
 
 _$QuoteImpl _$$QuoteImplFromJson(Map<String, dynamic> json) => _$QuoteImpl(
       place: json['place'] as String?,
-      serviceId: json['serviceId'] as String?,
+      service: json['service'] == null
+          ? null
+          : Service.fromJson(json['service'] as Map<String, dynamic>),
       day: json['day'] as String?,
       hour: json['hour'] as String?,
       observation: json['observation'] as String?,
@@ -17,7 +19,7 @@ _$QuoteImpl _$$QuoteImplFromJson(Map<String, dynamic> json) => _$QuoteImpl(
 Map<String, dynamic> _$$QuoteImplToJson(_$QuoteImpl instance) =>
     <String, dynamic>{
       'place': instance.place,
-      'serviceId': instance.serviceId,
+      'service': instance.service,
       'day': instance.day,
       'hour': instance.hour,
       'observation': instance.observation,

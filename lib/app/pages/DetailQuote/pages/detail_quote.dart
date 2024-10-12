@@ -22,10 +22,11 @@ class _DetailQuoteState extends State<DetailQuote> {
       body: Column(
         children: [
           const Text("Scroll de imagenes del servicio, mostrar colores"),
-          const Text("Resumen"),
-          const Text("duración"),
-          Text(quote.hour ?? ''),
+          Text(quote.service?.resumen ?? ''),
+          Text(quote.service?.observation ?? ''),
+          Text(quote.service?.duration ?? ''),
           Text("${quote.place}, botón de cómo llegar o dirección"),
+          Text(quote.hour ?? ''),
           if (quote.observation?.isNotEmpty == true) Text(quote.observation!),
           const Text("botón de confirmar, que cree el servicio"),
         ],

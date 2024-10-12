@@ -21,9 +21,9 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Profile {
   String? get userName => throw _privateConstructorUsedError;
-  String? get city => throw _privateConstructorUsedError;
   String? get bithDate => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
+  String? get city => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
   String? get observation => throw _privateConstructorUsedError;
 
@@ -39,9 +39,9 @@ abstract class $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String? userName,
-      String? city,
       String? bithDate,
       String? phone,
+      String? city,
       String? password,
       String? observation});
 }
@@ -60,9 +60,9 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   @override
   $Res call({
     Object? userName = freezed,
-    Object? city = freezed,
     Object? bithDate = freezed,
     Object? phone = freezed,
+    Object? city = freezed,
     Object? password = freezed,
     Object? observation = freezed,
   }) {
@@ -71,10 +71,6 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
       bithDate: freezed == bithDate
           ? _value.bithDate
           : bithDate // ignore: cast_nullable_to_non_nullable
@@ -82,6 +78,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
               as String?,
       password: freezed == password
           ? _value.password
@@ -104,9 +104,9 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String? userName,
-      String? city,
       String? bithDate,
       String? phone,
+      String? city,
       String? password,
       String? observation});
 }
@@ -123,9 +123,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userName = freezed,
-    Object? city = freezed,
     Object? bithDate = freezed,
     Object? phone = freezed,
+    Object? city = freezed,
     Object? password = freezed,
     Object? observation = freezed,
   }) {
@@ -134,10 +134,6 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
       bithDate: freezed == bithDate
           ? _value.bithDate
           : bithDate // ignore: cast_nullable_to_non_nullable
@@ -145,6 +141,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
               as String?,
       password: freezed == password
           ? _value.password
@@ -163,9 +163,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
 class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   const _$ProfileImpl(
       {this.userName,
-      this.city,
       this.bithDate,
       this.phone,
+      this.city,
       this.password,
       this.observation});
 
@@ -175,11 +175,11 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   @override
   final String? userName;
   @override
-  final String? city;
-  @override
   final String? bithDate;
   @override
   final String? phone;
+  @override
+  final String? city;
   @override
   final String? password;
   @override
@@ -187,7 +187,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(userName: $userName, city: $city, bithDate: $bithDate, phone: $phone, password: $password, observation: $observation)';
+    return 'Profile(userName: $userName, bithDate: $bithDate, phone: $phone, city: $city, password: $password, observation: $observation)';
   }
 
   @override
@@ -196,9 +196,9 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     properties
       ..add(DiagnosticsProperty('type', 'Profile'))
       ..add(DiagnosticsProperty('userName', userName))
-      ..add(DiagnosticsProperty('city', city))
       ..add(DiagnosticsProperty('bithDate', bithDate))
       ..add(DiagnosticsProperty('phone', phone))
+      ..add(DiagnosticsProperty('city', city))
       ..add(DiagnosticsProperty('password', password))
       ..add(DiagnosticsProperty('observation', observation));
   }
@@ -210,10 +210,10 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
             other is _$ProfileImpl &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
-            (identical(other.city, city) || other.city == city) &&
             (identical(other.bithDate, bithDate) ||
                 other.bithDate == bithDate) &&
             (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.city, city) || other.city == city) &&
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.observation, observation) ||
@@ -223,7 +223,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, userName, city, bithDate, phone, password, observation);
+      runtimeType, userName, bithDate, phone, city, password, observation);
 
   @JsonKey(ignore: true)
   @override
@@ -242,9 +242,9 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
 abstract class _Profile implements Profile {
   const factory _Profile(
       {final String? userName,
-      final String? city,
       final String? bithDate,
       final String? phone,
+      final String? city,
       final String? password,
       final String? observation}) = _$ProfileImpl;
 
@@ -253,11 +253,11 @@ abstract class _Profile implements Profile {
   @override
   String? get userName;
   @override
-  String? get city;
-  @override
   String? get bithDate;
   @override
   String? get phone;
+  @override
+  String? get city;
   @override
   String? get password;
   @override

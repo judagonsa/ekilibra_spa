@@ -4,6 +4,7 @@ import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _QuotePageState extends State<QuotePage> {
   late QuoteBloc quoteBloc;
 
   String placeSelected = '';
-  String serviceSelected = '';
+  Service? serviceSelected;
   String daySelected = '';
   String hourSelected = '';
   String minutesSelected = '';
@@ -31,7 +32,7 @@ class _QuotePageState extends State<QuotePage> {
   String errorQuote = '';
   String militarHour = '';
   List<String>? places;
-  List<String>? services;
+  List<Service>? services;
 
   @override
   Widget build(BuildContext context) {
@@ -103,10 +104,16 @@ class _QuotePageState extends State<QuotePage> {
                                     if (services != null)
                                       _DropdownMenu(
                                         hintText: 'Servicio',
-                                        dataList: services!,
+                                        dataList: services!
+                                            .map((service) => service.title!)
+                                            .toList(),
                                         onSelected: (value) {
                                           if (value != null) {
-                                            serviceSelected = value;
+                                            for (var service in services!) {
+                                              if (service.title == value) {
+                                                serviceSelected = service;
+                                              }
+                                            }
                                           }
                                         },
                                         width: 250,
@@ -295,7 +302,7 @@ class _QuotePageState extends State<QuotePage> {
     if (placeSelected.isEmpty) {
       setState(() {});
       errorQuote = 'Favor escoger un lugar';
-    } else if (serviceSelected.isEmpty) {
+    } else if (serviceSelected == null) {
       setState(() {});
       errorQuote = 'Favor escoger un servicio';
     } else if (daySelected.isEmpty) {
@@ -313,7 +320,7 @@ class _QuotePageState extends State<QuotePage> {
         extra: {
           'quote': Quote(
             place: placeSelected,
-            serviceId: serviceSelected,
+            service: serviceSelected,
             day: daySelected,
             hour: '$hourSelected:$minutesSelected $militarHour',
             observation: observationController.text,
@@ -422,7 +429,7 @@ class _ButtonPlace extends StatelessWidget {
 
 class _DropdownMenu extends StatelessWidget {
   final void Function(String?) onSelected;
-  final List<String>? dataList;
+  final List<String> dataList;
   final String hintText;
   final double? width;
 
@@ -440,7 +447,7 @@ class _DropdownMenu extends StatelessWidget {
       hintText: hintText,
       onSelected: onSelected,
       dropdownMenuEntries:
-          dataList!.map<DropdownMenuEntry<String>>((String value) {
+          dataList.map<DropdownMenuEntry<String>>((String value) {
         return DropdownMenuEntry<String>(
           value: value,
           label: value,

@@ -1,3 +1,4 @@
+import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository.dart';
 
 import '../model/quote.dart';
@@ -24,8 +25,30 @@ class QuoteRepositoryImpl implements QuoteRepository {
   }
 
   @override
-  Future<List<String>> getServices() async {
-    return ['Limpieza facial', 'Masaje', 'Camilla'];
+  Future<List<Service>> getServices() async {
+    return [
+      const Service(
+        title: "Limpieza facial",
+        resumen: 'resumen',
+        duration: '50 min',
+        images: [],
+        observation: 'Cuidados',
+      ),
+      const Service(
+        title: "Camilla",
+        resumen: 'resumen',
+        duration: '15 min',
+        images: [],
+        observation: 'Ninguno',
+      ),
+      const Service(
+        title: "Masaje",
+        resumen: 'resumen',
+        duration: '60 - 90 min',
+        images: [],
+        observation: 'Ropa o vestimenta',
+      ),
+    ];
   }
 
   @override

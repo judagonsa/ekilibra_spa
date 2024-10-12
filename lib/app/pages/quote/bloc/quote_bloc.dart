@@ -1,3 +1,4 @@
+import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/quote_use_cases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

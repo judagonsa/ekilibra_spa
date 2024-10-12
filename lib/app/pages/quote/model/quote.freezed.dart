@@ -21,7 +21,7 @@ Quote _$QuoteFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Quote {
   String? get place => throw _privateConstructorUsedError;
-  String? get serviceId => throw _privateConstructorUsedError;
+  Service? get service => throw _privateConstructorUsedError;
   String? get day => throw _privateConstructorUsedError;
   String? get hour => throw _privateConstructorUsedError;
   String? get observation => throw _privateConstructorUsedError;
@@ -38,10 +38,12 @@ abstract class $QuoteCopyWith<$Res> {
   @useResult
   $Res call(
       {String? place,
-      String? serviceId,
+      Service? service,
       String? day,
       String? hour,
       String? observation});
+
+  $ServiceCopyWith<$Res>? get service;
 }
 
 /// @nodoc
@@ -58,7 +60,7 @@ class _$QuoteCopyWithImpl<$Res, $Val extends Quote>
   @override
   $Res call({
     Object? place = freezed,
-    Object? serviceId = freezed,
+    Object? service = freezed,
     Object? day = freezed,
     Object? hour = freezed,
     Object? observation = freezed,
@@ -68,10 +70,10 @@ class _$QuoteCopyWithImpl<$Res, $Val extends Quote>
           ? _value.place
           : place // ignore: cast_nullable_to_non_nullable
               as String?,
-      serviceId: freezed == serviceId
-          ? _value.serviceId
-          : serviceId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      service: freezed == service
+          ? _value.service
+          : service // ignore: cast_nullable_to_non_nullable
+              as Service?,
       day: freezed == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -86,6 +88,18 @@ class _$QuoteCopyWithImpl<$Res, $Val extends Quote>
               as String?,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ServiceCopyWith<$Res>? get service {
+    if (_value.service == null) {
+      return null;
+    }
+
+    return $ServiceCopyWith<$Res>(_value.service!, (value) {
+      return _then(_value.copyWith(service: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -97,10 +111,13 @@ abstract class _$$QuoteImplCopyWith<$Res> implements $QuoteCopyWith<$Res> {
   @useResult
   $Res call(
       {String? place,
-      String? serviceId,
+      Service? service,
       String? day,
       String? hour,
       String? observation});
+
+  @override
+  $ServiceCopyWith<$Res>? get service;
 }
 
 /// @nodoc
@@ -115,7 +132,7 @@ class __$$QuoteImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? place = freezed,
-    Object? serviceId = freezed,
+    Object? service = freezed,
     Object? day = freezed,
     Object? hour = freezed,
     Object? observation = freezed,
@@ -125,10 +142,10 @@ class __$$QuoteImplCopyWithImpl<$Res>
           ? _value.place
           : place // ignore: cast_nullable_to_non_nullable
               as String?,
-      serviceId: freezed == serviceId
-          ? _value.serviceId
-          : serviceId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      service: freezed == service
+          ? _value.service
+          : service // ignore: cast_nullable_to_non_nullable
+              as Service?,
       day: freezed == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -149,7 +166,7 @@ class __$$QuoteImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$QuoteImpl implements _Quote {
   const _$QuoteImpl(
-      {this.place, this.serviceId, this.day, this.hour, this.observation});
+      {this.place, this.service, this.day, this.hour, this.observation});
 
   factory _$QuoteImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuoteImplFromJson(json);
@@ -157,7 +174,7 @@ class _$QuoteImpl implements _Quote {
   @override
   final String? place;
   @override
-  final String? serviceId;
+  final Service? service;
   @override
   final String? day;
   @override
@@ -167,7 +184,7 @@ class _$QuoteImpl implements _Quote {
 
   @override
   String toString() {
-    return 'Quote(place: $place, serviceId: $serviceId, day: $day, hour: $hour, observation: $observation)';
+    return 'Quote(place: $place, service: $service, day: $day, hour: $hour, observation: $observation)';
   }
 
   @override
@@ -176,8 +193,7 @@ class _$QuoteImpl implements _Quote {
         (other.runtimeType == runtimeType &&
             other is _$QuoteImpl &&
             (identical(other.place, place) || other.place == place) &&
-            (identical(other.serviceId, serviceId) ||
-                other.serviceId == serviceId) &&
+            (identical(other.service, service) || other.service == service) &&
             (identical(other.day, day) || other.day == day) &&
             (identical(other.hour, hour) || other.hour == hour) &&
             (identical(other.observation, observation) ||
@@ -187,7 +203,7 @@ class _$QuoteImpl implements _Quote {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, place, serviceId, day, hour, observation);
+      Object.hash(runtimeType, place, service, day, hour, observation);
 
   @JsonKey(ignore: true)
   @override
@@ -206,7 +222,7 @@ class _$QuoteImpl implements _Quote {
 abstract class _Quote implements Quote {
   const factory _Quote(
       {final String? place,
-      final String? serviceId,
+      final Service? service,
       final String? day,
       final String? hour,
       final String? observation}) = _$QuoteImpl;
@@ -216,7 +232,7 @@ abstract class _Quote implements Quote {
   @override
   String? get place;
   @override
-  String? get serviceId;
+  Service? get service;
   @override
   String? get day;
   @override

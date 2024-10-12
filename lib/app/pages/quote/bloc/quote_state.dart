@@ -3,7 +3,7 @@ part of 'quote_bloc.dart';
 class QuoteState {
   final Quote? quote;
   final bool loading;
-  final List<String>? services;
+  final List<Service>? services;
   final List<String>? places;
 
   const QuoteState({
@@ -16,7 +16,7 @@ class QuoteState {
   QuoteState copyWith({
     Quote? quote,
     bool? loading,
-    List<String>? services,
+    List<Service>? services,
     List<String>? places,
   }) =>
       QuoteState(
