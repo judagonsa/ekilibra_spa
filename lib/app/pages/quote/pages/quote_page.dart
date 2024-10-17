@@ -329,17 +329,6 @@ class _QuotePageState extends State<QuotePage> {
           ),
         },
       );
-      // quoteBloc.add(
-      //   CreteQuoteEvent(
-      //     quote: Quote(
-      //       place: placeSelected,
-      //       serviceId: serviceSelected,
-      //       day: daySelected,
-      //       hour: hourSelected,
-      //       observation: observationController.text,
-      //     ),
-      //   ),
-      // );
     }
   }
 

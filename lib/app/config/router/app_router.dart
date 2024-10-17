@@ -35,6 +35,10 @@ final GoRouter appRouter = GoRouter(
         Map<String, Quote> args = state.extra as Map<String, Quote>;
         return DetailQuote(quote: args['quote']!);
       },
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const HomePage(),
     )
   ],
 );
