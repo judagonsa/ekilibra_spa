@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,17 @@ class _DetailQuoteState extends State<DetailQuote> {
                 child: OutlinedButton(
                   onPressed: () {
                     //TODO: crear recordatorio desde el bloc de quote
+                    PopupHelpers().popupTwoButtons(
+                        context: context,
+                        withIconClose: false,
+                        title: "Muy bien",
+                        description: 'Cita agendada exitosamente',
+                        icon: Icons.check,
+                        titleButtonOne: 'Aceptar',
+                        titleButtonTwo: null,
+                        height: 140,
+                        onPressedOne: () => {Navigator.pop(context)},
+                        onPressedTwo: () => {});
                   },
                   style: ButtonHelpers().secondaryButton(),
                   child: const Padding(

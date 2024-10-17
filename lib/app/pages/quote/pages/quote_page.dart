@@ -270,9 +270,11 @@ class _QuotePageState extends State<QuotePage> {
                             onPressed: () {
                               PopupHelpers().popupTwoButtons(
                                 context: context,
+                                withIconClose: true,
                                 title: '¿Necesitas ayuda?',
                                 description:
                                     'Si necesitas ayuda agendando tu cita o quieres consultar si hay disponibilidad para atenderte el día de hoy, no dudes en ponerte en contacto con nosotros:',
+                                icon: null,
                                 titleButtonOne: 'WhatsApp',
                                 titleButtonTwo: "Llamar",
                                 height: 220,
