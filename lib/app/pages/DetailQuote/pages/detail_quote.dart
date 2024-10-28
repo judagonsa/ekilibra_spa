@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class DetailQuote extends StatefulWidget {
+  static const name = '/detail_quote';
   final Quote quote;
 
   const DetailQuote({super.key, required this.quote});
@@ -39,12 +40,14 @@ class _DetailQuoteState extends State<DetailQuote> {
                 description: 'Cita agendada exitosamente',
                 icon: Icons.check,
                 titleButtonOne: 'Aceptar',
-                titleButtonTwo: null,
+                titleButtonTwo: null, //TODO: Pasar a opcional
                 height: 140,
                 onPressedOne: () => {
                   context.go('/home'), //TODO: animación para ir al home
                 },
-                onPressedTwo: () => {},
+                onPressedTwo: () => {
+                  //TODO: pasar a opcional
+                },
               );
             });
           }
@@ -52,21 +55,46 @@ class _DetailQuoteState extends State<DetailQuote> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Banners(
-                    images: ['', '']), //TODO: enviar imagenes desde el servicio
+                if (quote.service?.images != null)
+                  Banners(
+                    images: quote.service!.images!,
+                  ),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(quote.service?.resumen ?? ''),
-                      Text(quote.service?.observation ?? ''),
-                      Text('Duración:  ${quote.service?.duration ?? ''}'),
-                      Text(
-                          "Lugar: ${quote.place}, botón de cómo llegar o dirección"),
-                      Text('Hora: ${quote.hour ?? ''}'),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(quote.service?.title ?? ''),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(quote.service?.resumen ?? ''),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(quote.service?.observation ?? ''),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child:
+                            Text('Duración:  ${quote.service?.duration ?? ''}'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                            "Lugar: ${quote.place}, botón de cómo llegar o dirección"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text('Hora: ${quote.hour ?? ''}'),
+                      ),
                       if (quote.observation?.isNotEmpty == true)
-                        Text(quote.observation!),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text(quote.observation!),
+                        ),
                     ],
                   ),
                 ),

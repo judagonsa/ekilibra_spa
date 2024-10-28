@@ -9,13 +9,17 @@ class Banners extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250,
+      height: 200,
       child: Swiper(
+        autoplay: true,
         itemCount: images.length,
         itemBuilder: (BuildContext context, int index) {
-          return Image.network(
-            "https://via.placeholder.com/350x150",
-            fit: BoxFit.fill,
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              images[index],
+              fit: BoxFit.fill,
+            ),
           );
         },
         viewportFraction: 0.8,

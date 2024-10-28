@@ -30,7 +30,7 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const QuotePage(),
     ),
     GoRoute(
-      path: '/detail_quote',
+      path: DetailQuote.name,
       builder: (context, state) {
         Map<String, Quote> args = state.extra as Map<String, Quote>;
         return DetailQuote(quote: args['quote']!);

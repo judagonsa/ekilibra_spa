@@ -40,7 +40,7 @@ class _QuotePageState extends State<QuotePage> {
     final minutesQuote = ["00", "15", "30", "45"];
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 146, 153, 155),
+      backgroundColor: const Color.fromARGB(255, 219, 223, 224),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text('Agendar cita'),
@@ -67,7 +67,7 @@ class _QuotePageState extends State<QuotePage> {
                           height: 170,
                           decoration: const BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -103,7 +103,7 @@ class _QuotePageState extends State<QuotePage> {
                                     const Text('Servicio:'),
                                     if (services != null)
                                       _DropdownMenu(
-                                        hintText: 'Servicio',
+                                        hintText: 'Seleccionar',
                                         dataList: services!
                                             .map((service) => service.title!)
                                             .toList(),
@@ -126,10 +126,10 @@ class _QuotePageState extends State<QuotePage> {
                         ),
                         const SizedBox(height: 15),
                         Container(
-                          height: 190,
+                          height: 220,
                           decoration: const BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -216,14 +216,14 @@ class _QuotePageState extends State<QuotePage> {
                         Container(
                           decoration: const BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(15),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Observaciones a tener en cuenta'),
+                                const Text('¿Observaciones a tener en cuenta?'),
                                 TextField(
                                   controller: observationController,
                                   maxLines: 3,
@@ -382,7 +382,11 @@ class _DaysWeek extends StatelessWidget {
                         .getDayString(DateFormat('EEE').format(date)),
                     style: const TextStyle(fontSize: 11),
                   ),
-                  Text(DateFormat('d').format(date))
+                  Text(DateFormat('d').format(date)),
+                  Text(
+                    DateFormat('MMM').format(date),
+                    style: const TextStyle(fontSize: 11),
+                  ),
                 ],
               ),
             )
