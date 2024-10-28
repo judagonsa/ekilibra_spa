@@ -1,7 +1,10 @@
+import 'package:ekilibra_spa/app/pages/pages.dart';
+import 'package:ekilibra_spa/app/pages/quote/pages/quote_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
+  static const name = '/home';
   const HomePage({super.key});
 
   @override
@@ -24,7 +27,7 @@ class _HomeView extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            context.push('/profile', extra: {'isRegister': false});
+            context.push(ProfilePage.name, extra: {'isRegister': false});
           },
           child: const Column(
             mainAxisSize: MainAxisSize.min,
@@ -36,7 +39,7 @@ class _HomeView extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () {
-            context.push('/quote');
+            context.push(QuotePage.name);
           },
           child: const Column(
             mainAxisSize: MainAxisSize.min,

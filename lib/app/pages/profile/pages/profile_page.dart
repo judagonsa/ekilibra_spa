@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatelessWidget {
+  static const name = '/profile';
   const ProfilePage({super.key, required this.isRegister});
 
   final bool? isRegister;

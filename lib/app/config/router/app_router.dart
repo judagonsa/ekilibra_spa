@@ -11,22 +11,22 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const HomePage(),
     ),
     GoRoute(
-      path: '/welcome',
+      path: WelcomePage.name,
       builder: (context, state) => const WelcomePage(),
     ),
     GoRoute(
-      path: '/login',
+      path: LoginPage.name,
       builder: (context, state) => const LoginPage(),
     ),
     GoRoute(
-      path: '/profile',
+      path: ProfilePage.name,
       builder: (context, state) {
         Map<String, bool> args = state.extra as Map<String, bool>;
         return ProfilePage(isRegister: args['isRegister']!);
       },
     ),
     GoRoute(
-      path: '/quote',
+      path: QuotePage.name,
       builder: (context, state) => const QuotePage(),
     ),
     GoRoute(
@@ -37,7 +37,7 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: '/home',
+      path: HomePage.name,
       builder: (context, state) => const HomePage(),
     )
   ],

@@ -4,6 +4,7 @@ import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/DetailQuote/pages/detail_quote.dart';
 import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
@@ -14,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class QuotePage extends StatefulWidget {
+  static const name = '/quote';
   const QuotePage({super.key});
 
   @override
@@ -318,7 +320,7 @@ class _QuotePageState extends State<QuotePage> {
       errorQuote = '';
 
       context.push(
-        '/detail_quote',
+        DetailQuote.name,
         extra: {
           'quote': Quote(
             place: placeSelected,

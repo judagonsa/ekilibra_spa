@@ -2,6 +2,7 @@
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/home/pages/home_page.dart';
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
@@ -43,7 +44,7 @@ class _DetailQuoteState extends State<DetailQuote> {
                 titleButtonTwo: null, //TODO: Pasar a opcional
                 height: 140,
                 onPressedOne: () => {
-                  context.go('/home'), //TODO: animación para ir al home
+                  context.go(HomePage.name), //TODO: animación para ir al home
                 },
                 onPressedTwo: () => {
                   //TODO: pasar a opcional
