@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/home/pages/home_page.dart';
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
@@ -37,7 +38,7 @@ class _DetailQuoteState extends State<DetailQuote> {
               PopupHelpers().popupTwoButtons(
                 context: context,
                 withIconClose: false,
-                title: "Muy bien",
+                title: Texts.veryGood,
                 description: 'Cita agendada exitosamente',
                 icon: Icons.check,
                 titleButtonOne: 'Aceptar',
@@ -79,17 +80,17 @@ class _DetailQuoteState extends State<DetailQuote> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child:
-                            Text('Duración:  ${quote.service?.duration ?? ''}'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Text(
-                            "Lugar: ${quote.place}, botón de cómo llegar o dirección"),
+                            '${Texts.duration}: ${quote.service?.duration ?? ''}'),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text('Hora: ${quote.hour ?? ''}'),
+                        child: Text("${Texts.place}: ${quote.place}"),
+                        //TODO: botón de cómo llegar o dirección
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text('${Texts.hour}: ${quote.hour ?? ''}'),
                       ),
                       if (quote.observation?.isNotEmpty == true)
                         Padding(
@@ -117,11 +118,11 @@ class _DetailQuoteState extends State<DetailQuote> {
                         );
                       },
                       style: ButtonHelpers().secondaryButton(),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Text(
-                          'Confirmar cita',
-                          style: TextStyle(fontSize: 16),
+                          Texts.confirmQuote,
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
                     ),

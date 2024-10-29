@@ -1,3 +1,4 @@
+import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/pages/pages.dart';
 import 'package:ekilibra_spa/app/pages/quote/pages/quote_page.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +30,11 @@ class _HomeView extends StatelessWidget {
           onPressed: () {
             context.push(ProfilePage.name, extra: {'isRegister': false});
           },
-          child: const Column(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.person),
-              Text('Perfil'),
+              const Icon(Icons.person),
+              Text(Texts.profile),
             ],
           ),
         ),
@@ -41,11 +42,11 @@ class _HomeView extends StatelessWidget {
           onPressed: () {
             context.push(QuotePage.name);
           },
-          child: const Column(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.person),
-              Text('Agendar cita'),
+              const Icon(Icons.person),
+              Text(Texts.scheduleQuote),
             ],
           ),
         )

@@ -1,4 +1,5 @@
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -52,9 +53,9 @@ class _WelcomeViewState extends State<_WelcomeView> {
                         );
                       },
                       style: ButtonHelpers().primaryButton(isLogin: true),
-                      child: const Text(
-                        'Registrar',
-                        style: TextStyle(fontSize: 16),
+                      child: Text(
+                        Texts.register,
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
@@ -67,11 +68,11 @@ class _WelcomeViewState extends State<_WelcomeView> {
                         context.push(LoginPage.name);
                       },
                       style: ButtonHelpers().secondaryButton(),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Text(
-                          'Iniciar sesión',
-                          style: TextStyle(fontSize: 16),
+                          Texts.startSession,
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: CustomTextFormField(
-                      label: 'Número de teléfono',
+                      label: Texts.phoneNumber,
                       // textEditingController: _controllerName,
                       onChanged: (value) {
                         // profileCubit.usernameChanged(value);
@@ -48,10 +49,10 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'El número teléfonico es requerido.';
+                          return Texts.phoneNumberRequired;
                         }
                         if (value.length != 10) {
-                          return 'Número teléfonico incorrecto.';
+                          return Texts.phoneNumberError;
                         }
                         return null;
                       },
@@ -60,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: CustomTextFormField(
-                      label: 'Contraseña',
+                      label: Texts.password,
                       // obscureText: obscureTextPassword,
                       iconInput: Icon(
                         obscureTextPassword
@@ -78,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'La contraseña es requerida.';
+                          return Texts.passwordRequired;
                         }
                         return null;
                       },
@@ -96,9 +97,9 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                       style: ButtonHelpers().primaryButton(isLogin: true),
-                      child: const Text(
-                        'Iniciar sesión',
-                        style: TextStyle(fontSize: 16),
+                      child: Text(
+                        Texts.startSession,
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                   ),

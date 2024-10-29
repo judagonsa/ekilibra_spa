@@ -3,6 +3,7 @@ import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/DetailQuote/pages/detail_quote.dart';
 import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
@@ -45,7 +46,7 @@ class _QuotePageState extends State<QuotePage> {
       backgroundColor: const Color.fromARGB(255, 219, 223, 224),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Agendar cita'),
+        title: Text(Texts.scheduleQuote),
       ),
       body: BlocBuilder<QuoteBloc, QuoteState>(
         builder: (context, state) {
@@ -77,7 +78,7 @@ class _QuotePageState extends State<QuotePage> {
                               children: [
                                 Column(
                                   children: [
-                                    const Text('Lugar:'),
+                                    Text(Texts.place),
                                     const SizedBox(height: 10),
                                     Row(
                                       mainAxisAlignment:
@@ -102,10 +103,10 @@ class _QuotePageState extends State<QuotePage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    const Text('Servicio:'),
+                                    Text(Texts.service),
                                     if (services != null)
                                       _DropdownMenu(
-                                        hintText: 'Seleccionar',
+                                        hintText: Texts.select,
                                         dataList: services!
                                             .map((service) => service.title!)
                                             .toList(),
@@ -137,10 +138,10 @@ class _QuotePageState extends State<QuotePage> {
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Column(
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(
+                                Padding(
+                                  padding: const EdgeInsets.only(
                                       bottom: 10, left: 40, right: 20),
-                                  child: Text('Día:'),
+                                  child: Text(Texts.day),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -160,9 +161,9 @@ class _QuotePageState extends State<QuotePage> {
                                       )
                                   ],
                                 ),
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Text('Hora:'),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text(Texts.hour),
                                 ),
                                 Flexible(
                                   fit: FlexFit.tight,
@@ -173,8 +174,8 @@ class _QuotePageState extends State<QuotePage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5),
                                         child: _DropdownMenu(
-                                          hintText:
-                                              'Hora', //Validar si existe hora
+                                          hintText: Texts
+                                              .hour, //Validar si existe hora
                                           dataList: hoursQuote,
                                           onSelected: (value) {
                                             if (value != null) {
@@ -196,8 +197,8 @@ class _QuotePageState extends State<QuotePage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5),
                                         child: _DropdownMenu(
-                                          hintText:
-                                              'Minutos', //Validar si existe hora
+                                          hintText: Texts
+                                              .minute, //Validar si existe hora
                                           dataList: minutesQuote,
                                           onSelected: (value) {
                                             if (value != null) {
@@ -225,7 +226,7 @@ class _QuotePageState extends State<QuotePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('¿Observaciones a tener en cuenta?'),
+                                Text(Texts.observationConsiderer),
                                 TextField(
                                   controller: observationController,
                                   maxLines: 3,
@@ -261,10 +262,10 @@ class _QuotePageState extends State<QuotePage> {
                               isLogin: false,
                               backgroundColor: Colors.purple,
                             ),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 30),
-                              child: Text('Agendar'),
+                              child: Text(Texts.schedule),
                             ),
                           ),
                         ),
@@ -273,12 +274,11 @@ class _QuotePageState extends State<QuotePage> {
                               PopupHelpers().popupTwoButtons(
                                 context: context,
                                 withIconClose: true,
-                                title: '¿Necesitas ayuda?',
-                                description:
-                                    'Si necesitas ayuda agendando tu cita o quieres consultar si hay disponibilidad para atenderte el día de hoy, no dudes en ponerte en contacto con nosotros:',
+                                title: Texts.needHelp,
+                                description: Texts.needHelpText,
                                 icon: null,
-                                titleButtonOne: 'WhatsApp',
-                                titleButtonTwo: "Llamar",
+                                titleButtonOne: Texts.wa,
+                                titleButtonTwo: Texts.call,
                                 height: 220,
                                 onPressedOne: () {
                                   FunctionsHelper().openWhatsApp();
@@ -289,7 +289,7 @@ class _QuotePageState extends State<QuotePage> {
                                 },
                               );
                             },
-                            child: const Text('¿Problemas agendando tu cita?'))
+                            child: Text(Texts.problemsScheduleQuote))
                       ],
                     ),
                   ),
@@ -305,16 +305,16 @@ class _QuotePageState extends State<QuotePage> {
   _createQuote() {
     if (placeSelected.isEmpty) {
       setState(() {});
-      errorQuote = 'Favor escoger un lugar';
+      errorQuote = Texts.pleaseSelectPlace;
     } else if (serviceSelected == null) {
       setState(() {});
-      errorQuote = 'Favor escoger un servicio';
+      errorQuote = Texts.pleaseSelectService;
     } else if (daySelected.isEmpty) {
       setState(() {});
-      errorQuote = 'Favor escoger el día del servicio';
+      errorQuote = Texts.pleaseSelectDayService;
     } else if (hourSelected.isEmpty) {
       setState(() {});
-      errorQuote = 'Favor escoger la hora del servicio';
+      errorQuote = Texts.pleaseSelectHourService;
     } else {
       setState(() {});
       errorQuote = '';
