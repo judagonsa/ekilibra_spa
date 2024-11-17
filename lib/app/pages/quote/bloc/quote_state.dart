@@ -63,23 +63,11 @@ class QuoteValidateFormState extends QuoteState {
         );
 }
 
-class ErrorLoadServicesState extends QuoteState {
+class ErrorLoadPlacesState extends QuoteState {
   final QuoteState state;
   final String error;
 
-  ErrorLoadServicesState(this.state, this.error)
-      : super(
-          quote: state.quote,
-          loading: state.loading,
-          services: state.services,
-          places: state.places,
-        );
-}
-
-class LoadServicesState extends QuoteState {
-  final QuoteState state;
-
-  LoadServicesState(this.state)
+  ErrorLoadPlacesState(this.state, this.error)
       : super(
           quote: state.quote,
           loading: state.loading,

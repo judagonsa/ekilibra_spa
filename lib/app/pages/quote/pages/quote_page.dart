@@ -50,10 +50,6 @@ class _QuotePageState extends State<QuotePage> {
       ),
       body: BlocBuilder<QuoteBloc, QuoteState>(
         builder: (context, state) {
-          if (state is LoadServicesState) {
-            services = state.services;
-            places = state.places;
-          }
           return SafeArea(
             child: GestureDetector(
               onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
