@@ -9,7 +9,8 @@ part of 'service.dart';
 _$ServiceImpl _$$ServiceImplFromJson(Map<String, dynamic> json) =>
     _$ServiceImpl(
       title: json['title'] as String?,
-      resumen: json['resumen'] as String?,
+      description: json['description'] as String?,
+      phrase: json['phrase'] as String?,
       duration: json['duration'] as String?,
       images:
           (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -19,7 +20,8 @@ _$ServiceImpl _$$ServiceImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$ServiceImplToJson(_$ServiceImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
-      'resumen': instance.resumen,
+      'description': instance.description,
+      'phrase': instance.phrase,
       'duration': instance.duration,
       'images': instance.images,
       'observation': instance.observation,

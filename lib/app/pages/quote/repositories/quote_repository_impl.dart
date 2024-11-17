@@ -29,7 +29,7 @@ class QuoteRepositoryImpl implements QuoteRepository {
     return [
       const Service(
         title: "Limpieza facial",
-        resumen: 'resumen',
+        phrase: 'resumen',
         duration: '50 min',
         images: [
           "https://picsum.photos/id/1/400/200",
@@ -41,7 +41,7 @@ class QuoteRepositoryImpl implements QuoteRepository {
       ),
       const Service(
         title: "Camilla",
-        resumen: 'resumen',
+        phrase: 'resumen',
         duration: '15 min',
         images: [
           "https://picsum.photos/id/5/400/200",
@@ -53,7 +53,7 @@ class QuoteRepositoryImpl implements QuoteRepository {
       ),
       const Service(
         title: "Masaje",
-        resumen: 'resumen',
+        phrase: 'resumen',
         duration: '60 - 90 min',
         images: [
           "https://picsum.photos/id/9/400/200",

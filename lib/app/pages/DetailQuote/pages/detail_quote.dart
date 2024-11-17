@@ -72,7 +72,7 @@ class _DetailQuoteState extends State<DetailQuote> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(quote.service?.resumen ?? ''),
+                        child: Text(quote.service?.phrase ?? ''),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),

@@ -9,7 +9,8 @@ part 'service.g.dart';
 class Service with _$Service {
   const factory Service({
     String? title,
-    String? resumen,
+    String? description,
+    String? phrase,
     String? duration,
     List<String>? images,
     String? observation,

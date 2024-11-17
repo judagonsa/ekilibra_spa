@@ -21,7 +21,8 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Service {
   String? get title => throw _privateConstructorUsedError;
-  String? get resumen => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get phrase => throw _privateConstructorUsedError;
   String? get duration => throw _privateConstructorUsedError;
   List<String>? get images => throw _privateConstructorUsedError;
   String? get observation => throw _privateConstructorUsedError;
@@ -38,7 +39,8 @@ abstract class $ServiceCopyWith<$Res> {
   @useResult
   $Res call(
       {String? title,
-      String? resumen,
+      String? description,
+      String? phrase,
       String? duration,
       List<String>? images,
       String? observation});
@@ -58,7 +60,8 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
   @override
   $Res call({
     Object? title = freezed,
-    Object? resumen = freezed,
+    Object? description = freezed,
+    Object? phrase = freezed,
     Object? duration = freezed,
     Object? images = freezed,
     Object? observation = freezed,
@@ -68,9 +71,13 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      resumen: freezed == resumen
-          ? _value.resumen
-          : resumen // ignore: cast_nullable_to_non_nullable
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phrase: freezed == phrase
+          ? _value.phrase
+          : phrase // ignore: cast_nullable_to_non_nullable
               as String?,
       duration: freezed == duration
           ? _value.duration
@@ -97,7 +104,8 @@ abstract class _$$ServiceImplCopyWith<$Res> implements $ServiceCopyWith<$Res> {
   @useResult
   $Res call(
       {String? title,
-      String? resumen,
+      String? description,
+      String? phrase,
       String? duration,
       List<String>? images,
       String? observation});
@@ -115,7 +123,8 @@ class __$$ServiceImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = freezed,
-    Object? resumen = freezed,
+    Object? description = freezed,
+    Object? phrase = freezed,
     Object? duration = freezed,
     Object? images = freezed,
     Object? observation = freezed,
@@ -125,9 +134,13 @@ class __$$ServiceImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      resumen: freezed == resumen
-          ? _value.resumen
-          : resumen // ignore: cast_nullable_to_non_nullable
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phrase: freezed == phrase
+          ? _value.phrase
+          : phrase // ignore: cast_nullable_to_non_nullable
               as String?,
       duration: freezed == duration
           ? _value.duration
@@ -150,7 +163,8 @@ class __$$ServiceImplCopyWithImpl<$Res>
 class _$ServiceImpl implements _Service {
   const _$ServiceImpl(
       {this.title,
-      this.resumen,
+      this.description,
+      this.phrase,
       this.duration,
       final List<String>? images,
       this.observation})
@@ -162,7 +176,9 @@ class _$ServiceImpl implements _Service {
   @override
   final String? title;
   @override
-  final String? resumen;
+  final String? description;
+  @override
+  final String? phrase;
   @override
   final String? duration;
   final List<String>? _images;
@@ -180,7 +196,7 @@ class _$ServiceImpl implements _Service {
 
   @override
   String toString() {
-    return 'Service(title: $title, resumen: $resumen, duration: $duration, images: $images, observation: $observation)';
+    return 'Service(title: $title, description: $description, phrase: $phrase, duration: $duration, images: $images, observation: $observation)';
   }
 
   @override
@@ -189,7 +205,9 @@ class _$ServiceImpl implements _Service {
         (other.runtimeType == runtimeType &&
             other is _$ServiceImpl &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.resumen, resumen) || other.resumen == resumen) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.phrase, phrase) || other.phrase == phrase) &&
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
@@ -199,8 +217,8 @@ class _$ServiceImpl implements _Service {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, title, resumen, duration,
-      const DeepCollectionEquality().hash(_images), observation);
+  int get hashCode => Object.hash(runtimeType, title, description, phrase,
+      duration, const DeepCollectionEquality().hash(_images), observation);
 
   @JsonKey(ignore: true)
   @override
@@ -219,7 +237,8 @@ class _$ServiceImpl implements _Service {
 abstract class _Service implements Service {
   const factory _Service(
       {final String? title,
-      final String? resumen,
+      final String? description,
+      final String? phrase,
       final String? duration,
       final List<String>? images,
       final String? observation}) = _$ServiceImpl;
@@ -229,7 +248,9 @@ abstract class _Service implements Service {
   @override
   String? get title;
   @override
-  String? get resumen;
+  String? get description;
+  @override
+  String? get phrase;
   @override
   String? get duration;
   @override
