@@ -1,6 +1,7 @@
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/pages/pages.dart';
 import 'package:ekilibra_spa/app/pages/quote/pages/quote_page.dart';
+import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,8 +25,14 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
+        const Banners(images: [
+          "https://picsum.photos/id/9/400/200",
+          "https://picsum.photos/id/10/400/200",
+          "https://picsum.photos/id/11/400/200",
+          "https://picsum.photos/id/12/400/200"
+        ]),
         ElevatedButton(
           onPressed: () {
             context.push(ProfilePage.name, extra: {'isRegister': false});
