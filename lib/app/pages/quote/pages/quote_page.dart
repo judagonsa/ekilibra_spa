@@ -17,7 +17,14 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class QuotePage extends StatefulWidget {
   static const name = '/quote';
-  const QuotePage({super.key});
+  const QuotePage({
+    super.key,
+    required this.services,
+    required this.places,
+  });
+
+  final List<Service> services;
+  final List<String> places;
 
   @override
   State<QuotePage> createState() => _QuotePageState();
@@ -34,8 +41,6 @@ class _QuotePageState extends State<QuotePage> {
   TextEditingController observationController = TextEditingController();
   String errorQuote = '';
   String militarHour = '';
-  List<String>? places;
-  List<Service>? services;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +85,7 @@ class _QuotePageState extends State<QuotePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
-                                        for (var place in places ?? [])
+                                        for (var place in widget.places)
                                           _ButtonPlace(
                                             place: place,
                                             placeSelected: placeSelected,
@@ -100,23 +105,22 @@ class _QuotePageState extends State<QuotePage> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(Texts.service),
-                                    if (services != null)
-                                      _DropdownMenu(
-                                        hintText: Texts.select,
-                                        dataList: services!
-                                            .map((service) => service.title!)
-                                            .toList(),
-                                        onSelected: (value) {
-                                          if (value != null) {
-                                            for (var service in services!) {
-                                              if (service.title == value) {
-                                                serviceSelected = service;
-                                              }
+                                    _DropdownMenu(
+                                      hintText: Texts.select,
+                                      dataList: widget.services
+                                          .map((service) => service.title!)
+                                          .toList(),
+                                      onSelected: (value) {
+                                        if (value != null) {
+                                          for (var service in widget.services) {
+                                            if (service.title == value) {
+                                              serviceSelected = service;
                                             }
                                           }
-                                        },
-                                        width: 250,
-                                      )
+                                        }
+                                      },
+                                      width: 250,
+                                    )
                                   ],
                                 ),
                               ],

@@ -57,7 +57,10 @@ class _HomePageState extends State<HomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  context.push(QuotePage.name);
+                  context.push(QuotePage.name, extra: {
+                    'places': state.places,
+                    'services': state.services
+                  });
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
