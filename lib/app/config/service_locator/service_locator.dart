@@ -21,7 +21,7 @@ import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository_impl.
 import 'package:ekilibra_spa/app/pages/quote/use_cases/create_quote_use_case.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases/delete_quote_use_case.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases/get_quotes_use_case.dart';
-import 'package:ekilibra_spa/app/pages/quote/use_cases/load_places_use_case.dart';
+import 'package:ekilibra_spa/app/pages/home/use_cases/load_places_use_case.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases/quote_use_cases.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases/update_quote_use_case.dart';
 import 'package:get_it/get_it.dart';
@@ -57,7 +57,6 @@ void serviceLocatorInit() async {
         deleteQuoteUseCase: DeleteQuoteUseCase(getIt<QuoteRepository>()),
         getQuotesUseCase: GetQuotesUseCase(getIt<QuoteRepository>()),
         updateQuoteUseCase: UpdateQuoteUseCase(getIt<QuoteRepository>()),
-        loadPlacesUseCase: LoadPlacesUseCase(getIt<QuoteRepository>()),
       ),
     ),
   );
@@ -66,9 +65,8 @@ void serviceLocatorInit() async {
   getIt.registerLazySingleton(
     () => HomeBloc(
       HomeUseCases(
-        loadServicesUseCase: LoadServicesUseCase(
-          getIt<HomeRepository>(),
-        ),
+        loadServicesUseCase: LoadServicesUseCase(getIt<HomeRepository>()),
+        loadPlacesUseCase: LoadPlacesUseCase(getIt<HomeRepository>()),
       ),
     ),
   );

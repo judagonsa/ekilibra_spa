@@ -24,16 +24,16 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     homeBloc = getIt.get<HomeBloc>();
     homeBloc.add(LoadServicesEvent());
+    homeBloc.add(LoadPlacesEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Ekilibra Spa'),
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
-        buildWhen: (previous, current) => current is LoadServicesState,
         builder: (context, state) {
           return Column(
             children: [

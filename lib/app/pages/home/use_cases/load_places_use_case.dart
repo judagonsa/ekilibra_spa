@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository.dart';
+import 'package:ekilibra_spa/app/pages/home/repositories/home_repository.dart';
 
 class LoadPlacesUseCase {
-  final QuoteRepository _quoteRepository;
+  final HomeRepository _homeRepository;
 
-  LoadPlacesUseCase(this._quoteRepository);
+  LoadPlacesUseCase(this._homeRepository);
 
   Future<Either<bool, List<String>>> invoke() async {
     try {
-      final listServices = await _quoteRepository.getPlaces();
+      final listServices = await _homeRepository.getPlaces();
       return listServices.isNotEmpty ? Right(listServices) : const Left(false);
     } catch (e) {
       //manejo de logs

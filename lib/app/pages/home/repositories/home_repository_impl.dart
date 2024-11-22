@@ -211,4 +211,9 @@ class HomeRepositoryImpl implements HomeRepository {
       ),
     ];
   }
+
+  @override
+  Future<List<String>> getPlaces() async {
+    return ['Sogamoso', 'Duitama', 'Tunja'];
+  }
 }

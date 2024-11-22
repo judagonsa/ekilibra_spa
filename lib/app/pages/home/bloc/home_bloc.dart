@@ -7,8 +7,9 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc(this.homeUseCases) : super(HomeState(services: [])) {
+  HomeBloc(this.homeUseCases) : super(HomeState(services: [], places: [])) {
     on<LoadServicesEvent>(_loadServices);
+    on<LoadPlacesEvent>(_loadPlaces);
   }
   final HomeUseCases homeUseCases;
 
@@ -25,6 +26,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       );
     } catch (e) {
       emit(ErrorLoadServicesState(state, e.toString()));
+    }
+  }
+
+  Future _loadPlaces(LoadPlacesEvent event, Emitter<HomeState> emit) async {
+    try {
+      // emit(LoadingSaveProfile(state.data));
+
+      final resp = await homeUseCases.loadPlacesUseCase.invoke();
+
+      resp.fold(
+        (l) => emit(ErrorLoadPlacesState(state, 'Error cargando lugares')),
+        (places) {
+          emit(LoadPlacesState(state.copyWith(places: places)));
+        },
+      );
+      add(LoadServicesEvent());
+    } catch (e) {
+      emit(ErrorLoadPlacesState(state, e.toString()));
     }
   }
 }

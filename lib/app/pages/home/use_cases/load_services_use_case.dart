@@ -12,7 +12,6 @@ class LoadServicesUseCase {
       final listServices = await _homeRepository.getServices();
       return listServices.isNotEmpty ? Right(listServices) : const Left(false);
     } catch (e) {
-      //manejo de logs
       return const Left(false);
     }
   }

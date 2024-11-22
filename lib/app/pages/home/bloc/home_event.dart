@@ -11,6 +11,7 @@ class ErrorLoadServicesState extends HomeState {
   ErrorLoadServicesState(this.state, this.error)
       : super(
           services: state.services,
+          places: state.places,
         );
 }
 
@@ -20,5 +21,29 @@ class LoadServicesState extends HomeState {
   LoadServicesState(this.state)
       : super(
           services: state.services,
+          places: state.places,
+        );
+}
+
+class LoadPlacesEvent extends HomeEvent {}
+
+class ErrorLoadPlacesState extends HomeState {
+  final HomeState state;
+  final String error;
+
+  ErrorLoadPlacesState(this.state, this.error)
+      : super(
+          services: state.services,
+          places: state.places,
+        );
+}
+
+class LoadPlacesState extends HomeState {
+  final HomeState state;
+
+  LoadPlacesState(this.state)
+      : super(
+          services: state.services,
+          places: state.places,
         );
 }

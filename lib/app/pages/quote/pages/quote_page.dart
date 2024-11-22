@@ -335,7 +335,6 @@ class _QuotePageState extends State<QuotePage> {
     super.initState();
 
     quoteBloc = getIt.get<QuoteBloc>();
-    quoteBloc.add(LoadPlacesEvent());
   }
 }
 

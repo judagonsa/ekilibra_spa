@@ -3,14 +3,10 @@ part of 'quote_bloc.dart';
 class QuoteState {
   final Quote? quote;
   final bool loading;
-  final List<Service>? services;
-  final List<String>? places;
 
   const QuoteState({
     this.quote,
     this.loading = false,
-    this.services,
-    this.places,
   });
 
   QuoteState copyWith({
@@ -22,8 +18,6 @@ class QuoteState {
       QuoteState(
         quote: quote ?? this.quote,
         loading: loading ?? this.loading,
-        services: services ?? this.services,
-        places: places ?? this.places,
       );
 }
 
@@ -33,8 +27,6 @@ class QuoteListInitialState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
@@ -45,8 +37,6 @@ class QuoteListUpdateState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
@@ -58,8 +48,6 @@ class QuoteValidateFormState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
@@ -71,8 +59,6 @@ class ErrorLoadPlacesState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
@@ -83,8 +69,6 @@ class LoadPlacesState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
@@ -95,8 +79,6 @@ class CreateQuoteState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
@@ -108,7 +90,5 @@ class ErrorCreateQuoteState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
