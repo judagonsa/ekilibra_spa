@@ -42,13 +42,9 @@ class _DetailQuoteState extends State<DetailQuote> {
                 description: 'Cita agendada exitosamente',
                 icon: Icons.check,
                 titleButtonOne: 'Aceptar',
-                titleButtonTwo: null, //TODO: Pasar a opcional
                 height: 140,
                 onPressedOne: () => {
                   context.go(HomePage.name), //TODO: animación para ir al home
-                },
-                onPressedTwo: () => {
-                  //TODO: pasar a opcional
                 },
               );
             });
@@ -69,6 +65,10 @@ class _DetailQuoteState extends State<DetailQuote> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Text(quote.service?.title ?? ''),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(quote.service?.description ?? ''),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),

@@ -4,6 +4,7 @@ import 'package:ekilibra_spa/app/config/helpers/banner_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/text_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
+import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
 import 'package:ekilibra_spa/app/pages/profile/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/model/profile.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
@@ -66,8 +67,6 @@ class _InputFormState extends State<_InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   DateTime dateBirthDate = DateTime.now();
-  final List<String> cities = ['Sogamoso', 'Duitama', 'Tunja'];
-  //TODO: cargar cities del servicio (fake)
 
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerDate = TextEditingController();
@@ -86,6 +85,7 @@ class _InputFormState extends State<_InputForm> {
   @override
   Widget build(BuildContext context) {
     final profileCubit = context.watch<ProfileCubit>();
+    final List<String>? cities = context.read<HomeBloc>().state.places;
 
     _controllerName.text = profileCubit.state.data?.userName ?? '';
     _controllerCity.text = profileCubit.state.data?.city ?? '';
@@ -205,35 +205,36 @@ class _InputFormState extends State<_InputForm> {
                   Texts.placeNearYouLocation,
                   style: const TextStyle(fontSize: 13),
                 ),
-                DropdownButtonFormField(
-                  decoration: const InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(
-                        color: Colors.black,
+                if (cities != null)
+                  DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
-                  hint: Text(Texts.city),
-                  onChanged: (value) {
-                    if (value != null) _controllerCity.text = value;
-                  },
-                  value: _controllerCity.text,
-                  items: cities.map(
-                    (String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
+                    hint: Text(Texts.city),
+                    onChanged: (value) {
+                      if (value != null) _controllerCity.text = value;
                     },
-                  ).toList(),
-                  validator: (value) {
-                    return value == null ? Texts.pleaseSelectCity : null;
-                  },
-                ),
+                    value: _controllerCity.text,
+                    items: cities.map(
+                      (String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      },
+                    ).toList(),
+                    validator: (value) {
+                      return value == null ? Texts.pleaseSelectCity : null;
+                    },
+                  ),
               ],
             ),
           ),

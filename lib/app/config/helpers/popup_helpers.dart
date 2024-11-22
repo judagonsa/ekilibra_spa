@@ -9,10 +9,10 @@ class PopupHelpers {
     required String description,
     required IconData? icon,
     required String titleButtonOne,
-    required String? titleButtonTwo,
+    String? titleButtonTwo,
     required double height,
     required void Function() onPressedOne,
-    required void Function()? onPressedTwo,
+    void Function()? onPressedTwo,
   }) {
     return showDialog(
       context: context,
