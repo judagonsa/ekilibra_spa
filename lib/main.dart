@@ -2,6 +2,7 @@ import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart'
 import 'package:ekilibra_spa/app/config/router/app_router.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/config/theme/app_theme.dart';
+import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => getIt<LoginCubit>()),
         BlocProvider(create: (context) => getIt<ProfileCubit>()),
         BlocProvider(create: (context) => getIt<QuoteBloc>()),
+        BlocProvider(create: (context) => getIt<HomeBloc>()),
       ],
       child: MaterialApp.router(
         routerConfig: appRouter,

@@ -3,16 +3,28 @@ import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/DetailQuote/pages/detail_quote.dart';
+import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class QuotePage extends StatefulWidget {
-  const QuotePage({super.key});
+  static const name = '/quote';
+  const QuotePage({
+    super.key,
+    required this.services,
+    required this.places,
+  });
+
+  final List<Service> services;
+  final List<String> places;
 
   @override
   State<QuotePage> createState() => _QuotePageState();
@@ -22,15 +34,13 @@ class _QuotePageState extends State<QuotePage> {
   late QuoteBloc quoteBloc;
 
   String placeSelected = '';
-  String serviceSelected = '';
+  Service? serviceSelected;
   String daySelected = '';
   String hourSelected = '';
   String minutesSelected = '';
   TextEditingController observationController = TextEditingController();
   String errorQuote = '';
   String militarHour = '';
-  List<String>? places;
-  List<String>? services;
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +48,13 @@ class _QuotePageState extends State<QuotePage> {
     final minutesQuote = ["00", "15", "30", "45"];
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 146, 153, 155),
+      backgroundColor: const Color.fromARGB(255, 219, 223, 224),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Agendar cita'),
+        title: Text(Texts.scheduleQuote),
       ),
       body: BlocBuilder<QuoteBloc, QuoteState>(
         builder: (context, state) {
-          if (state is LoadServicesState) {
-            services = state.services;
-            places = state.places;
-          }
           return SafeArea(
             child: GestureDetector(
               onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -65,7 +71,7 @@ class _QuotePageState extends State<QuotePage> {
                           height: 170,
                           decoration: const BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -73,13 +79,13 @@ class _QuotePageState extends State<QuotePage> {
                               children: [
                                 Column(
                                   children: [
-                                    const Text('Lugar:'),
+                                    Text(Texts.place),
                                     const SizedBox(height: 10),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
-                                        for (var place in places ?? [])
+                                        for (var place in widget.places)
                                           _ButtonPlace(
                                             place: place,
                                             placeSelected: placeSelected,
@@ -98,18 +104,23 @@ class _QuotePageState extends State<QuotePage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    const Text('Servicio:'),
-                                    if (services != null)
-                                      _DropdownMenu(
-                                        hintText: 'Servicio',
-                                        dataList: services!,
-                                        onSelected: (value) {
-                                          if (value != null) {
-                                            serviceSelected = value;
+                                    Text(Texts.service),
+                                    _DropdownMenu(
+                                      hintText: Texts.select,
+                                      dataList: widget.services
+                                          .map((service) => service.title!)
+                                          .toList(),
+                                      onSelected: (value) {
+                                        if (value != null) {
+                                          for (var service in widget.services) {
+                                            if (service.title == value) {
+                                              serviceSelected = service;
+                                            }
                                           }
-                                        },
-                                        width: 250,
-                                      )
+                                        }
+                                      },
+                                      width: 250,
+                                    )
                                   ],
                                 ),
                               ],
@@ -118,19 +129,19 @@ class _QuotePageState extends State<QuotePage> {
                         ),
                         const SizedBox(height: 15),
                         Container(
-                          height: 190,
+                          height: 220,
                           decoration: const BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Column(
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(
+                                Padding(
+                                  padding: const EdgeInsets.only(
                                       bottom: 10, left: 40, right: 20),
-                                  child: Text('Día:'),
+                                  child: Text(Texts.day),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -150,9 +161,9 @@ class _QuotePageState extends State<QuotePage> {
                                       )
                                   ],
                                 ),
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Text('Hora:'),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text(Texts.hour),
                                 ),
                                 Flexible(
                                   fit: FlexFit.tight,
@@ -163,8 +174,8 @@ class _QuotePageState extends State<QuotePage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5),
                                         child: _DropdownMenu(
-                                          hintText:
-                                              'Hora', //Validar si existe hora
+                                          hintText: Texts
+                                              .hour, //Validar si existe hora
                                           dataList: hoursQuote,
                                           onSelected: (value) {
                                             if (value != null) {
@@ -186,8 +197,8 @@ class _QuotePageState extends State<QuotePage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5),
                                         child: _DropdownMenu(
-                                          hintText:
-                                              'Minutos', //Validar si existe hora
+                                          hintText: Texts
+                                              .minute, //Validar si existe hora
                                           dataList: minutesQuote,
                                           onSelected: (value) {
                                             if (value != null) {
@@ -208,14 +219,14 @@ class _QuotePageState extends State<QuotePage> {
                         Container(
                           decoration: const BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(15),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Observaciones a tener en cuenta'),
+                                Text(Texts.observationConsiderer),
                                 TextField(
                                   controller: observationController,
                                   maxLines: 3,
@@ -251,10 +262,10 @@ class _QuotePageState extends State<QuotePage> {
                               isLogin: false,
                               backgroundColor: Colors.purple,
                             ),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 30),
-                              child: Text('Agendar'),
+                              child: Text(Texts.schedule),
                             ),
                           ),
                         ),
@@ -262,11 +273,12 @@ class _QuotePageState extends State<QuotePage> {
                             onPressed: () {
                               PopupHelpers().popupTwoButtons(
                                 context: context,
-                                title: '¿Necesitas ayuda?',
-                                description:
-                                    'Si necesitas ayuda agendando tu cita o quieres consultar si hay disponibilidad para atenderte el día de hoy, no dudes en ponerte en contacto con nosotros:',
-                                titleButtonOne: 'WhatsApp',
-                                titleButtonTwo: "Llamar",
+                                withIconClose: true,
+                                title: Texts.needHelp,
+                                description: Texts.needHelpText,
+                                icon: null,
+                                titleButtonOne: Texts.wa,
+                                titleButtonTwo: Texts.call,
                                 height: 220,
                                 onPressedOne: () {
                                   FunctionsHelper().openWhatsApp();
@@ -277,7 +289,7 @@ class _QuotePageState extends State<QuotePage> {
                                 },
                               );
                             },
-                            child: const Text('¿Problemas agendando tu cita?'))
+                            child: Text(Texts.problemsScheduleQuote))
                       ],
                     ),
                   ),
@@ -293,29 +305,31 @@ class _QuotePageState extends State<QuotePage> {
   _createQuote() {
     if (placeSelected.isEmpty) {
       setState(() {});
-      errorQuote = 'Favor escoger un lugar';
-    } else if (serviceSelected.isEmpty) {
+      errorQuote = Texts.pleaseSelectPlace;
+    } else if (serviceSelected == null) {
       setState(() {});
-      errorQuote = 'Favor escoger un servicio';
+      errorQuote = Texts.pleaseSelectService;
     } else if (daySelected.isEmpty) {
       setState(() {});
-      errorQuote = 'Favor escoger el día del servicio';
+      errorQuote = Texts.pleaseSelectDayService;
     } else if (hourSelected.isEmpty) {
       setState(() {});
-      errorQuote = 'Favor escoger la hora del servicio';
+      errorQuote = Texts.pleaseSelectHourService;
     } else {
       setState(() {});
       errorQuote = '';
-      quoteBloc.add(
-        CreteQuoteEvent(
-          quote: Quote(
+
+      context.push(
+        DetailQuote.name,
+        extra: {
+          'quote': Quote(
             place: placeSelected,
-            serviceId: serviceSelected,
+            service: serviceSelected,
             day: daySelected,
-            hour: hourSelected,
+            hour: '$hourSelected:$minutesSelected $militarHour',
             observation: observationController.text,
           ),
-        ),
+        },
       );
     }
   }
@@ -325,7 +339,6 @@ class _QuotePageState extends State<QuotePage> {
     super.initState();
 
     quoteBloc = getIt.get<QuoteBloc>();
-    quoteBloc.add(LoadPlacesEvent());
   }
 }
 
@@ -370,7 +383,11 @@ class _DaysWeek extends StatelessWidget {
                         .getDayString(DateFormat('EEE').format(date)),
                     style: const TextStyle(fontSize: 11),
                   ),
-                  Text(DateFormat('d').format(date))
+                  Text(DateFormat('d').format(date)),
+                  Text(
+                    DateFormat('MMM').format(date),
+                    style: const TextStyle(fontSize: 11),
+                  ),
                 ],
               ),
             )
@@ -408,7 +425,7 @@ class _ButtonPlace extends StatelessWidget {
 
 class _DropdownMenu extends StatelessWidget {
   final void Function(String?) onSelected;
-  final List<String>? dataList;
+  final List<String> dataList;
   final String hintText;
   final double? width;
 
@@ -426,7 +443,7 @@ class _DropdownMenu extends StatelessWidget {
       hintText: hintText,
       onSelected: onSelected,
       dropdownMenuEntries:
-          dataList!.map<DropdownMenuEntry<String>>((String value) {
+          dataList.map<DropdownMenuEntry<String>>((String value) {
         return DropdownMenuEntry<String>(
           value: value,
           label: value,

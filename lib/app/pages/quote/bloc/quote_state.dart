@@ -3,27 +3,21 @@ part of 'quote_bloc.dart';
 class QuoteState {
   final Quote? quote;
   final bool loading;
-  final List<String>? services;
-  final List<String>? places;
 
   const QuoteState({
     this.quote,
     this.loading = false,
-    this.services,
-    this.places,
   });
 
   QuoteState copyWith({
     Quote? quote,
     bool? loading,
-    List<String>? services,
+    List<Service>? services,
     List<String>? places,
   }) =>
       QuoteState(
         quote: quote ?? this.quote,
         loading: loading ?? this.loading,
-        services: services ?? this.services,
-        places: places ?? this.places,
       );
 }
 
@@ -33,8 +27,6 @@ class QuoteListInitialState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
@@ -45,8 +37,6 @@ class QuoteListUpdateState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
@@ -58,33 +48,17 @@ class QuoteValidateFormState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
-class ErrorLoadServicesState extends QuoteState {
+class ErrorLoadPlacesState extends QuoteState {
   final QuoteState state;
   final String error;
 
-  ErrorLoadServicesState(this.state, this.error)
+  ErrorLoadPlacesState(this.state, this.error)
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
-        );
-}
-
-class LoadServicesState extends QuoteState {
-  final QuoteState state;
-
-  LoadServicesState(this.state)
-      : super(
-          quote: state.quote,
-          loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
@@ -95,20 +69,26 @@ class LoadPlacesState extends QuoteState {
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
         );
 }
 
 class CreateQuoteState extends QuoteState {
   final QuoteState state;
-  final String error;
 
-  CreateQuoteState(this.state, this.error)
+  CreateQuoteState(this.state)
       : super(
           quote: state.quote,
           loading: state.loading,
-          services: state.services,
-          places: state.places,
+        );
+}
+
+class ErrorCreateQuoteState extends QuoteState {
+  final QuoteState state;
+  final String error;
+
+  ErrorCreateQuoteState(this.state, this.error)
+      : super(
+          quote: state.quote,
+          loading: state.loading,
         );
 }

@@ -1,3 +1,8 @@
+import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
+import 'package:ekilibra_spa/app/pages/home/repositories/home_repository.dart';
+import 'package:ekilibra_spa/app/pages/home/repositories/home_repository_impl.dart';
+import 'package:ekilibra_spa/app/pages/home/use_cases/home_use_cases.dart';
+import 'package:ekilibra_spa/app/pages/home/use_cases/load_services_use_case.dart';
 import 'package:ekilibra_spa/app/pages/login/cubit/login_cubit.dart';
 import 'package:ekilibra_spa/app/pages/login/repositories/login_repository.dart';
 import 'package:ekilibra_spa/app/pages/login/repositories/login_repository_impl.dart';
@@ -13,15 +18,13 @@ import 'package:ekilibra_spa/app/pages/profile/usecases/update_profile_use_case.
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
 import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository.dart';
 import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository_impl.dart';
-import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/create_quote_use_case.dart';
-import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/delete_quote_use_case.dart';
-import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/get_quotes_use_case.dart';
-import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/load_places_use_case.dart';
-import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/quote_use_cases.dart';
-import 'package:ekilibra_spa/app/pages/quote/use_cases.dart/update_quote_use_case.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases/create_quote_use_case.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases/delete_quote_use_case.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases/get_quotes_use_case.dart';
+import 'package:ekilibra_spa/app/pages/home/use_cases/load_places_use_case.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases/quote_use_cases.dart';
+import 'package:ekilibra_spa/app/pages/quote/use_cases/update_quote_use_case.dart';
 import 'package:get_it/get_it.dart';
-
-import '../../pages/quote/use_cases.dart/load_services_use_case.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -54,8 +57,16 @@ void serviceLocatorInit() async {
         deleteQuoteUseCase: DeleteQuoteUseCase(getIt<QuoteRepository>()),
         getQuotesUseCase: GetQuotesUseCase(getIt<QuoteRepository>()),
         updateQuoteUseCase: UpdateQuoteUseCase(getIt<QuoteRepository>()),
-        loadServicesUseCase: LoadServicesUseCase(getIt<QuoteRepository>()),
-        loadPlacesUseCase: LoadPlacesUseCase(getIt<QuoteRepository>()),
+      ),
+    ),
+  );
+
+  getIt.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl());
+  getIt.registerLazySingleton(
+    () => HomeBloc(
+      HomeUseCases(
+        loadServicesUseCase: LoadServicesUseCase(getIt<HomeRepository>()),
+        loadPlacesUseCase: LoadPlacesUseCase(getIt<HomeRepository>()),
       ),
     ),
   );

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:ekilibra_spa/app/config/helpers/banner_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/text_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/texts.dart';
+import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
 import 'package:ekilibra_spa/app/pages/profile/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/model/profile.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatelessWidget {
+  static const name = '/profile';
   const ProfilePage({super.key, required this.isRegister});
 
   final bool? isRegister;
@@ -20,7 +23,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(isRegister ?? false ? 'Registro' : 'Mi perfil'),
+        title: Text(isRegister ?? false ? Texts.register : Texts.myProfile),
       ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) =>
@@ -64,7 +67,6 @@ class _InputFormState extends State<_InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   DateTime dateBirthDate = DateTime.now();
-  final List<String> cities = ['Sogamoso', 'Duitama', 'Tunja'];
 
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerDate = TextEditingController();
@@ -83,6 +85,7 @@ class _InputFormState extends State<_InputForm> {
   @override
   Widget build(BuildContext context) {
     final profileCubit = context.watch<ProfileCubit>();
+    final List<String>? cities = context.read<HomeBloc>().state.places;
 
     _controllerName.text = profileCubit.state.data?.userName ?? '';
     _controllerCity.text = profileCubit.state.data?.city ?? '';
@@ -123,14 +126,14 @@ class _InputFormState extends State<_InputForm> {
           // if (widget.isRegister) const SizedBox(height: 50),
           if (widget.isRegister) const _TitleRegister(),
           CustomTextFormField(
-            label: 'Nombre y apellido',
+            label: Texts.nameAndLastname,
             textEditingController: _controllerName,
             onChanged: (value) {
               if (isRealtime) _formKey.currentState?.validate();
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'El nombre y apellido es requerido.';
+                return Texts.nameAndLastnameRequired;
               }
               if (value.length < 6) return 'Más de 6 caracteres.';
               return null;
@@ -139,7 +142,7 @@ class _InputFormState extends State<_InputForm> {
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: CustomTextFormField(
-              label: 'Número de teléfono',
+              label: Texts.phoneNumber,
               textEditingController: _controllerPhone,
               isPhone: true,
               onChanged: (value) {
@@ -147,11 +150,11 @@ class _InputFormState extends State<_InputForm> {
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'El número de teléfono es requerido.';
+                  return Texts.phoneNumberRequired;
                 }
 
                 if (value.length != 10) {
-                  return 'Número de teléfono inválido';
+                  return Texts.phoneNumberError;
                 }
                 return null;
               },
@@ -161,7 +164,7 @@ class _InputFormState extends State<_InputForm> {
             padding: const EdgeInsets.only(top: 15),
             child: CustomTextFormField(
               textEditingController: _controllerDate,
-              label: 'Fecha de nacimiento',
+              label: Texts.birthDate,
               onChanged: (value) async {
                 if (profileCubit.state.data?.bithDate?.isNotEmpty == false) {
                   _controllerDate.text = '';
@@ -178,7 +181,7 @@ class _InputFormState extends State<_InputForm> {
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'La fecha de nacimiento es requerido.';
+                  return Texts.birthDateRequired;
                 }
                 return null;
               },
@@ -198,39 +201,40 @@ class _InputFormState extends State<_InputForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Selecciona la ciudad más cercana a tu ubicación',
-                  style: TextStyle(fontSize: 13),
+                Text(
+                  Texts.placeNearYouLocation,
+                  style: const TextStyle(fontSize: 13),
                 ),
-                DropdownButtonFormField(
-                  decoration: const InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(
-                        color: Colors.black,
+                if (cities != null)
+                  DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
-                  hint: const Text('Ciudad'),
-                  onChanged: (value) {
-                    if (value != null) _controllerCity.text = value;
-                  },
-                  value: _controllerCity.text,
-                  items: cities.map(
-                    (String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
+                    hint: Text(Texts.city),
+                    onChanged: (value) {
+                      if (value != null) _controllerCity.text = value;
                     },
-                  ).toList(),
-                  validator: (value) {
-                    return value == null ? 'Favor seleccionar la ciudad' : null;
-                  },
-                ),
+                    value: _controllerCity.text,
+                    items: cities.map(
+                      (String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      },
+                    ).toList(),
+                    validator: (value) {
+                      return value == null ? Texts.pleaseSelectCity : null;
+                    },
+                  ),
               ],
             ),
           ),
@@ -238,7 +242,7 @@ class _InputFormState extends State<_InputForm> {
             Padding(
               padding: const EdgeInsets.only(top: 15),
               child: CustomTextFormField(
-                label: 'Contraseña',
+                label: Texts.password,
                 obscureText: obscureTextPassword,
                 iconInput: Icon(
                   obscureTextPassword ? Icons.visibility : Icons.visibility_off,
@@ -253,14 +257,14 @@ class _InputFormState extends State<_InputForm> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'La contraseña es requerida.';
+                    return Texts.passwordRequired;
                   }
                   final passwordRegExp = RegExp(
                     r'^(?=.*[a-z])(?=.*[A-Z])(?=.*)[a-zA-Z]{6,}',
                   );
 
                   if (!passwordRegExp.hasMatch(value)) {
-                    return 'Contraseña no segura, debe tener una mayúscula y una letra';
+                    return Texts.passwordNotSecure;
                   }
                   return null;
                 },
@@ -270,7 +274,7 @@ class _InputFormState extends State<_InputForm> {
             Padding(
               padding: const EdgeInsets.only(top: 15),
               child: CustomTextFormField(
-                label: 'Confirmar contraseña',
+                label: Texts.confirmPassword,
                 obscureText: obscureTextConfirmPassword,
                 iconInput: Icon(
                   obscureTextConfirmPassword
@@ -287,11 +291,11 @@ class _InputFormState extends State<_InputForm> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Confirmar contraseña es requerido.';
+                    return Texts.confirmPasswordRequired;
                   }
                   if (profileCubit.state.data?.password != '' &&
                       value != profileCubit.state.data?.password) {
-                    return 'las contraseñas no coinciden';
+                    return Texts.passwordDifferent;
                   }
                   return null;
                 },
@@ -302,11 +306,10 @@ class _InputFormState extends State<_InputForm> {
             child: Tooltip(
               key: tooltipkey,
               triggerMode: TooltipTriggerMode.manual,
-              message:
-                  'Acá podras agregar información que consideres pertinente, alguna enfermedad, alérgia o lesión a tener en cuenta.',
+              message: Texts.informationForProfile,
               child: CustomTextFormField(
                 textEditingController: _controllerObservations,
-                label: 'Observaciones a tener en cuenta',
+                label: Texts.observationConsiderer,
                 isObservation: true,
                 iconInput: const Icon(Icons.question_mark_outlined),
                 iconActtion: () {
@@ -344,15 +347,15 @@ class _InputFormState extends State<_InputForm> {
                     BannerHelper().showBanner(
                       context: context,
                       text: widget.isRegister
-                          ? 'Perfil creado con exito.'
-                          : 'Perfil guardado con exito.',
+                          ? Texts.profileCreateSuccess
+                          : Texts.profileSaveSuccess,
                     );
                   } else if (profileCubit.state is ErrorSaveProfile) {
                     BannerHelper().showBanner(
                       context: context,
                       text: widget.isRegister
-                          ? 'Error creando perfil.'
-                          : 'Error guardando perfil.',
+                          ? Texts.profileCreateError
+                          : Texts.profileSaveError,
                     );
                   }
                 }
@@ -363,7 +366,7 @@ class _InputFormState extends State<_InputForm> {
                 height: 40,
                 child: Center(
                   child: Text(
-                    widget.isRegister ? 'Crear usuario' : 'Guardar',
+                    widget.isRegister ? Texts.createProfile : Texts.save,
                   ),
                 ),
               ),
@@ -377,7 +380,7 @@ class _InputFormState extends State<_InputForm> {
 
   Future<DateTime?> pickDate() => showDatePicker(
         context: context,
-        helpText: 'Debes ser mayor de 15 años.',
+        helpText: Texts.fifteenYearsOld,
         firstDate: DateTime(1900),
         lastDate: DateTime(DateTime.now().year - 15),
       );
@@ -411,7 +414,7 @@ class _TitleRegister extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 40),
       child: Text(
-        'Bienvenido a Ekilibra Spa',
+        Texts.welcomeEkilibra,
         style: TextHelpers().textTitle(),
       ),
     );

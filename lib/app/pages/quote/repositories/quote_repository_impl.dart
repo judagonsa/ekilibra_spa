@@ -5,7 +5,7 @@ import '../model/quote.dart';
 class QuoteRepositoryImpl implements QuoteRepository {
   @override
   Future<bool> createQuote(Quote quote) async {
-    return false;
+    return true;
   }
 
   @override
@@ -21,15 +21,5 @@ class QuoteRepositoryImpl implements QuoteRepository {
   @override
   Future<bool> updateQuote(Quote quote) async {
     return false;
-  }
-
-  @override
-  Future<List<String>> getServices() async {
-    return ['Limpieza facial', 'Masaje', 'Camilla'];
-  }
-
-  @override
-  Future<List<String>> getPlaces() async {
-    return ['Sogamoso', 'Duitama', 'Tunja'];
   }
 }

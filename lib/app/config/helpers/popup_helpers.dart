@@ -4,29 +4,34 @@ import 'package:flutter/material.dart';
 class PopupHelpers {
   Future<void> popupTwoButtons({
     required BuildContext context,
+    required bool withIconClose,
     required String title,
     required String description,
+    required IconData? icon,
     required String titleButtonOne,
-    required String titleButtonTwo,
+    String? titleButtonTwo,
     required double height,
     required void Function() onPressedOne,
-    required void Function() onPressedTwo,
+    void Function()? onPressedTwo,
   }) {
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          title: Stack(
             children: [
-              const SizedBox(),
               Center(child: Text(title)),
-              GestureDetector(
-                child: const Icon(Icons.close),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              )
+              if (withIconClose)
+                Positioned(
+                  height: 20,
+                  left: 240,
+                  child: GestureDetector(
+                    child: const Icon(Icons.close),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                )
             ],
           ),
           shape: const RoundedRectangleBorder(
@@ -45,6 +50,12 @@ class PopupHelpers {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
+                if (icon != null)
+                  Icon(
+                    icon,
+                    size: 30,
+                  ),
+                if (icon != null) const SizedBox(height: 20),
                 SizedBox(
                   child: TextButton(
                     onPressed: onPressedOne,
@@ -52,11 +63,12 @@ class PopupHelpers {
                     child: Text(titleButtonOne),
                   ),
                 ),
-                TextButton(
-                  onPressed: onPressedTwo,
-                  style: ButtonHelpers().generalButton(context: context),
-                  child: Text(titleButtonTwo),
-                ),
+                if (titleButtonTwo != null)
+                  TextButton(
+                    onPressed: onPressedTwo,
+                    style: ButtonHelpers().generalButton(context: context),
+                    child: Text(titleButtonTwo),
+                  ),
               ],
             ),
           ),
