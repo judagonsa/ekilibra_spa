@@ -11,6 +11,7 @@ import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.da
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -22,9 +23,6 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(isRegister ?? false ? Texts.register : Texts.myProfile),
-      ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) =>
             _ProfileView(isRegister: isRegister ?? false),
@@ -40,17 +38,93 @@ class _ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-          child: SingleChildScrollView(
-            child: _InputForm(isRegister: isRegister),
-          ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _ImageProfile(
+              isRegister: isRegister,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+              child: _InputForm(isRegister: isRegister),
+            ),
+          ],
         ),
       ),
     );
+  }
+}
+
+class _ImageProfile extends StatefulWidget {
+  const _ImageProfile({required this.isRegister});
+  final bool isRegister;
+
+  @override
+  State<_ImageProfile> createState() => _ImageProfileState();
+}
+
+class _ImageProfileState extends State<_ImageProfile> {
+  File? image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (image != null && widget.isRegister == false)
+          Stack(
+            children: [
+              SizedBox(
+                height: 300,
+                width: double.infinity,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15)),
+                  child: Image.file(
+                    image!,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 10,
+                top: 40,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white70,
+                  child: IconButton(
+                    onPressed: () => context.pop(),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        Padding(
+          padding: EdgeInsets.only(
+              top: (image != null && widget.isRegister == false) ? 0 : 70),
+          child: TextButton(
+            onPressed: () => loadImageProfile(),
+            child: Text(image == null ? 'Subir foto' : 'Cambiar foto'),
+          ),
+        )
+      ],
+    );
+  }
+
+  Future loadImageProfile() async {
+    try {
+      final imageGalery =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (imageGalery == null) return;
+      final imageTemp = File(imageGalery.path);
+      setState(() => image = imageTemp);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
   }
 }
 
@@ -79,7 +153,6 @@ class _InputFormState extends State<_InputForm> {
 
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
-  File? image;
   bool isRealtime = false;
 
   @override
@@ -97,32 +170,6 @@ class _InputFormState extends State<_InputForm> {
       key: _formKey,
       child: Column(
         children: [
-          if (!widget.isRegister)
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: ClipOval(
-                child: SizedBox.fromSize(
-                  size: const Size.fromRadius(80),
-                  child: IconButton(
-                    iconSize: 150,
-                    icon: image == null
-                        ? const Icon(
-                            Icons.account_circle,
-                          )
-                        : ClipOval(
-                            child: SizedBox.fromSize(
-                              size: const Size.fromRadius(75),
-                              child: Image.file(
-                                image!,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                    onPressed: () => loadImageProfile(),
-                  ),
-                ),
-              ),
-            ),
           // if (widget.isRegister) const SizedBox(height: 50),
           if (widget.isRegister) const _TitleRegister(),
           CustomTextFormField(
@@ -384,17 +431,6 @@ class _InputFormState extends State<_InputForm> {
         firstDate: DateTime(1900),
         lastDate: DateTime(DateTime.now().year - 15),
       );
-
-  Future loadImageProfile() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
-  }
 
   @override
   void initState() {
