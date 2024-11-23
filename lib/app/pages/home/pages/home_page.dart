@@ -32,29 +32,37 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ekilibra Spa'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.push(ProfilePage.name, extra: {'isRegister': false});
+            },
+            icon: const Icon(Icons.person),
+            color: Colors.purple,
+          ),
+        ],
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.purple,
+          ),
+        ),
+        elevation: 10,
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return Column(
             children: [
               if (state.services != null)
-                Banners(
-                  images: state.services!
-                      .map((service) => service.images![0])
-                      .toList(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Banners(
+                    images: state.services!
+                        .map((service) => service.images![0])
+                        .toList(),
+                  ),
                 ),
-              ElevatedButton(
-                onPressed: () {
-                  context.push(ProfilePage.name, extra: {'isRegister': false});
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.person),
-                    Text(Texts.profile),
-                  ],
-                ),
-              ),
               ElevatedButton(
                 onPressed: () {
                   context.push(QuotePage.name, extra: {
