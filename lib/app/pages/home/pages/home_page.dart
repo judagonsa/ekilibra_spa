@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              context.push(ProfilePage.name, extra: {'isRegister': false});
+              context.push(ProfilePage.name, extra: {'isRegister': true});
             },
             icon: const Icon(Icons.person),
             color: Colors.purple,

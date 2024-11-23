@@ -47,7 +47,7 @@ class _ProfileView extends StatelessWidget {
               isRegister: isRegister,
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
               child: _InputForm(isRegister: isRegister),
             ),
           ],
@@ -103,14 +103,33 @@ class _ImageProfileState extends State<_ImageProfile> {
               ),
             ],
           ),
-        Padding(
-          padding: EdgeInsets.only(
-              top: (image != null && widget.isRegister == false) ? 0 : 70),
-          child: TextButton(
-            onPressed: () => loadImageProfile(),
-            child: Text(image == null ? 'Subir foto' : 'Cambiar foto'),
-          ),
-        )
+        if (widget.isRegister == false)
+          Padding(
+            padding: EdgeInsets.only(
+                top: (image != null && widget.isRegister == false) ? 0 : 70),
+            child: SizedBox(
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  if (image == null)
+                    Positioned(
+                      left: 10,
+                      child: IconButton(
+                        onPressed: () => context.pop(),
+                        icon: const Icon(Icons.arrow_back),
+                      ),
+                    ),
+                  Center(
+                    child: TextButton(
+                      onPressed: () => loadImageProfile(),
+                      child:
+                          Text(image == null ? 'Subir foto' : 'Cambiar foto'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
       ],
     );
   }
@@ -170,7 +189,7 @@ class _InputFormState extends State<_InputForm> {
       key: _formKey,
       child: Column(
         children: [
-          // if (widget.isRegister) const SizedBox(height: 50),
+          if (widget.isRegister) const SizedBox(height: 50),
           if (widget.isRegister) const _TitleRegister(),
           CustomTextFormField(
             label: Texts.nameAndLastname,
@@ -449,9 +468,26 @@ class _TitleRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 40),
-      child: Text(
-        Texts.welcomeEkilibra,
-        style: TextHelpers().textTitle(),
+      child: SizedBox(
+        width: double.infinity,
+        child: Stack(
+          children: [
+            Positioned(
+              left: -10,
+              top: -5,
+              child: IconButton(
+                onPressed: () => context.pop(),
+                icon: const Icon(Icons.arrow_back),
+              ),
+            ),
+            Center(
+              child: Text(
+                Texts.welcomeEkilibra,
+                style: TextHelpers().textTitle(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
