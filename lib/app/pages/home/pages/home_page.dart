@@ -1,7 +1,9 @@
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/DetailQuote/pages/detail_quote.dart';
 import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
 import 'package:ekilibra_spa/app/pages/pages.dart';
+import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/pages/quote/pages/quote_page.dart';
 import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +44,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            //TODO: abrir menú lateral
+          },
           icon: const Icon(
             Icons.menu,
             color: Colors.purple,
@@ -61,6 +65,16 @@ class _HomePageState extends State<HomePage> {
                     images: state.services!
                         .map((service) => service.images![0])
                         .toList(),
+                    onTap: (index) {
+                      context.push(
+                        DetailQuote.name,
+                        extra: {
+                          'quote': Quote(
+                            service: state.services![index],
+                          ),
+                        },
+                      );
+                    },
                   ),
                 ),
               ElevatedButton(

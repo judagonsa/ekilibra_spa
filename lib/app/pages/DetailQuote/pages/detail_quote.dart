@@ -3,6 +3,7 @@ import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/home/pages/home_page.dart';
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
@@ -14,8 +15,13 @@ import 'package:go_router/go_router.dart';
 class DetailQuote extends StatefulWidget {
   static const name = '/detail_quote';
   final Quote quote;
+  final Service? service;
 
-  const DetailQuote({super.key, required this.quote});
+  const DetailQuote({
+    super.key,
+    required this.quote,
+    this.service,
+  });
 
   @override
   State<DetailQuote> createState() => _DetailQuoteState();
@@ -23,6 +29,7 @@ class DetailQuote extends StatefulWidget {
 
 class _DetailQuoteState extends State<DetailQuote> {
   late Quote quote = widget.quote;
+  late Service? service = widget.service ?? widget.quote.service;
   late QuoteBloc quoteBloc;
   @override
   Widget build(BuildContext context) {
@@ -53,9 +60,9 @@ class _DetailQuoteState extends State<DetailQuote> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (quote.service?.images != null)
+                if (service?.images != null)
                   Banners(
-                    images: quote.service!.images!,
+                    images: service!.images!,
                   ),
                 Padding(
                   padding: const EdgeInsets.all(10),
@@ -64,35 +71,41 @@ class _DetailQuoteState extends State<DetailQuote> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(quote.service?.title ?? ''),
+                        child: Text(service?.title ?? ''),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(quote.service?.description ?? ''),
+                        child: Text(service?.description ?? ''),
                       ),
+                      if (service?.phrase != null &&
+                          service?.phrase?.isNotEmpty == true)
+                        //TODO: dejar bien bonita la frase, en un recuadro o algo
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text(service?.phrase ?? ''),
+                        ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(quote.service?.phrase ?? ''),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(quote.service?.observation ?? ''),
+                        child: Text(service?.observation ?? ''),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Text(
-                            '${Texts.duration}: ${quote.service?.duration ?? ''}'),
+                            '${Texts.duration}: ${service?.duration ?? ''}'),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text("${Texts.place}: ${quote.place}"),
-                        //TODO: botón de cómo llegar o dirección
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text('${Texts.hour}: ${quote.hour ?? ''}'),
-                      ),
-                      if (quote.observation?.isNotEmpty == true)
+                      if (quote.place != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text("${Texts.place}: ${quote.place}"),
+                          //TODO: botón de cómo llegar o dirección
+                        ),
+                      if (quote.hour != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text('${Texts.hour}: ${quote.hour}'),
+                        ),
+                      if (quote.observation != null &&
+                          quote.observation?.isNotEmpty == true)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Text(quote.observation!),
@@ -121,7 +134,7 @@ class _DetailQuoteState extends State<DetailQuote> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Text(
-                          Texts.confirmQuote,
+                          service != null ? 'Agendar cita' : Texts.confirmQuote,
                           style: const TextStyle(fontSize: 16),
                         ),
                       ),

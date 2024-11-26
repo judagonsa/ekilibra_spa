@@ -2,22 +2,30 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
 class Banners extends StatelessWidget {
-  const Banners({super.key, required this.images});
+  const Banners({
+    super.key,
+    required this.images,
+    this.onTap,
+  });
 
   final List<String> images;
+  final Function(int)? onTap;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 200,
       child: Swiper(
+        onTap: onTap,
         viewportFraction: 0.8,
         scale: 0.9,
         loop: false,
         autoplay: true,
         itemCount: images.length,
         itemBuilder: (context, index) {
-          return _Slide(image: images[index]);
+          return _Slide(
+            image: images[index],
+          );
         },
       ),
     );
@@ -39,7 +47,7 @@ class _Slide extends StatelessWidget {
         BoxShadow(
           color: Colors.black45,
           blurRadius: 10,
-          offset: Offset(0, 8), // Cambia la posición de la sombra
+          offset: Offset(0, 8),
         ),
       ],
     );
