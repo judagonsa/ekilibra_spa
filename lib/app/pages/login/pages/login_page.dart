@@ -93,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                         isRealtime = true;
                         final isValid = formLoginKey.currentState!.validate();
                         if (isValid) {
+                          // ignore: avoid_print
                           print('revisar datos on firebase');
                         }
                       },

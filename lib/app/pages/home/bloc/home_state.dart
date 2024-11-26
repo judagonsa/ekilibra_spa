@@ -1,6 +1,5 @@
 part of 'home_bloc.dart';
 
-@freezed
 class HomeState {
   final List<Service>? services;
   final List<String>? places;

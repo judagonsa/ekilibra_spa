@@ -142,6 +142,7 @@ class _ImageProfileState extends State<_ImageProfile> {
       final imageTemp = File(imageGalery.path);
       setState(() => image = imageTemp);
     } on PlatformException catch (e) {
+      // ignore: avoid_print
       print('Failed to pick image: $e');
     }
   }
@@ -263,7 +264,7 @@ class _InputFormState extends State<_InputForm> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 15),
+            padding: const EdgeInsets.only(top: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

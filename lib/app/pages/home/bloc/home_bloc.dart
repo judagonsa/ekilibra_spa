@@ -1,7 +1,6 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/home/use_cases/home_use_cases.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
