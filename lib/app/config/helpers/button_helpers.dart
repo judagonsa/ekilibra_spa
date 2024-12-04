@@ -9,7 +9,7 @@ class ButtonHelpers {
     return TextButton.styleFrom(
       elevation: 1,
       foregroundColor: textColor ?? Colors.white,
-      backgroundColor: backgroundColor ?? Colors.red,
+      backgroundColor: backgroundColor ?? Colors.purple,
       minimumSize: const Size(88, 36),
       padding: EdgeInsets.only(
           left: isLogin ? 16 : 8,
@@ -30,9 +30,9 @@ class ButtonHelpers {
     return OutlinedButton.styleFrom(
       backgroundColor: backgrounColor ?? Colors.white,
       elevation: 1,
-      foregroundColor: textColor ?? Colors.red,
+      foregroundColor: textColor ?? Colors.purple,
       // padding: const EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
-      side: BorderSide(width: 2, color: borderColor ?? Colors.red),
+      side: BorderSide(width: 2, color: borderColor ?? Colors.purple),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
@@ -46,7 +46,7 @@ class ButtonHelpers {
     return TextButton.styleFrom(
       elevation: 1,
       foregroundColor: textColor ?? Colors.white,
-      backgroundColor: backgroundColor ?? Colors.red,
+      backgroundColor: backgroundColor ?? Colors.purple,
       minimumSize: Size(MediaQuery.of(context).size.width, 45),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),

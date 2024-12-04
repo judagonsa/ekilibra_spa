@@ -29,7 +29,7 @@ class _DetailQuoteState extends State<DetailQuote> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalle del agendameinto'),
+        title: Text(Texts.detailService),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -43,7 +43,13 @@ class _DetailQuoteState extends State<DetailQuote> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(service?.title ?? ''),
+                    child: Center(
+                      child: Text(
+                        service?.title ?? '',
+                        style: const TextStyle(fontSize: 20),
+                        maxLines: 2,
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -53,8 +59,20 @@ class _DetailQuoteState extends State<DetailQuote> {
                       service?.phrase?.isNotEmpty == true)
                     //TODO: dejar bien bonita la frase, en un recuadro o algo
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Text(service?.phrase ?? ''),
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.purple,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            service?.phrase ?? '',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ),
                   if (service?.observation?.isEmpty == false)
                     Padding(

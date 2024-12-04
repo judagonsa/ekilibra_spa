@@ -53,4 +53,5 @@ class Texts {
   static String pleaseSelectService = 'Favor escoger un servicio';
   static String pleaseSelectDayService = 'Favor escoger el día del servicio';
   static String pleaseSelectHourService = 'Favor escoger la hora del servicio';
+  static String detailService = 'Detalle del servicio';
 }
