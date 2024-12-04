@@ -1,7 +1,5 @@
 import 'package:ekilibra_spa/app/pages/DetailQuote/pages/detail_quote.dart';
-import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/pages.dart';
-import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/pages/quote/pages/quote_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,16 +29,17 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         Map<String, dynamic> args = state.extra as Map<String, dynamic>;
         return QuotePage(
-          places: args['places'] as List<String>,
-          services: args['services'] as List<Service>,
+          serviceId: args['serviceId'] as String,
         );
       },
     ),
     GoRoute(
       path: DetailQuote.name,
       builder: (context, state) {
-        Map<String, Quote> args = state.extra as Map<String, Quote>;
-        return DetailQuote(quote: args['quote']!);
+        Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+        return DetailQuote(
+          serviceId: args['serviceId'] as String,
+        );
       },
     ),
     GoRoute(

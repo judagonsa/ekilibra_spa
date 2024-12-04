@@ -5,13 +5,11 @@ import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
-import 'package:ekilibra_spa/app/pages/DetailQuote/pages/detail_quote.dart';
+import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
 import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
-import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -19,13 +17,10 @@ class QuotePage extends StatefulWidget {
   static const name = '/quote';
   const QuotePage({
     super.key,
-    required this.services,
-    required this.places,
+    this.serviceId,
   });
 
-  final List<Service> services;
-  final List<String> places;
-
+  final String? serviceId;
   @override
   State<QuotePage> createState() => _QuotePageState();
 }
@@ -46,6 +41,14 @@ class _QuotePageState extends State<QuotePage> {
   Widget build(BuildContext context) {
     final hoursQuote = ["09", "10", "11", "02", "03", "04", "05"];
     final minutesQuote = ["00", "15", "30", "45"];
+
+    final List<Service>? services = context.read<HomeBloc>().state.services;
+    final List<String>? places = context.read<HomeBloc>().state.places;
+
+    if (widget.serviceId != null) {
+      serviceSelected =
+          context.read<HomeBloc>().getServiceFromId(widget.serviceId!);
+    }
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 219, 223, 224),
@@ -85,16 +88,17 @@ class _QuotePageState extends State<QuotePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
-                                        for (var place in widget.places)
-                                          _ButtonPlace(
-                                            place: place,
-                                            placeSelected: placeSelected,
-                                            action: () {
-                                              setState(() {
-                                                placeSelected = place;
-                                              });
-                                            },
-                                          )
+                                        if (places != null)
+                                          for (var place in places)
+                                            _ButtonPlace(
+                                              place: place,
+                                              placeSelected: placeSelected,
+                                              action: () {
+                                                setState(() {
+                                                  placeSelected = place;
+                                                });
+                                              },
+                                            )
                                       ],
                                     )
                                   ],
@@ -105,22 +109,29 @@ class _QuotePageState extends State<QuotePage> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(Texts.service),
-                                    _DropdownMenu(
-                                      hintText: Texts.select,
-                                      dataList: widget.services
-                                          .map((service) => service.title!)
-                                          .toList(),
-                                      onSelected: (value) {
-                                        if (value != null) {
-                                          for (var service in widget.services) {
-                                            if (service.title == value) {
-                                              serviceSelected = service;
+                                    if (services != null)
+                                      _DropdownMenu(
+                                        initialSelection:
+                                            serviceSelected != null
+                                                ? serviceSelected!.title!
+                                                : '',
+                                        hintText: serviceSelected != null
+                                            ? serviceSelected!.title!
+                                            : Texts.select,
+                                        dataList: services
+                                            .map((service) => service.title!)
+                                            .toList(),
+                                        onSelected: (value) {
+                                          if (value != null) {
+                                            for (var service in services) {
+                                              if (service.title == value) {
+                                                serviceSelected = service;
+                                              }
                                             }
                                           }
-                                        }
-                                      },
-                                      width: 250,
-                                    )
+                                        },
+                                        width: 250,
+                                      )
                                   ],
                                 ),
                               ],
@@ -319,18 +330,7 @@ class _QuotePageState extends State<QuotePage> {
       setState(() {});
       errorQuote = '';
 
-      context.push(
-        DetailQuote.name,
-        extra: {
-          'quote': Quote(
-            place: placeSelected,
-            service: serviceSelected,
-            day: daySelected,
-            hour: '$hourSelected:$minutesSelected $militarHour',
-            observation: observationController.text,
-          ),
-        },
-      );
+      //todo: mostrar vista del servicio agendado
     }
   }
 
@@ -428,17 +428,20 @@ class _DropdownMenu extends StatelessWidget {
   final List<String> dataList;
   final String hintText;
   final double? width;
+  final String? initialSelection;
 
   const _DropdownMenu({
     required this.onSelected,
     required this.dataList,
     required this.hintText,
     this.width,
+    this.initialSelection,
   });
 
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
+      initialSelection: initialSelection,
       width: width,
       hintText: hintText,
       onSelected: onSelected,

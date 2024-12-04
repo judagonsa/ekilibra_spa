@@ -45,4 +45,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(ErrorLoadPlacesState(state, e.toString()));
     }
   }
+
+  Service? getServiceFromId(String serviceId) {
+    final exist =
+        state.services?.any((service) => service.title == serviceId) ?? false;
+    if (!exist) return null;
+
+    return state.services?.firstWhere((service) => service.title! == serviceId);
+  }
 }

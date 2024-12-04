@@ -1,6 +1,6 @@
 part of 'quote_bloc.dart';
 
-class QuoteState {
+class QuoteState extends Equatable {
   final Quote? quote;
   final bool loading;
 
@@ -19,6 +19,9 @@ class QuoteState {
         quote: quote ?? this.quote,
         loading: loading ?? this.loading,
       );
+
+  @override
+  List<Object?> get props => [quote, loading];
 }
 
 class QuoteListInitialState extends QuoteState {
