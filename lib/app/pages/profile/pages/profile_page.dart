@@ -289,7 +289,9 @@ class _InputFormState extends State<_InputForm> {
                     onChanged: (value) {
                       if (value != null) _controllerCity.text = value;
                     },
-                    value: _controllerCity.text,
+                    value: _controllerCity.text.isEmpty
+                        ? null
+                        : _controllerCity.text,
                     items: cities.map(
                       (String value) {
                         return DropdownMenuItem<String>(
