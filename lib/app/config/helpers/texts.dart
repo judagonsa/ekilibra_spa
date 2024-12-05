@@ -39,7 +39,7 @@ class Texts {
   static String save = 'Guardar';
   static String fifteenYearsOld = 'Debes ser mayor de 15 años.';
   static String welcomeEkilibra = 'Bienvenido a Ekilibra Spa';
-  static String service = 'Servicio:';
+  static String service = 'Servicio';
   static String select = 'Seleccionar';
   static String day = 'Día:';
   static String schedule = 'Agendar';

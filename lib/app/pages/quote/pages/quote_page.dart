@@ -3,6 +3,7 @@ import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/text_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
@@ -42,7 +43,6 @@ class _QuotePageState extends State<QuotePage> {
     final hoursQuote = ["09", "10", "11", "02", "03", "04", "05"];
     final minutesQuote = ["00", "15", "30", "45"];
 
-    final List<Service>? services = context.read<HomeBloc>().state.services;
     final List<String>? places = context.read<HomeBloc>().state.places;
 
     if (widget.serviceId != null) {
@@ -71,7 +71,6 @@ class _QuotePageState extends State<QuotePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          height: 170,
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -82,7 +81,10 @@ class _QuotePageState extends State<QuotePage> {
                               children: [
                                 Column(
                                   children: [
-                                    Text(Texts.place),
+                                    Text(
+                                      Texts.place,
+                                      style: TextHelpers().titleQuote(),
+                                    ),
                                     const SizedBox(height: 10),
                                     Row(
                                       mainAxisAlignment:
@@ -104,35 +106,24 @@ class _QuotePageState extends State<QuotePage> {
                                   ],
                                 ),
                                 const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(Texts.service),
-                                    if (services != null)
-                                      _DropdownMenu(
-                                        initialSelection:
-                                            serviceSelected != null
-                                                ? serviceSelected!.title!
-                                                : '',
-                                        hintText: serviceSelected != null
-                                            ? serviceSelected!.title!
-                                            : Texts.select,
-                                        dataList: services
-                                            .map((service) => service.title!)
-                                            .toList(),
-                                        onSelected: (value) {
-                                          if (value != null) {
-                                            for (var service in services) {
-                                              if (service.title == value) {
-                                                serviceSelected = service;
-                                              }
-                                            }
-                                          }
-                                        },
-                                        width: 250,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        Texts.service,
+                                        style: TextHelpers().titleQuote(),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        serviceSelected?.title ?? '',
+                                        textAlign: TextAlign.center,
                                       )
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -152,7 +143,10 @@ class _QuotePageState extends State<QuotePage> {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       bottom: 10, left: 40, right: 20),
-                                  child: Text(Texts.day),
+                                  child: Text(
+                                    Texts.day,
+                                    style: TextHelpers().titleQuote(),
+                                  ),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +168,10 @@ class _QuotePageState extends State<QuotePage> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: Text(Texts.hour),
+                                  child: Text(
+                                    Texts.hour,
+                                    style: TextHelpers().titleQuote(),
+                                  ),
                                 ),
                                 Flexible(
                                   fit: FlexFit.tight,

@@ -6,7 +6,8 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<List<Service>> getServices() async {
     return [
       const Service(
-        title: 'Estudio del rostro',
+        title:
+            'Estudio del rostro Estudio del rostro Estudio del rostro Estudio del rostro',
         phrase: '¡Déjanos ayudarte a descubrir tu ceja perfecta!',
         description:
             'CuidaNuestro servicio de Diseño de Cejas en Ekilibra es más que una simple técnica de depilación, es una experiencia personalizada que resalta la belleza única de cada individuo. Con un enfoque meticuloso, realizamos un diseño previo basado en el estudio del rostro de cada cliente, teniendo en cuenta su morfología única. Entendemos que cada persona es diferente, por lo que nos esforzamos por definir la ceja más adecuada para realzar su belleza natural. En Ekilibra, no se trata solo de seguir tendencias, sino de crear una ceja que refleje la singularidad y la exclusividad de cada personados',
