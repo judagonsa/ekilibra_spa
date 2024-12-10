@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:ekilibra_spa/app/config/helpers/banner_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/text_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
@@ -23,19 +22,28 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<ProfileCubit, ProfileState>(
-        builder: (context, state) =>
-            _ProfileView(isRegister: isRegister ?? false),
+      body: BlocListener<ProfileCubit, ProfileState>(
+        listenWhen: (previous, current) => previous != current,
+        listener: (context, state) async {
+          if (state is SaveProfile) {
+          } else if (state is ErrorSaveProfile) {}
+        },
+        child: _ProfileView(isRegister: isRegister ?? false),
       ),
     );
   }
 }
 
-class _ProfileView extends StatelessWidget {
+class _ProfileView extends StatefulWidget {
   const _ProfileView({required this.isRegister});
 
   final bool isRegister;
 
+  @override
+  State<_ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<_ProfileView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -44,11 +52,11 @@ class _ProfileView extends StatelessWidget {
         child: Column(
           children: [
             _ImageProfile(
-              isRegister: isRegister,
+              isRegister: widget.isRegister,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-              child: _InputForm(isRegister: isRegister),
+              child: _InputForm(isRegister: widget.isRegister),
             ),
           ],
         ),
@@ -163,9 +171,10 @@ class _InputFormState extends State<_InputForm> {
   DateTime dateBirthDate = DateTime.now();
 
   final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerPhone = TextEditingController();
   final TextEditingController _controllerDate = TextEditingController();
   final TextEditingController _controllerCity = TextEditingController();
-  final TextEditingController _controllerPhone = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
   final TextEditingController _controllerObservations = TextEditingController();
 
   var obscureTextPassword = true;
@@ -177,14 +186,9 @@ class _InputFormState extends State<_InputForm> {
 
   @override
   Widget build(BuildContext context) {
-    final profileCubit = context.watch<ProfileCubit>();
     final List<String>? cities = context.read<HomeBloc>().state.places;
 
-    _controllerName.text = profileCubit.state.data?.userName ?? '';
-    _controllerCity.text = profileCubit.state.data?.city ?? '';
-    _controllerPhone.text = profileCubit.state.data?.phone ?? '';
-    _controllerDate.text = profileCubit.state.data?.bithDate ?? '';
-    _controllerObservations.text = profileCubit.state.data?.observation ?? '';
+    final ProfileCubit profileCubit = context.watch<ProfileCubit>();
 
     return Form(
       key: _formKey,
@@ -275,16 +279,21 @@ class _InputFormState extends State<_InputForm> {
                 if (cities != null)
                   DropdownButtonFormField(
                     decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(
-                          color: Colors.black,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                    ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(
+                            color: Colors.red,
+                          ),
+                        )),
                     hint: Text(Texts.city),
                     onChanged: (value) {
                       if (value != null) _controllerCity.text = value;
@@ -322,6 +331,7 @@ class _InputFormState extends State<_InputForm> {
                   });
                 },
                 onChanged: (value) {
+                  _controllerPassword.text = value;
                   if (isRealtime) _formKey.currentState?.validate();
                 },
                 validator: (value) {
@@ -337,6 +347,7 @@ class _InputFormState extends State<_InputForm> {
                   }
                   return null;
                 },
+                textEditingController: _controllerPassword,
               ),
             ),
           if (widget.isRegister)
@@ -362,8 +373,8 @@ class _InputFormState extends State<_InputForm> {
                   if (value == null || value.isEmpty) {
                     return Texts.confirmPasswordRequired;
                   }
-                  if (profileCubit.state.data?.password != '' &&
-                      value != profileCubit.state.data?.password) {
+                  if (_controllerPassword.text != '' &&
+                      value != _controllerPassword.text) {
                     return Texts.passwordDifferent;
                   }
                   return null;
@@ -393,6 +404,7 @@ class _InputFormState extends State<_InputForm> {
               onPressed: () {
                 isRealtime = true;
                 final isValid = _formKey.currentState!.validate();
+                print(isValid);
                 if (isValid) {
                   if (widget.isRegister) {
                     profileCubit.onSubmitRegister(Profile(
@@ -410,22 +422,6 @@ class _InputFormState extends State<_InputForm> {
                       city: _controllerCity.text,
                       observation: _controllerObservations.text,
                     ));
-                  }
-
-                  if (profileCubit.state is SaveProfile) {
-                    BannerHelper().showBanner(
-                      context: context,
-                      text: widget.isRegister
-                          ? Texts.profileCreateSuccess
-                          : Texts.profileSaveSuccess,
-                    );
-                  } else if (profileCubit.state is ErrorSaveProfile) {
-                    BannerHelper().showBanner(
-                      context: context,
-                      text: widget.isRegister
-                          ? Texts.profileCreateError
-                          : Texts.profileSaveError,
-                    );
                   }
                 }
               },
@@ -457,9 +453,18 @@ class _InputFormState extends State<_InputForm> {
   @override
   void initState() {
     super.initState();
-    String phoneNumber = '';
+
+    final stateProfileCubit = context.read<ProfileCubit>();
+
+    _controllerName.text = stateProfileCubit.state.data?.userName ?? '';
+    _controllerCity.text = stateProfileCubit.state.data?.city ?? '';
+    _controllerPhone.text = stateProfileCubit.state.data?.phone ?? '';
+    _controllerDate.text = stateProfileCubit.state.data?.bithDate ?? '';
+    _controllerObservations.text =
+        stateProfileCubit.state.data?.observation ?? '';
+
     if (!widget.isRegister) {
-      context.read<ProfileCubit>().getProfile(phoneNumber);
+      context.read<ProfileCubit>().getProfile(_controllerPhone.text);
     }
   }
 }
