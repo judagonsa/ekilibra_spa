@@ -27,7 +27,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Profile?> getProfile(String phoneNumber) async {
+  Future<Profile?> getProfile() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? profileString = prefs.getString('profile');
     if (profileString != null) {

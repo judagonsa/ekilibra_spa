@@ -11,8 +11,6 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   onSubmitRegister(Profile profile) async {
     try {
-      emit(LoadingSaveProfile(state.data));
-
       final resp = await profileUseCases.registerProfileUseCase.invoke(profile);
 
       resp.fold(
@@ -26,8 +24,6 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   onSubmitUpdate(Profile profile) async {
     try {
-      emit(LoadingSaveProfile(state.data));
-
       final resp = await profileUseCases.updateProfileUseCase.invoke(profile);
 
       resp.fold(
@@ -39,14 +35,12 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  getProfile(String phoneNumber) async {
+  getProfile() async {
     try {
-      emit(LoadingSaveProfile(state.data));
-
-      final resp = await profileUseCases.getProfileUseCase.invoke(phoneNumber);
+      final resp = await profileUseCases.getProfileUseCase.invoke();
 
       resp.fold(
-        (l) => emit(ErrorSaveProfile(state.data, 'error guardando profile')),
+        (l) => emit(ErrorSaveProfile(state.data, 'error cargando profile')),
         (profile) => emit(GetProfile(profile)),
       );
     } catch (e) {

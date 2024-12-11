@@ -424,22 +424,16 @@ class _DropdownMenu extends StatelessWidget {
   final void Function(String?) onSelected;
   final List<String> dataList;
   final String hintText;
-  final double? width;
-  final String? initialSelection;
 
   const _DropdownMenu({
     required this.onSelected,
     required this.dataList,
     required this.hintText,
-    this.width,
-    this.initialSelection,
   });
 
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
-      initialSelection: initialSelection,
-      width: width,
       hintText: hintText,
       onSelected: onSelected,
       dropdownMenuEntries:

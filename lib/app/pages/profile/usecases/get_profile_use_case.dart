@@ -7,9 +7,9 @@ class GetProfileUseCase {
 
   GetProfileUseCase(this._profileRepository);
 
-  Future<Either<bool, Profile>> invoke(String phoneNumber) async {
+  Future<Either<bool, Profile>> invoke() async {
     try {
-      final success = await _profileRepository.getProfile(phoneNumber);
+      final success = await _profileRepository.getProfile();
       return success != null ? Right(success) : const Left(false);
     } catch (e) {
       //manejo de logs

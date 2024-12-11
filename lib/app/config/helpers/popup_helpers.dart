@@ -11,7 +11,7 @@ class PopupHelpers {
     required String titleButtonOne,
     String? titleButtonTwo,
     required double height,
-    required void Function() onPressedOne,
+    void Function()? onPressedOne,
     void Function()? onPressedTwo,
   }) {
     return showDialog(
