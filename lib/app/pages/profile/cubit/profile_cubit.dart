@@ -9,6 +9,10 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   final ProfileUseCases profileUseCases;
 
+  onRestartState() async {
+    emit(ProfileInitial(state.data));
+  }
+
   onSubmitRegister(Profile profile) async {
     try {
       final resp = await profileUseCases.registerProfileUseCase.invoke(profile);

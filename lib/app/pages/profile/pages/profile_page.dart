@@ -85,7 +85,8 @@ class _ProfileViewState extends State<_ProfileView> {
               titleButtonOne: "Aceptar",
               height: 140,
               onPressedOne: () {
-                context.go(LoginPage.name);
+                profileCubit.onRestartState();
+                context.go(widget.isRegister ? LoginPage.name : HomePage.name);
               },
             );
           });
