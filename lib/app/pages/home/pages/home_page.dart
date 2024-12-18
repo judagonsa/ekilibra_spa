@@ -1,12 +1,16 @@
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/DetailQuote/pages/detail_quote.dart';
 import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
+import 'package:ekilibra_spa/app/pages/pages.dart';
+import 'package:ekilibra_spa/app/pages/quote/pages/quote_page.dart';
 import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
-  static const name = 'home';
+  static const name = '/home';
   const HomePage({super.key});
 
   @override
@@ -32,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              //TODO: ir al perfil
+              context.push(ProfilePage.name, extra: {'isRegister': false});
             },
             icon: const Icon(Icons.person),
             color: Colors.purple,
@@ -61,13 +65,21 @@ class _HomePageState extends State<HomePage> {
                         .map((service) => service.images![0])
                         .toList(),
                     onTap: (index) {
-                      //TODO: detalle quote
+                      context.push(
+                        DetailQuote.name,
+                        extra: {
+                          'serviceId': state.services![index].title,
+                        },
+                      );
                     },
                   ),
                 ),
               ElevatedButton(
                 onPressed: () {
-                  //TODO: quuote page
+                  context.push(QuotePage.name, extra: {
+                    'places': state.places,
+                    'services': state.services
+                  });
                 },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

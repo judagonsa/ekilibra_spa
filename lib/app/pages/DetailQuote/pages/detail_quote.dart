@@ -3,12 +3,14 @@ import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
 import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
+import 'package:ekilibra_spa/app/pages/quote/pages/quote_page.dart';
 import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class DetailQuote extends StatefulWidget {
-  static const name = 'detail_quote';
+  static const name = '/detail_quote';
   final String serviceId;
 
   const DetailQuote({
@@ -90,7 +92,9 @@ class _DetailQuoteState extends State<DetailQuote> {
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: OutlinedButton(
                   onPressed: () {
-                    //TODO: quote page
+                    context.push(QuotePage.name, extra: {
+                      'serviceId': service?.title,
+                    });
                   },
                   style: ButtonHelpers().secondaryButton(),
                   child: Padding(
