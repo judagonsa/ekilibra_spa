@@ -4,7 +4,7 @@ import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.da
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  static const name = '/login';
+  static const name = 'login';
   const LoginPage({super.key});
 
   @override

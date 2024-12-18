@@ -15,7 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class QuotePage extends StatefulWidget {
-  static const name = '/quote';
+  static const name = 'quote';
   const QuotePage({
     super.key,
     this.serviceId,
@@ -327,7 +327,7 @@ class _QuotePageState extends State<QuotePage> {
       setState(() {});
       errorQuote = '';
 
-      //todo: mostrar vista del servicio agendado
+      //TODO: mostrar vista del servicio agendado
     }
   }
 

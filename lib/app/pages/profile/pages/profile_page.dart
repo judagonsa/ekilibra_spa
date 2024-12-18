@@ -5,7 +5,6 @@ import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/text_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
-import 'package:ekilibra_spa/app/pages/pages.dart';
 import 'package:ekilibra_spa/app/pages/profile/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/model/profile.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
@@ -13,11 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
-  static const name = '/profile';
+  static const name = 'profile';
   const ProfilePage({
     super.key,
     required this.isRegister,
@@ -85,7 +83,8 @@ class _ProfileViewState extends State<_ProfileView> {
               titleButtonOne: "Aceptar",
               height: 140,
               onPressedOne: () {
-                context.go(LoginPage.name);
+                //TODO: cerrar popup
+                //TODO: ir a vista de login o home, si esta registrado o no
               },
             );
           });
@@ -137,8 +136,9 @@ class _ProfileViewState extends State<_ProfileView> {
                               if (value == null || value.isEmpty) {
                                 return Texts.nameAndLastnameRequired;
                               }
-                              if (value.length < 6)
+                              if (value.length < 6) {
                                 return 'Más de 6 caracteres.';
+                              }
                               return null;
                             },
                           ),
@@ -149,8 +149,9 @@ class _ProfileViewState extends State<_ProfileView> {
                               textEditingController: _controllerPhone,
                               isPhone: true,
                               onChanged: (value) {
-                                if (isRealtime)
+                                if (isRealtime) {
                                   _formKey.currentState?.validate();
+                                }
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -465,7 +466,9 @@ class _ImageProfileState extends State<_ImageProfile> {
                 child: CircleAvatar(
                   backgroundColor: Colors.white70,
                   child: IconButton(
-                    onPressed: () => context.pop(),
+                    onPressed: () {
+                      //TODO: cerrar popup
+                    },
                     icon: const Icon(
                       Icons.arrow_back,
                     ),
@@ -486,7 +489,9 @@ class _ImageProfileState extends State<_ImageProfile> {
                     Positioned(
                       left: 10,
                       child: IconButton(
-                        onPressed: () => context.pop(),
+                        onPressed: () => {
+                          //TODO: cerrar popup
+                        },
                         icon: const Icon(Icons.arrow_back),
                       ),
                     ),
@@ -534,7 +539,9 @@ class _TitleRegister extends StatelessWidget {
               left: -10,
               top: -5,
               child: IconButton(
-                onPressed: () => context.pop(),
+                onPressed: () => {
+                  //TODO: cerrar popup
+                },
                 icon: const Icon(Icons.arrow_back),
               ),
             ),
