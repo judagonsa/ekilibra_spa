@@ -20,6 +20,7 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Profile {
+  String? get imageProfile => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
   String? get bithDate => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -38,7 +39,8 @@ abstract class $ProfileCopyWith<$Res> {
       _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
   $Res call(
-      {String? userName,
+      {String? imageProfile,
+      String? userName,
       String? bithDate,
       String? phone,
       String? city,
@@ -59,6 +61,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? imageProfile = freezed,
     Object? userName = freezed,
     Object? bithDate = freezed,
     Object? phone = freezed,
@@ -67,6 +70,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? observation = freezed,
   }) {
     return _then(_value.copyWith(
+      imageProfile: freezed == imageProfile
+          ? _value.imageProfile
+          : imageProfile // ignore: cast_nullable_to_non_nullable
+              as String?,
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -103,7 +110,8 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? userName,
+      {String? imageProfile,
+      String? userName,
       String? bithDate,
       String? phone,
       String? city,
@@ -122,6 +130,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? imageProfile = freezed,
     Object? userName = freezed,
     Object? bithDate = freezed,
     Object? phone = freezed,
@@ -130,6 +139,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? observation = freezed,
   }) {
     return _then(_$ProfileImpl(
+      imageProfile: freezed == imageProfile
+          ? _value.imageProfile
+          : imageProfile // ignore: cast_nullable_to_non_nullable
+              as String?,
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -162,7 +175,8 @@ class __$$ProfileImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   const _$ProfileImpl(
-      {this.userName,
+      {this.imageProfile,
+      this.userName,
       this.bithDate,
       this.phone,
       this.city,
@@ -172,6 +186,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
 
+  @override
+  final String? imageProfile;
   @override
   final String? userName;
   @override
@@ -187,7 +203,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(userName: $userName, bithDate: $bithDate, phone: $phone, city: $city, password: $password, observation: $observation)';
+    return 'Profile(imageProfile: $imageProfile, userName: $userName, bithDate: $bithDate, phone: $phone, city: $city, password: $password, observation: $observation)';
   }
 
   @override
@@ -195,6 +211,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Profile'))
+      ..add(DiagnosticsProperty('imageProfile', imageProfile))
       ..add(DiagnosticsProperty('userName', userName))
       ..add(DiagnosticsProperty('bithDate', bithDate))
       ..add(DiagnosticsProperty('phone', phone))
@@ -208,6 +225,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProfileImpl &&
+            (identical(other.imageProfile, imageProfile) ||
+                other.imageProfile == imageProfile) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.bithDate, bithDate) ||
@@ -222,8 +241,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, userName, bithDate, phone, city, password, observation);
+  int get hashCode => Object.hash(runtimeType, imageProfile, userName, bithDate,
+      phone, city, password, observation);
 
   @JsonKey(ignore: true)
   @override
@@ -241,7 +260,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
 
 abstract class _Profile implements Profile {
   const factory _Profile(
-      {final String? userName,
+      {final String? imageProfile,
+      final String? userName,
       final String? bithDate,
       final String? phone,
       final String? city,
@@ -250,6 +270,8 @@ abstract class _Profile implements Profile {
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
 
+  @override
+  String? get imageProfile;
   @override
   String? get userName;
   @override

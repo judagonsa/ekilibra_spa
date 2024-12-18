@@ -10,6 +10,7 @@ part 'profile.g.dart';
 @freezed
 class Profile with _$Profile {
   const factory Profile({
+    String? imageProfile,
     String? userName,
     String? bithDate,
     String? phone,

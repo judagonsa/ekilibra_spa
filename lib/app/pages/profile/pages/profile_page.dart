@@ -68,6 +68,8 @@ class _ProfileViewState extends State<_ProfileView> {
 
   bool isRealtime = false;
 
+  File? image;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
@@ -103,6 +105,9 @@ class _ProfileViewState extends State<_ProfileView> {
             );
           });
         } else if (state is GetProfile) {
+          if (profileCubit.state.data?.imageProfile != null) {
+            image = File(profileCubit.state.data!.imageProfile!);
+          }
           _controllerName.text = profileCubit.state.data?.userName ?? '';
           _controllerCity.text = profileCubit.state.data?.city ?? '';
           _controllerPhone.text = profileCubit.state.data?.phone ?? '';
@@ -116,8 +121,70 @@ class _ProfileViewState extends State<_ProfileView> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _ImageProfile(
-                    isRegister: widget.isRegister,
+                  Column(
+                    children: [
+                      if (image != null && widget.isRegister == false)
+                        Stack(
+                          children: [
+                            SizedBox(
+                              height: 300,
+                              width: double.infinity,
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(15),
+                                    bottomRight: Radius.circular(15)),
+                                child: Image.file(
+                                  image!,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: 10,
+                              top: 40,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white70,
+                                child: IconButton(
+                                  onPressed: () => context.pop(),
+                                  icon: const Icon(
+                                    Icons.arrow_back,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      if (widget.isRegister == false)
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: (image != null && widget.isRegister == false)
+                                  ? 0
+                                  : 70),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Stack(
+                              children: [
+                                if (image == null)
+                                  Positioned(
+                                    left: 10,
+                                    child: IconButton(
+                                      onPressed: () => context.pop(),
+                                      icon: const Icon(Icons.arrow_back),
+                                    ),
+                                  ),
+                                Center(
+                                  child: TextButton(
+                                    onPressed: () => loadImageProfile(),
+                                    child: Text(image == null
+                                        ? 'Subir foto'
+                                        : 'Cambiar foto'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                    ],
                   ),
                   Padding(
                     padding:
@@ -138,8 +205,9 @@ class _ProfileViewState extends State<_ProfileView> {
                               if (value == null || value.isEmpty) {
                                 return Texts.nameAndLastnameRequired;
                               }
-                              if (value.length < 6)
+                              if (value.length < 6) {
                                 return 'Más de 6 caracteres.';
+                              }
                               return null;
                             },
                           ),
@@ -150,8 +218,9 @@ class _ProfileViewState extends State<_ProfileView> {
                               textEditingController: _controllerPhone,
                               isPhone: true,
                               onChanged: (value) {
-                                if (isRealtime)
+                                if (isRealtime) {
                                   _formKey.currentState?.validate();
+                                }
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -364,23 +433,7 @@ class _ProfileViewState extends State<_ProfileView> {
                                 final isValid =
                                     _formKey.currentState!.validate();
                                 if (isValid) {
-                                  if (widget.isRegister) {
-                                    profileCubit.onSubmitRegister(Profile(
-                                      userName: _controllerName.text,
-                                      phone: _controllerPhone.text,
-                                      bithDate: _controllerDate.text,
-                                      city: _controllerCity.text,
-                                      observation: _controllerObservations.text,
-                                    ));
-                                  } else {
-                                    profileCubit.onSubmitUpdate(Profile(
-                                      userName: _controllerName.text,
-                                      phone: _controllerPhone.text,
-                                      bithDate: _controllerDate.text,
-                                      city: _controllerCity.text,
-                                      observation: _controllerObservations.text,
-                                    ));
-                                  }
+                                  saveInformation(widget.isRegister);
                                 }
                               },
                               style:
@@ -427,84 +480,6 @@ class _ProfileViewState extends State<_ProfileView> {
         firstDate: DateTime(1900),
         lastDate: DateTime(DateTime.now().year - 15),
       );
-}
-
-class _ImageProfile extends StatefulWidget {
-  const _ImageProfile({required this.isRegister});
-  final bool isRegister;
-
-  @override
-  State<_ImageProfile> createState() => _ImageProfileState();
-}
-
-class _ImageProfileState extends State<_ImageProfile> {
-  File? image;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (image != null && widget.isRegister == false)
-          Stack(
-            children: [
-              SizedBox(
-                height: 300,
-                width: double.infinity,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15)),
-                  child: Image.file(
-                    image!,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 10,
-                top: 40,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white70,
-                  child: IconButton(
-                    onPressed: () => context.pop(),
-                    icon: const Icon(
-                      Icons.arrow_back,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        if (widget.isRegister == false)
-          Padding(
-            padding: EdgeInsets.only(
-                top: (image != null && widget.isRegister == false) ? 0 : 70),
-            child: SizedBox(
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  if (image == null)
-                    Positioned(
-                      left: 10,
-                      child: IconButton(
-                        onPressed: () => context.pop(),
-                        icon: const Icon(Icons.arrow_back),
-                      ),
-                    ),
-                  Center(
-                    child: TextButton(
-                      onPressed: () => loadImageProfile(),
-                      child:
-                          Text(image == null ? 'Subir foto' : 'Cambiar foto'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-      ],
-    );
-  }
 
   Future loadImageProfile() async {
     try {
@@ -516,6 +491,28 @@ class _ImageProfileState extends State<_ImageProfile> {
     } on PlatformException catch (e) {
       // ignore: avoid_print
       print('Failed to pick image: $e');
+    }
+  }
+
+  saveInformation(bool isRegister) {
+    if (widget.isRegister) {
+      profileCubit.onSubmitRegister(Profile(
+        imageProfile: image?.path,
+        userName: _controllerName.text,
+        phone: _controllerPhone.text,
+        bithDate: _controllerDate.text,
+        city: _controllerCity.text,
+        observation: _controllerObservations.text,
+      ));
+    } else {
+      profileCubit.onSubmitUpdate(Profile(
+        imageProfile: image?.path,
+        userName: _controllerName.text,
+        phone: _controllerPhone.text,
+        bithDate: _controllerDate.text,
+        city: _controllerCity.text,
+        observation: _controllerObservations.text,
+      ));
     }
   }
 }
