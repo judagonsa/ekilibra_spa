@@ -25,8 +25,11 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
     resp.fold(
       (l) => emit(ErrorCreateQuoteState(state, 'Error creando agendamiento')),
       (success) {
-        if (success) emit(CreateQuoteState(state.copyWith(quote: event.quote)));
-        // emit(ErrorCreateQuoteState(state, 'Error creando agendamiento'));
+        if (success) {
+          emit(CreateQuoteState(state.copyWith(quote: event.quote)));
+        } else {
+          emit(ErrorCreateQuoteState(state, 'Error creando agendamiento'));
+        }
       },
     );
   }

@@ -8,9 +8,13 @@ import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
 import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
+import 'package:ekilibra_spa/app/pages/home/pages/home_page.dart';
+import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -58,6 +62,23 @@ class _QuotePageState extends State<QuotePage> {
       ),
       body: BlocBuilder<QuoteBloc, QuoteState>(
         builder: (context, state) {
+          if (state is CreateQuoteState) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              PopupHelpers().popupTwoButtons(
+                context: context,
+                withIconClose: false,
+                title: 'Muy bien',
+                description: 'Servicio agendado con exito',
+                icon: Icons.check_circle,
+                titleButtonOne: "Aceptar",
+                height: 140,
+                onPressedOne: () {
+                  quoteBloc.add(ResetBloc());
+                  context.go(HomePage.name);
+                },
+              );
+            });
+          }
           return SafeArea(
             child: GestureDetector(
               onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -293,7 +314,8 @@ class _QuotePageState extends State<QuotePage> {
                                 },
                                 onPressedTwo: () {
                                   launchUrlString(
-                                      FunctionsHelper().numbrePhone());
+                                    FunctionsHelper().numbrePhone(),
+                                  );
                                 },
                               );
                             },
@@ -327,7 +349,17 @@ class _QuotePageState extends State<QuotePage> {
       setState(() {});
       errorQuote = '';
 
-      //todo: mostrar vista del servicio agendado
+      quoteBloc.add(
+        CreteQuoteEvent(
+          quote: Quote(
+            place: placeSelected,
+            service: serviceSelected,
+            day: daySelected,
+            hour: hourSelected,
+            observation: observationController.text,
+          ),
+        ),
+      );
     }
   }
 

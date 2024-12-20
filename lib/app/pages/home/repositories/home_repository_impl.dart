@@ -57,10 +57,10 @@ class HomeRepositoryImpl implements HomeRepository {
         phrase: '¡Agenda tu cita hoy mismo y descubre la diferencia!',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/13/400/200',
+          'https://picsum.photos/id/14/400/200',
+          'https://picsum.photos/id/15/400/200',
+          'https://picsum.photos/id/16/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -71,10 +71,10 @@ class HomeRepositoryImpl implements HomeRepository {
         phrase: '¡Agenda tu cita hoy mismo en Ekilibra!',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/17/400/200',
+          'https://picsum.photos/id/18/400/200',
+          'https://picsum.photos/id/19/400/200',
+          'https://picsum.photos/id/20/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -86,10 +86,10 @@ class HomeRepositoryImpl implements HomeRepository {
             '¡Agenda tu cita hoy mismo y descubre el poder de unos labios perfectamente delineados en Ekilibra!',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/21/400/200',
+          'https://picsum.photos/id/22/400/200',
+          'https://picsum.photos/id/23/400/200',
+          'https://picsum.photos/id/24/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -101,10 +101,10 @@ class HomeRepositoryImpl implements HomeRepository {
             '¡Descubre una apariencia fresca y rejuvenecida con nuestro servicio de Hyaluron Pen!',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/25/400/200',
+          'https://picsum.photos/id/26/400/200',
+          'https://picsum.photos/id/27/400/200',
+          'https://picsum.photos/id/28/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -116,10 +116,10 @@ class HomeRepositoryImpl implements HomeRepository {
             'Descubre una piel revitalizada y radiante con nuestro servicio de Peeling Ultrasónico en Ekilibra.',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/29/400/200',
+          'https://picsum.photos/id/30/400/200',
+          'https://picsum.photos/id/31/400/200',
+          'https://picsum.photos/id/32/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -130,10 +130,10 @@ class HomeRepositoryImpl implements HomeRepository {
         phrase: '¡Descubre una piel transformada con HydraFacial en Ekilibra!',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/33/400/200',
+          'https://picsum.photos/id/34/400/200',
+          'https://picsum.photos/id/35/400/200',
+          'https://picsum.photos/id/36/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -145,10 +145,10 @@ class HomeRepositoryImpl implements HomeRepository {
             '¡Agenda tu cita hoy mismo y da el primer paso hacia una piel más hermosa!',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/37/400/200',
+          'https://picsum.photos/id/38/400/200',
+          'https://picsum.photos/id/39/400/200',
+          'https://picsum.photos/id/40/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -160,10 +160,10 @@ class HomeRepositoryImpl implements HomeRepository {
             'Descubre el secreto para una piel perfecta con nuestro tratamiento de BB Glow. ¡Agenda tu cita hoy mismo y dale a tu piel el cuidado que se merece!',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/41/400/200',
+          'https://picsum.photos/id/42/400/200',
+          'https://picsum.photos/id/43/400/200',
+          'https://picsum.photos/id/44/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -175,10 +175,10 @@ class HomeRepositoryImpl implements HomeRepository {
             '¡Agenda tu sesión y regálate un momento de pura relajación en Ekilibra!',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/45/400/200',
+          'https://picsum.photos/id/46/400/200',
+          'https://picsum.photos/id/47/400/200',
+          'https://picsum.photos/id/48/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -190,10 +190,10 @@ class HomeRepositoryImpl implements HomeRepository {
             'Descubre el poder curativo de la Acupuntura y encuentra el equilibrio físico y emocional que mereces en Ekilibra.',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/49/400/200',
+          'https://picsum.photos/id/50/400/200',
+          'https://picsum.photos/id/51/400/200',
+          'https://picsum.photos/id/52/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),
@@ -203,10 +203,10 @@ class HomeRepositoryImpl implements HomeRepository {
             'Explora las raíces de tu salud con nuestro exclusivo servicio de Iridología y Biomagnetismo en Ekilibra.Esta práctica milenaria de diagnóstico examina detalladamente los patrones y características del iris para identificar posibles desequilibrios y trastornos en el cuerpo. Desde artritis reumatoide y afectaciones cardíacas hasta dolores musculares y patologías digestivas, la Iridología ofrece una ventana única hacia tu salud integral. Nuestros expertos en Iridología están capacitados para detectar señales sutiles que pueden indicar problemas como problemas de presión, afecciones en órganos reproductivos o de la vesícula, entre otros. Descubre cómo el Biomagnetismo puede mejorar tu bienestar en todos los niveles. ¡Sigue leyendo para aprender más! Esta terapia no invasiva utiliza imanes para equilibrar el campo magnético del cuerpo y promover la salud en todos los niveles. El Biomagnetismo se basa en la premisa de que muchas enfermedades y dolencias se deben a desequilibrios energéticos en el cuerpo, y mediante la colocación estratégica de imanes, se pueden restaurar estos equilibrios.',
         duration: '60 - 90 min',
         images: [
-          'https://picsum.photos/id/9/400/200',
-          'https://picsum.photos/id/10/400/200',
-          'https://picsum.photos/id/11/400/200',
-          'https://picsum.photos/id/12/400/200'
+          'https://picsum.photos/id/53/400/200',
+          'https://picsum.photos/id/54/400/200',
+          'https://picsum.photos/id/55/400/200',
+          'https://picsum.photos/id/56/400/200'
         ],
         observation: 'Ropa o vestimenta',
       ),

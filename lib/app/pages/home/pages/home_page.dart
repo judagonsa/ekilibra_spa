@@ -1,9 +1,7 @@
-import 'package:ekilibra_spa/app/config/helpers/texts.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/DetailQuote/pages/detail_quote.dart';
 import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
-import 'package:ekilibra_spa/app/pages/pages.dart';
-import 'package:ekilibra_spa/app/pages/quote/pages/quote_page.dart';
+import 'package:ekilibra_spa/app/pages/profile/pages/profile_page.dart';
 import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,16 +74,13 @@ class _HomePageState extends State<HomePage> {
                 ),
               ElevatedButton(
                 onPressed: () {
-                  context.push(QuotePage.name, extra: {
-                    'places': state.places,
-                    'services': state.services
-                  });
+                  //TODO: ir a mis citas
                 },
-                child: Column(
+                child: const Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.person),
-                    Text(Texts.scheduleQuote),
+                    Icon(Icons.calendar_today_outlined),
+                    Text('Mis citas agendadas'),
                   ],
                 ),
               )
