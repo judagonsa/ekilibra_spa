@@ -1,6 +1,7 @@
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/DetailQuote/pages/detail_quote.dart';
 import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
+import 'package:ekilibra_spa/app/pages/myQuotes/page/my_quotes.dart';
 import 'package:ekilibra_spa/app/pages/profile/pages/profile_page.dart';
 import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ElevatedButton(
                 onPressed: () {
-                  //TODO: ir a mis citas
+                  context.push(MyQuotes.name);
                 },
                 child: const Column(
                   mainAxisSize: MainAxisSize.min,
