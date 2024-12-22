@@ -14,12 +14,8 @@ class QuoteRepositoryImpl implements QuoteRepository {
   }
 
   @override
-  Future<bool> deleteQuote(String quoteId) async {
-    var listQuote = await HelperDb().getQuotes();
-    final index =
-        listQuote.indexWhere((quote) => quote.service?.title == quoteId);
-    listQuote.removeAt(index);
-    return await HelperDb().createQuote(listQuote);
+  Future<List<Quote>> deleteQuote(String quoteId) async {
+    return await HelperDb().deleteQuote(quoteId);
   }
 
   @override

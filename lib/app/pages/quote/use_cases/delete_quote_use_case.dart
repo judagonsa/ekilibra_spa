@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository.dart';
 
 class DeleteQuoteUseCase {
@@ -6,10 +7,10 @@ class DeleteQuoteUseCase {
 
   DeleteQuoteUseCase(this._quoteRepository);
 
-  Future<Either<bool, bool>> invoke(String quoteId) async {
+  Future<Either<bool, List<Quote>>> invoke(String quoteId) async {
     try {
       final success = await _quoteRepository.deleteQuote(quoteId);
-      return success ? Right(success) : Left(success);
+      return success.isNotEmpty ? Right(success) : const Left(false);
     } catch (e) {
       //manejo de logs
       return const Left(false);

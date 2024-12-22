@@ -37,9 +37,13 @@ class DatetimeHelper {
     return '${DatetimeHelper().getDayString(DateFormat('EEE').format(tempDate))} ${DateFormat('d').format(tempDate)} ${DateFormat('MMM').format(tempDate)}';
   }
 
-//Para validaciones de día y hora
-  DateTime stringToDate(String day, String hour) {
-    DateTime tempDate = DateFormat("yyyy-MM-dd hh:mm a").parse('$day $hour');
-    return tempDate;
+  bool validateDateNow(String day, String hour) {
+    DateTime tempDay = DateFormat("yyyy-MM-dd").parse(day);
+
+    final newDay = '${tempDay.year}-${tempDay.month}-${tempDay.day}';
+    DateTime tempDate = DateFormat("yyyy-MM-dd hh:mm a").parse('$newDay $hour');
+
+    if (tempDate.difference(DateTime.now()).inDays >= 0) return true;
+    return false;
   }
 }

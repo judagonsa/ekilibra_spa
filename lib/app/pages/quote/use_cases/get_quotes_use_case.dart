@@ -8,7 +8,7 @@ class GetQuotesUseCase {
 
   GetQuotesUseCase(this._quoteRepository);
 
-  Future<Either<bool, List<Quote>?>> invoke(String quoteId) async {
+  Future<Either<bool, List<Quote>?>> invoke() async {
     try {
       final success = await _quoteRepository.getQuotes();
       return success.isNotEmpty ? Right(success) : const Left(false);

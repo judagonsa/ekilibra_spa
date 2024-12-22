@@ -21,4 +21,12 @@ class HelperDb {
     await prefs.setString('quotes', quotesString);
     return true;
   }
+
+  Future<List<Quote>> deleteQuote(String quoteId) async {
+    var listQuote = await HelperDb().getQuotes();
+    final index =
+        listQuote.indexWhere((quote) => quote.service?.title == quoteId);
+    listQuote.removeAt(index);
+    return listQuote;
+  }
 }

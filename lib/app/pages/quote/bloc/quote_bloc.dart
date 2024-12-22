@@ -11,6 +11,7 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
   QuoteBloc(this.quoteUseCases) : super(const QuoteState()) {
     on<CreteQuoteEvent>(_createQuote);
     on<ResetBloc>(_reset);
+    on<DeleteQuoteEvent>(_deleteQuote);
   }
 
   final QuoteUseCases quoteUseCases;
@@ -29,6 +30,21 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
           emit(CreateQuoteState(state.copyWith(quote: event.quote)));
         } else {
           emit(ErrorCreateQuoteState(state, 'Error creando agendamiento'));
+        }
+      },
+    );
+  }
+
+  void _deleteQuote(DeleteQuoteEvent event, Emitter<QuoteState> emit) async {
+    final resp = await quoteUseCases.deleteQuoteUseCase.invoke(event.quoteId);
+
+    resp.fold(
+      (l) => emit(ErrorCreateQuoteState(state, 'Error creando agendamiento')),
+      (success) {
+        if (success.isNotEmpty) {
+          emit(const DeleteQuoteState());
+        } else {
+          emit(ErrorCreateQuoteState(state, 'No hay agendamientos'));
         }
       },
     );

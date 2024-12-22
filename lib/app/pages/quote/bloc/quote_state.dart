@@ -95,3 +95,11 @@ class ErrorCreateQuoteState extends QuoteState {
           loading: state.loading,
         );
 }
+
+class GetQuotesState extends QuoteState {
+  const GetQuotesState() : super();
+}
+
+class DeleteQuoteState extends QuoteState {
+  const DeleteQuoteState() : super();
+}
