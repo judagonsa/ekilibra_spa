@@ -6,11 +6,7 @@ import '../model/quote.dart';
 class QuoteRepositoryImpl implements QuoteRepository {
   @override
   Future<bool> createQuote(Quote quote) async {
-    //solo es para manera local
-    var listQuote = await HelperDb().getQuotes();
-    //TODO: validar citas a la misma hora ?
-    listQuote.add(quote);
-    return await HelperDb().createQuote(listQuote);
+    return await HelperDb().createQuote(quote);
   }
 
   @override

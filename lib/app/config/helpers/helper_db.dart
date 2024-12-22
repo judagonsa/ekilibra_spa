@@ -15,18 +15,32 @@ class HelperDb {
     return [];
   }
 
-  Future<bool> createQuote(List<Quote> quotes) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final quotesString = json.encode(quotes);
-    await prefs.setString('quotes', quotesString);
-    return true;
+  Future<bool> createQuote(Quote quote) async {
+    final List<Quote> myQuotes = await getQuotes();
+    myQuotes.add(quote);
+    return await saveQuotes(myQuotes);
   }
 
   Future<List<Quote>> deleteQuote(String quoteId) async {
-    var listQuote = await HelperDb().getQuotes();
+    final listQuote = await HelperDb().getQuotes();
     final index =
         listQuote.indexWhere((quote) => quote.service?.title == quoteId);
     listQuote.removeAt(index);
-    return listQuote;
+
+    if (await saveQuotes(listQuote)) {
+      return listQuote;
+    }
+    return [];
+  }
+
+  Future<bool> saveQuotes(List<Quote> quotes) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final quotesString = json.encode(quotes);
+    try {
+      await prefs.setString('quotes', quotesString);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

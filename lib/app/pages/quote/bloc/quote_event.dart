@@ -12,6 +12,16 @@ class CreteQuoteEvent extends QuoteEvent {
   });
 }
 
+class UpdateQuoteEvent extends QuoteEvent {
+  final String quoteId;
+
+  UpdateQuoteEvent(this.quoteId);
+}
+
+class GetQuoteEvent extends QuoteEvent {
+  GetQuoteEvent();
+}
+
 class DeleteQuoteEvent extends QuoteEvent {
   final String quoteId;
 

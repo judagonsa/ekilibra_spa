@@ -1,48 +1,73 @@
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
-import 'package:ekilibra_spa/app/config/helpers/helper_db.dart';
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MyQuotes extends StatelessWidget {
+class MyQuotes extends StatefulWidget {
   static const name = '/my_quotes';
   const MyQuotes({super.key});
 
   @override
+  State<MyQuotes> createState() => _MyQuotesState();
+}
+
+class _MyQuotesState extends State<MyQuotes> {
+  late final quoteBloc = context.read<QuoteBloc>();
+
+  @override
   Widget build(BuildContext context) {
-    // late final quoteBloc = context.read<QuoteBloc>()..add(GetQuoteEvent());
-    //TODO: cargar el home y solo llamar getid y mostrar los del esstado del home
+    late List<Quote> myQuotes = [];
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mis servicios'),
       ),
-      //TODO: cambiar y mostrar lo del home
-      body: FutureBuilder<List<Quote>>(
-        future: HelperDb().getQuotes(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text('Error loading quotes'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No quotes available'));
-          } else {
-            return _CardQuotes(myQuotes: snapshot.data!);
+      body: BlocBuilder<QuoteBloc, QuoteState>(
+        buildWhen: (previous, current) {
+          if (current is GetQuotesState) return true;
+          if (current is DeleteQuoteState) return true;
+          return false;
+        },
+        builder: (context, state) {
+          if (state is GetQuotesState) {
+            myQuotes = state.state.quotes ?? [];
+            quoteBloc.add(ResetBloc());
           }
+          if (state is UpdateQuotesState) {
+            myQuotes = state.state.quotes ?? [];
+            quoteBloc.add(ResetBloc());
+          }
+          if (state is DeleteQuoteState) {
+            myQuotes = state.state.quotes ?? [];
+            quoteBloc.add(ResetBloc());
+          }
+          return _CardQuotes(myQuotes: myQuotes);
         },
       ),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+
+    quoteBloc.add(GetQuoteEvent());
+  }
 }
 
-class _CardQuotes extends StatelessWidget {
+class _CardQuotes extends StatefulWidget {
   const _CardQuotes({
     required this.myQuotes,
   });
 
   final List<Quote> myQuotes;
+
+  @override
+  State<_CardQuotes> createState() => _CardQuotesState();
+}
+
+class _CardQuotesState extends State<_CardQuotes> {
   @override
   Widget build(BuildContext context) {
     final decoration = BoxDecoration(
@@ -59,9 +84,9 @@ class _CardQuotes extends StatelessWidget {
     late final quoteBloc = context.read<QuoteBloc>();
 
     return ListView.builder(
-      itemCount: myQuotes.length,
+      itemCount: widget.myQuotes.length,
       itemBuilder: (context, index) {
-        final quote = myQuotes[index];
+        final quote = widget.myQuotes[index];
         return Padding(
           padding: const EdgeInsets.all(10),
           child: Container(

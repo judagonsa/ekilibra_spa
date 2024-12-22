@@ -1,4 +1,3 @@
-import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/pages/quote/use_cases/quote_use_cases.dart';
 import 'package:equatable/equatable.dart';
@@ -12,6 +11,7 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
     on<CreteQuoteEvent>(_createQuote);
     on<ResetBloc>(_reset);
     on<DeleteQuoteEvent>(_deleteQuote);
+    on<GetQuoteEvent>(_getQuotes);
   }
 
   final QuoteUseCases quoteUseCases;
@@ -42,7 +42,22 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
       (l) => emit(ErrorCreateQuoteState(state, 'Error creando agendamiento')),
       (success) {
         if (success.isNotEmpty) {
-          emit(const DeleteQuoteState());
+          emit(DeleteQuoteState(state.copyWith(quotes: success)));
+        } else {
+          emit(ErrorCreateQuoteState(state, 'No hay agendamientos'));
+        }
+      },
+    );
+  }
+
+  void _getQuotes(GetQuoteEvent event, Emitter<QuoteState> emit) async {
+    final resp = await quoteUseCases.getQuotesUseCase.invoke();
+
+    resp.fold(
+      (l) => emit(ErrorCreateQuoteState(state, 'Error creando agendamiento')),
+      (success) {
+        if (success?.isNotEmpty ?? false) {
+          emit(GetQuotesState(state.copyWith(quotes: success)));
         } else {
           emit(ErrorCreateQuoteState(state, 'No hay agendamientos'));
         }
