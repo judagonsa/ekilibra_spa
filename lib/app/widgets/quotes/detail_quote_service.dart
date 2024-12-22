@@ -1,3 +1,4 @@
+import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:flutter/material.dart';
 
@@ -23,101 +24,96 @@ class DetailQuoteService extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Container(
         decoration: decoration,
-        height: 130,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Text(
-                  quote.service?.title ?? '',
-                  maxLines: 2,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        height: 160,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                quote.service?.title ?? '',
+                maxLines: 2,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text('Día: ${DatetimeHelper().dayToString(quote.day ?? '')}'),
+                Text('Hora: ${quote.hour}'),
+              ],
+            ),
+            Text('Lugar: ${quote.place}'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _ButtonHelp(
+                  onPressed: () {
+                    //TODO: lugar
+                  },
+                  text: 'Lugar',
+                  icon: Icons.map_outlined,
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(quote.day ?? ''), //TODO: dar formato de fecha
-                  Text(quote.hour ??
-                      ''), //TODO: revisdar donde se guarda el minuto
-                  Text(quote.place ?? ''),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      //TODO: Como llegar
-                    },
-                    child: const Column(children: [
-                      Text('Cómo llegar',
-                          style: TextStyle(color: Colors.black)),
-                      Icon(
-                        Icons.map_outlined,
-                        color: Colors.purple,
-                      ),
-                    ]),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      //TODO: Llamar
-                    },
-                    child: const Column(
-                      children: [
-                        Text(
-                          'Llamar',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        Icon(
-                          Icons.call,
-                          color: Colors.purple,
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      //TODO: Editar ?
-                    },
-                    child: const Column(
-                      children: [
-                        Text(
-                          'Editar',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        Icon(
-                          Icons.edit,
-                          color: Colors.purple,
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      //TODO: Cancelar
-                    },
-                    child: const Column(
-                      children: [
-                        Text(
-                          'Cancelar',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        Icon(
-                          Icons.cancel,
-                          color: Colors.purple,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+                _ButtonHelp(
+                  onPressed: () {
+                    //TODO: llamar
+                  },
+                  text: 'Llamar',
+                  icon: Icons.call,
+                ),
+                _ButtonHelp(
+                  onPressed: () {
+                    //TODO: editar
+                  },
+                  text: 'Editar',
+                  icon: Icons.edit,
+                ),
+                _ButtonHelp(
+                  onPressed: () {
+                    //TODO: cancelar
+                  },
+                  text: 'Cancelar',
+                  icon: Icons.cancel,
+                ),
+              ],
+            )
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class _ButtonHelp extends StatelessWidget {
+  const _ButtonHelp({
+    required this.onPressed,
+    required this.text,
+    required this.icon,
+  });
+
+  final Function() onPressed;
+  final String text;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Column(
+        children: [
+          Text(
+            text,
+            style: const TextStyle(color: Colors.black),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Icon(
+              icon,
+              color: Colors.purple,
+            ),
+          ),
+        ],
       ),
     );
   }

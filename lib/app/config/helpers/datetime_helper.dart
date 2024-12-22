@@ -22,7 +22,6 @@ class DatetimeHelper {
       'Fri': 'Vie',
       'Sun': 'Dom',
     };
-    // getHoursOfDay();
     return '${dayWeekArray[dayWeek]}';
   }
 
@@ -30,5 +29,17 @@ class DatetimeHelper {
     final now = DateTime.now();
     DateFormat.jm().format(now);
     return '';
+  }
+
+//Para mostrar fecha ordenada en el detail quote
+  String dayToString(String day) {
+    DateTime tempDate = DateFormat("yyyy-MM-dd").parse(day);
+    return '${DatetimeHelper().getDayString(DateFormat('EEE').format(tempDate))} ${DateFormat('d').format(tempDate)} ${DateFormat('MMM').format(tempDate)}';
+  }
+
+//Para validaciones de día y hora
+  DateTime stringToDate(String day, String hour) {
+    DateTime tempDate = DateFormat("yyyy-MM-dd hh:mm a").parse('$day $hour');
+    return tempDate;
   }
 }

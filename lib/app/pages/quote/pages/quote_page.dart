@@ -342,7 +342,7 @@ class _QuotePageState extends State<QuotePage> {
     } else if (daySelected.isEmpty) {
       setState(() {});
       errorQuote = Texts.pleaseSelectDayService;
-    } else if (hourSelected.isEmpty) {
+    } else if (hourSelected.isEmpty || minutesSelected.isEmpty) {
       setState(() {});
       errorQuote = Texts.pleaseSelectHourService;
     } else {
@@ -355,7 +355,7 @@ class _QuotePageState extends State<QuotePage> {
             place: placeSelected,
             service: serviceSelected,
             day: daySelected,
-            hour: hourSelected,
+            hour: '$hourSelected:$minutesSelected $militarHour',
             observation: observationController.text,
           ),
         ),
@@ -412,7 +412,10 @@ class _DaysWeek extends StatelessWidget {
                         .getDayString(DateFormat('EEE').format(date)),
                     style: const TextStyle(fontSize: 11),
                   ),
-                  Text(DateFormat('d').format(date)),
+                  Text(
+                    DateFormat('d').format(date),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   Text(
                     DateFormat('MMM').format(date),
                     style: const TextStyle(fontSize: 11),
