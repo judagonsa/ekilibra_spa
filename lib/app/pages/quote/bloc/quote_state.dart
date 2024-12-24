@@ -1,105 +1,86 @@
 part of 'quote_bloc.dart';
 
-class QuoteState extends Equatable {
+class QuoteState {
+  final Data data;
+
+  QuoteState(this.data);
+}
+
+class Data {
   final Quote? quote;
   final bool loading;
-
   final List<Quote>? quotes;
 
-  const QuoteState({
+  Data({
     this.quote,
     this.loading = false,
     this.quotes,
   });
 
-  QuoteState copyWith({
+  Data copyWith({
     Quote? quote,
     bool? loading,
     List<Quote>? quotes,
   }) =>
-      QuoteState(
-          quote: quote ?? this.quote,
-          loading: loading ?? this.loading,
-          quotes: quotes ?? this.quotes);
+      Data(
+        quote: quote ?? this.quote,
+        loading: loading ?? this.loading,
+        quotes: quotes ?? this.quotes,
+      );
+}
 
-  @override
-  List<Object?> get props => [quote, loading];
+class QuoteStateInitState extends QuoteState {
+  QuoteStateInitState()
+      : super(
+          Data(
+            loading: false,
+            quotes: [],
+          ),
+        );
 }
 
 class QuoteListInitialState extends QuoteState {
-  final QuoteState state;
-  const QuoteListInitialState(this.state) : super();
+  QuoteListInitialState(super.data);
 }
 
 class QuoteListUpdateState extends QuoteState {
-  final List<Quote> newQuotes;
-  const QuoteListUpdateState(this.newQuotes) : super(quotes: newQuotes);
+  QuoteListUpdateState(super.data);
 }
 
 class QuoteValidateFormState extends QuoteState {
-  final QuoteState state;
   final String error;
 
-  QuoteValidateFormState(this.state, this.error)
-      : super(
-          quote: state.quote,
-          loading: state.loading,
-        );
+  QuoteValidateFormState(super.data, this.error);
 }
 
 class ErrorLoadPlacesState extends QuoteState {
-  final QuoteState state;
   final String error;
 
-  ErrorLoadPlacesState(this.state, this.error)
-      : super(
-          quote: state.quote,
-          loading: state.loading,
-        );
+  ErrorLoadPlacesState(super.data, this.error);
 }
 
 class LoadPlacesState extends QuoteState {
-  final QuoteState state;
-
-  LoadPlacesState(this.state)
-      : super(
-          quote: state.quote,
-          loading: state.loading,
-        );
+  LoadPlacesState(super.data);
 }
 
 class CreateQuoteState extends QuoteState {
-  final QuoteState state;
-
-  CreateQuoteState(this.state)
-      : super(
-          quote: state.quote,
-          loading: state.loading,
-        );
+  CreateQuoteState(super.data);
 }
 
 class ErrorCreateQuoteState extends QuoteState {
-  final QuoteState state;
   final String error;
 
-  ErrorCreateQuoteState(this.state, this.error)
-      : super(
-          quote: state.quote,
-          loading: state.loading,
-        );
+  ErrorCreateQuoteState(super.data, this.error);
 }
 
 class GetQuotesState extends QuoteState {
-  final QuoteState state;
-  const GetQuotesState(this.state) : super();
+  GetQuotesState(super.data);
 }
 
 class UpdateQuotesState extends QuoteState {
-  final QuoteState state;
-  const UpdateQuotesState(this.state) : super();
+  UpdateQuotesState(super.data);
 }
 
 class DeleteQuoteState extends QuoteState {
-  final QuoteState state;
-  DeleteQuoteState(this.state) : super(quotes: state.quotes);
+  DeleteQuoteState(super.data);
 }

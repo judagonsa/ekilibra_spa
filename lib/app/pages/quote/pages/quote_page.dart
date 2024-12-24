@@ -1,4 +1,3 @@
-import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart';
 import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
 import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
@@ -9,6 +8,7 @@ import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
 import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/home/pages/home_page.dart';
+import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 
 import 'package:flutter/material.dart';
@@ -357,6 +357,7 @@ class _QuotePageState extends State<QuotePage> {
             day: daySelected,
             hour: '$hourSelected:$minutesSelected $militarHour',
             observation: observationController.text,
+            isEnable: true,
           ),
         ),
       );

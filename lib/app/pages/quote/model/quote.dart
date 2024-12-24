@@ -10,12 +10,15 @@ part 'quote.g.dart';
 
 @freezed
 class Quote with _$Quote {
-  const factory Quote({
+  const Quote._();
+
+  factory Quote({
     String? place,
     Service? service,
     String? day,
     String? hour,
     String? observation,
+    bool? isEnable,
   }) = _Quote;
 
   factory Quote.fromJson(Map<String, Object?> json) => _$QuoteFromJson(json);

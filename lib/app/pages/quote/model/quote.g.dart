@@ -14,6 +14,7 @@ _$QuoteImpl _$$QuoteImplFromJson(Map<String, dynamic> json) => _$QuoteImpl(
       day: json['day'] as String?,
       hour: json['hour'] as String?,
       observation: json['observation'] as String?,
+      isEnable: json['isEnable'] as bool?,
     );
 
 Map<String, dynamic> _$$QuoteImplToJson(_$QuoteImpl instance) =>
@@ -23,4 +24,5 @@ Map<String, dynamic> _$$QuoteImplToJson(_$QuoteImpl instance) =>
       'day': instance.day,
       'hour': instance.hour,
       'observation': instance.observation,
+      'isEnable': instance.isEnable,
     };

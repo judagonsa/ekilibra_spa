@@ -1,4 +1,5 @@
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
+import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:flutter/material.dart';
@@ -13,36 +14,27 @@ class MyQuotes extends StatefulWidget {
 }
 
 class _MyQuotesState extends State<MyQuotes> {
-  late final quoteBloc = context.read<QuoteBloc>();
+  late final quoteBloc = getIt.get<QuoteBloc>();
 
   @override
   Widget build(BuildContext context) {
-    late List<Quote> myQuotes = [];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mis servicios'),
       ),
       body: BlocBuilder<QuoteBloc, QuoteState>(
         buildWhen: (previous, current) {
-          if (current is GetQuotesState) return true;
-          if (current is DeleteQuoteState) return true;
-          return false;
+          return current is GetQuotesState ||
+              current is UpdateQuotesState ||
+              current is DeleteQuoteState;
         },
         builder: (context, state) {
-          if (state is GetQuotesState) {
-            myQuotes = state.state.quotes ?? [];
-            quoteBloc.add(ResetBloc());
+          if (state is GetQuotesState ||
+              state is UpdateQuotesState ||
+              state is DeleteQuoteState) {
+            return _CardQuotes(myQuotes: state.data.quotes ?? []);
           }
-          if (state is UpdateQuotesState) {
-            myQuotes = state.state.quotes ?? [];
-            quoteBloc.add(ResetBloc());
-          }
-          if (state is DeleteQuoteState) {
-            myQuotes = state.state.quotes ?? [];
-            quoteBloc.add(ResetBloc());
-          }
-          return _CardQuotes(myQuotes: myQuotes);
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
@@ -87,71 +79,103 @@ class _CardQuotesState extends State<_CardQuotes> {
       itemCount: widget.myQuotes.length,
       itemBuilder: (context, index) {
         final quote = widget.myQuotes[index];
-        return Padding(
-          padding: const EdgeInsets.all(10),
-          child: Container(
+
+        if (quote.isEnable ?? true) {
+          return _CardQuoteView(
             decoration: decoration,
-            height: 160,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            quote: quote,
+            quoteBloc: quoteBloc,
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+}
+
+class _CardQuoteView extends StatefulWidget {
+  const _CardQuoteView({
+    required this.decoration,
+    required this.quote,
+    required this.quoteBloc,
+  });
+
+  final BoxDecoration decoration;
+  final Quote quote;
+  final QuoteBloc quoteBloc;
+
+  @override
+  State<_CardQuoteView> createState() => _CardQuoteViewState();
+}
+
+class _CardQuoteViewState extends State<_CardQuoteView> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        decoration: widget.decoration,
+        height: 180,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                textAlign: TextAlign.center,
+                widget.quote.service?.title ?? '',
+                maxLines: 2,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(
-                    quote.service?.title ?? '',
-                    maxLines: 2,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                        'Día: ${DatetimeHelper().dayToString(quote.day ?? '')}'),
-                    Text('Hora: ${quote.hour}'),
-                  ],
-                ),
-                Text('Lugar: ${quote.place}'),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _ButtonHelp(
-                      onPressed: () {
-                        //TODO: lugar
-                      },
-                      text: 'Lugar',
-                      icon: Icons.map_outlined,
-                    ),
-                    _ButtonHelp(
-                      onPressed: () {
-                        //TODO: llamar
-                      },
-                      text: 'Llamar',
-                      icon: Icons.call,
-                    ),
-                    _ButtonHelp(
-                      onPressed: () {
-                        //TODO: editar
-                      },
-                      text: 'Editar',
-                      icon: Icons.edit,
-                    ),
-                    _ButtonHelp(
-                      onPressed: () {
-                        quoteBloc
-                            .add(DeleteQuoteEvent(quote.service?.title ?? ''));
-                      },
-                      text: 'Cancelar',
-                      icon: Icons.cancel,
-                    ),
-                  ],
-                )
+                Text(
+                    'Día: ${DatetimeHelper().dayToString(widget.quote.day ?? '')}'),
+                Text('Hora: ${widget.quote.hour}'),
               ],
             ),
-          ),
-        );
-      },
+            Text('Lugar: ${widget.quote.place}'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _ButtonHelp(
+                  onPressed: () {
+                    //TODO: lugar
+                  },
+                  text: 'Lugar',
+                  icon: Icons.map_outlined,
+                ),
+                _ButtonHelp(
+                  onPressed: () {
+                    //TODO: llamar
+                  },
+                  text: 'Llamar',
+                  icon: Icons.call,
+                ),
+                _ButtonHelp(
+                  onPressed: () {
+                    //TODO: editar
+                  },
+                  text: 'Editar',
+                  icon: Icons.edit,
+                ),
+                _ButtonHelp(
+                  onPressed: () {
+                    widget.quoteBloc.add(
+                        DeleteQuoteEvent(widget.quote.service?.title ?? ''));
+                  },
+                  text: 'Cancelar',
+                  icon: Icons.cancel,
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }

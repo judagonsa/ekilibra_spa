@@ -25,6 +25,7 @@ mixin _$Quote {
   String? get day => throw _privateConstructorUsedError;
   String? get hour => throw _privateConstructorUsedError;
   String? get observation => throw _privateConstructorUsedError;
+  bool? get isEnable => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +42,8 @@ abstract class $QuoteCopyWith<$Res> {
       Service? service,
       String? day,
       String? hour,
-      String? observation});
+      String? observation,
+      bool? isEnable});
 
   $ServiceCopyWith<$Res>? get service;
 }
@@ -64,6 +66,7 @@ class _$QuoteCopyWithImpl<$Res, $Val extends Quote>
     Object? day = freezed,
     Object? hour = freezed,
     Object? observation = freezed,
+    Object? isEnable = freezed,
   }) {
     return _then(_value.copyWith(
       place: freezed == place
@@ -86,6 +89,10 @@ class _$QuoteCopyWithImpl<$Res, $Val extends Quote>
           ? _value.observation
           : observation // ignore: cast_nullable_to_non_nullable
               as String?,
+      isEnable: freezed == isEnable
+          ? _value.isEnable
+          : isEnable // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 
@@ -114,7 +121,8 @@ abstract class _$$QuoteImplCopyWith<$Res> implements $QuoteCopyWith<$Res> {
       Service? service,
       String? day,
       String? hour,
-      String? observation});
+      String? observation,
+      bool? isEnable});
 
   @override
   $ServiceCopyWith<$Res>? get service;
@@ -136,6 +144,7 @@ class __$$QuoteImplCopyWithImpl<$Res>
     Object? day = freezed,
     Object? hour = freezed,
     Object? observation = freezed,
+    Object? isEnable = freezed,
   }) {
     return _then(_$QuoteImpl(
       place: freezed == place
@@ -158,15 +167,25 @@ class __$$QuoteImplCopyWithImpl<$Res>
           ? _value.observation
           : observation // ignore: cast_nullable_to_non_nullable
               as String?,
+      isEnable: freezed == isEnable
+          ? _value.isEnable
+          : isEnable // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$QuoteImpl implements _Quote {
-  const _$QuoteImpl(
-      {this.place, this.service, this.day, this.hour, this.observation});
+class _$QuoteImpl extends _Quote {
+  _$QuoteImpl(
+      {this.place,
+      this.service,
+      this.day,
+      this.hour,
+      this.observation,
+      this.isEnable})
+      : super._();
 
   factory _$QuoteImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuoteImplFromJson(json);
@@ -181,10 +200,12 @@ class _$QuoteImpl implements _Quote {
   final String? hour;
   @override
   final String? observation;
+  @override
+  final bool? isEnable;
 
   @override
   String toString() {
-    return 'Quote(place: $place, service: $service, day: $day, hour: $hour, observation: $observation)';
+    return 'Quote(place: $place, service: $service, day: $day, hour: $hour, observation: $observation, isEnable: $isEnable)';
   }
 
   @override
@@ -197,13 +218,15 @@ class _$QuoteImpl implements _Quote {
             (identical(other.day, day) || other.day == day) &&
             (identical(other.hour, hour) || other.hour == hour) &&
             (identical(other.observation, observation) ||
-                other.observation == observation));
+                other.observation == observation) &&
+            (identical(other.isEnable, isEnable) ||
+                other.isEnable == isEnable));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, place, service, day, hour, observation);
+  int get hashCode => Object.hash(
+      runtimeType, place, service, day, hour, observation, isEnable);
 
   @JsonKey(ignore: true)
   @override
@@ -219,13 +242,15 @@ class _$QuoteImpl implements _Quote {
   }
 }
 
-abstract class _Quote implements Quote {
-  const factory _Quote(
+abstract class _Quote extends Quote {
+  factory _Quote(
       {final String? place,
       final Service? service,
       final String? day,
       final String? hour,
-      final String? observation}) = _$QuoteImpl;
+      final String? observation,
+      final bool? isEnable}) = _$QuoteImpl;
+  _Quote._() : super._();
 
   factory _Quote.fromJson(Map<String, dynamic> json) = _$QuoteImpl.fromJson;
 
@@ -239,6 +264,8 @@ abstract class _Quote implements Quote {
   String? get hour;
   @override
   String? get observation;
+  @override
+  bool? get isEnable;
   @override
   @JsonKey(ignore: true)
   _$$QuoteImplCopyWith<_$QuoteImpl> get copyWith =>

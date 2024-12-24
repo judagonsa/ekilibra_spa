@@ -23,9 +23,11 @@ class HelperDb {
 
   Future<List<Quote>> deleteQuote(String quoteId) async {
     final listQuote = await HelperDb().getQuotes();
+
     final index =
         listQuote.indexWhere((quote) => quote.service?.title == quoteId);
-    listQuote.removeAt(index);
+
+    listQuote[index] = listQuote[index].copyWith(isEnable: false);
 
     if (await saveQuotes(listQuote)) {
       return listQuote;
