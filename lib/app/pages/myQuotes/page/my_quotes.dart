@@ -62,17 +62,6 @@ class _CardQuotes extends StatefulWidget {
 class _CardQuotesState extends State<_CardQuotes> {
   @override
   Widget build(BuildContext context) {
-    final decoration = BoxDecoration(
-      border: Border.all(
-        color:
-            // DatetimeHelper().validateDateNow(quote.day ?? '', '')
-            //     ? Colors.purple
-            Colors.green,
-        width: 2.0,
-      ), //TODO: validar fecha de quote para mostrar el color del borde
-      borderRadius: BorderRadius.circular(10),
-    );
-
     late final quoteBloc = context.read<QuoteBloc>();
 
     return ListView.builder(
@@ -80,9 +69,18 @@ class _CardQuotesState extends State<_CardQuotes> {
       itemBuilder: (context, index) {
         final quote = widget.myQuotes[index];
 
+        final isInTime =
+            DatetimeHelper().validateDateNow(quote.day ?? '', quote.hour ?? '');
+
         if (quote.isEnable ?? true) {
           return _CardQuoteView(
-            decoration: decoration,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: isInTime ? Colors.green : Colors.purple,
+                width: 2.0,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
             quote: quote,
             quoteBloc: quoteBloc,
           );
@@ -112,6 +110,9 @@ class _CardQuoteView extends StatefulWidget {
 class _CardQuoteViewState extends State<_CardQuoteView> {
   @override
   Widget build(BuildContext context) {
+    final isInTime = DatetimeHelper()
+        .validateDateNow(widget.quote.day ?? '', widget.quote.hour ?? '');
+
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
@@ -148,6 +149,7 @@ class _CardQuoteViewState extends State<_CardQuoteView> {
                   },
                   text: 'Lugar',
                   icon: Icons.map_outlined,
+                  isInTime: isInTime,
                 ),
                 _ButtonHelp(
                   onPressed: () {
@@ -155,6 +157,7 @@ class _CardQuoteViewState extends State<_CardQuoteView> {
                   },
                   text: 'Llamar',
                   icon: Icons.call,
+                  isInTime: isInTime,
                 ),
                 _ButtonHelp(
                   onPressed: () {
@@ -162,6 +165,7 @@ class _CardQuoteViewState extends State<_CardQuoteView> {
                   },
                   text: 'Editar',
                   icon: Icons.edit,
+                  isInTime: isInTime,
                 ),
                 _ButtonHelp(
                   onPressed: () {
@@ -170,6 +174,7 @@ class _CardQuoteViewState extends State<_CardQuoteView> {
                   },
                   text: 'Cancelar',
                   icon: Icons.cancel,
+                  isInTime: isInTime,
                 ),
               ],
             )
@@ -185,11 +190,13 @@ class _ButtonHelp extends StatelessWidget {
     required this.onPressed,
     required this.text,
     required this.icon,
+    required this.isInTime,
   });
 
   final Function() onPressed;
   final String text;
   final IconData icon;
+  final bool isInTime;
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +212,7 @@ class _ButtonHelp extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5),
             child: Icon(
               icon,
-              color: Colors.purple,
+              color: isInTime ? Colors.green : Colors.purple,
             ),
           ),
         ],
