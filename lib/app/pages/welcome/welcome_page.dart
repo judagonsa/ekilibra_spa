@@ -2,7 +2,6 @@ import 'package:ekilibra_spa/app/config/exports/helpers/exports_helpers.dart';
 import 'package:ekilibra_spa/app/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomePage extends StatelessWidget {
   static const name = '/welcome';
@@ -92,7 +91,6 @@ class _WelcomeViewState extends State<_WelcomeView> {
   }
 
   void saveWelcomeData() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('welcomeData', true);
+    SharedPreferencesHelper().saveKey('welcomeData', true);
   }
 }

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:ekilibra_spa/app/config/exports/helpers/exports_helpers.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HelperDb {
   Future<List<Quote>> getQuotes() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? quotesString = prefs.getString('quotes');
+    final String? quotesString =
+        await SharedPreferencesHelper().getValue('quotes');
     if (quotesString != null) {
       final data = json.decode(quotesString);
       final list = (data as List).map((quote) => Quote.fromJson(quote));
@@ -36,10 +36,9 @@ class HelperDb {
   }
 
   Future<bool> saveQuotes(List<Quote> quotes) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
     final quotesString = json.encode(quotes);
     try {
-      await prefs.setString('quotes', quotesString);
+      await SharedPreferencesHelper().saveKey('quotes', quotesString);
       return true;
     } catch (e) {
       return false;

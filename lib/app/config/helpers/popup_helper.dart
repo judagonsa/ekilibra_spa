@@ -1,4 +1,4 @@
-import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
+import 'package:ekilibra_spa/app/config/helpers/button_helper.dart';
 import 'package:flutter/material.dart';
 
 class PopupHelpers {
