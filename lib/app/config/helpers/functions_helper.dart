@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class FunctionsHelper {
   openWhatsApp() async {
@@ -21,5 +22,9 @@ class FunctionsHelper {
 
   String numbrePhone() {
     return 'tel://3114526465';
+  }
+
+  callPhone() async {
+    await launchUrlString(numbrePhone());
   }
 }

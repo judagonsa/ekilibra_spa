@@ -1,4 +1,5 @@
 import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
+import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
 import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
@@ -153,7 +154,7 @@ class _CardQuoteViewState extends State<_CardQuoteView> {
                 ),
                 _ButtonHelp(
                   onPressed: () {
-                    //TODO: llamar
+                    FunctionsHelper().callPhone();
                   },
                   text: 'Llamar',
                   icon: Icons.call,
