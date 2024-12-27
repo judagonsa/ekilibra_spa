@@ -8,7 +8,7 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.loginUseCase)
       : super(
           LoginState(
-            Data(numberPhone: '', password: ''),
+            DataLogin(numberPhone: '', password: ''),
           ),
         );
 

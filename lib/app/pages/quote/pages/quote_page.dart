@@ -1,19 +1,11 @@
-import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
-import 'package:ekilibra_spa/app/config/helpers/datetime_helper.dart';
-import 'package:ekilibra_spa/app/config/helpers/functions_helper.dart';
-import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
-import 'package:ekilibra_spa/app/config/helpers/text_helpers.dart';
-import 'package:ekilibra_spa/app/config/helpers/texts.dart';
+import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart';
+import 'package:ekilibra_spa/app/config/exports/helpers/exports_helpers.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
-import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
 import 'package:ekilibra_spa/app/pages/home/model_service/service.dart';
 import 'package:ekilibra_spa/app/pages/home/pages/home_page.dart';
-import 'package:ekilibra_spa/app/pages/quote/bloc/quote_bloc.dart';
 import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';

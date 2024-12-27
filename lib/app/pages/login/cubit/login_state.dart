@@ -2,7 +2,7 @@ part of 'login_cubit.dart';
 
 class LoginState {
   const LoginState(this.data);
-  final Data data;
+  final DataLogin data;
 }
 
 class ErrorLoginState extends LoginState {
@@ -17,14 +17,14 @@ class SuccessLoginState extends LoginState {
   SuccessLoginState(super.data);
 }
 
-class Data {
+class DataLogin {
   final String numberPhone;
   final String password;
 
-  Data({required this.numberPhone, required this.password});
+  DataLogin({required this.numberPhone, required this.password});
 
-  Data copyWith({String? numberPhone, String? password}) {
-    return Data(
+  DataLogin copyWith({String? numberPhone, String? password}) {
+    return DataLogin(
       numberPhone: numberPhone ?? this.numberPhone,
       password: password ?? this.password,
     );

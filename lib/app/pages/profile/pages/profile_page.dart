@@ -1,18 +1,12 @@
 import 'dart:io';
-
-import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
-import 'package:ekilibra_spa/app/config/helpers/popup_helpers.dart';
-import 'package:ekilibra_spa/app/config/helpers/text_helpers.dart';
-import 'package:ekilibra_spa/app/config/helpers/texts.dart';
-import 'package:ekilibra_spa/app/pages/home/bloc/home_bloc.dart';
+import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart';
+import 'package:ekilibra_spa/app/config/exports/helpers/exports_helpers.dart';
 import 'package:ekilibra_spa/app/pages/pages.dart';
-import 'package:ekilibra_spa/app/pages/profile/cubit/profile_cubit.dart';
 import 'package:ekilibra_spa/app/pages/profile/model/profile.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 

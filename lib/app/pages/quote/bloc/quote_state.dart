@@ -1,28 +1,28 @@
 part of 'quote_bloc.dart';
 
 class QuoteState {
-  final Data data;
+  final DataQuote data;
 
   QuoteState(this.data);
 }
 
-class Data {
+class DataQuote {
   final Quote? quote;
   final bool loading;
   final List<Quote>? quotes;
 
-  Data({
+  DataQuote({
     this.quote,
     this.loading = false,
     this.quotes,
   });
 
-  Data copyWith({
+  DataQuote copyWith({
     Quote? quote,
     bool? loading,
     List<Quote>? quotes,
   }) =>
-      Data(
+      DataQuote(
         quote: quote ?? this.quote,
         loading: loading ?? this.loading,
         quotes: quotes ?? this.quotes,
@@ -32,7 +32,7 @@ class Data {
 class QuoteStateInitState extends QuoteState {
   QuoteStateInitState()
       : super(
-          Data(
+          DataQuote(
             loading: false,
             quotes: [],
           ),
@@ -51,16 +51,6 @@ class QuoteValidateFormState extends QuoteState {
   final String error;
 
   QuoteValidateFormState(super.data, this.error);
-}
-
-class ErrorLoadPlacesState extends QuoteState {
-  final String error;
-
-  ErrorLoadPlacesState(super.data, this.error);
-}
-
-class LoadPlacesState extends QuoteState {
-  LoadPlacesState(super.data);
 }
 
 class CreateQuoteState extends QuoteState {

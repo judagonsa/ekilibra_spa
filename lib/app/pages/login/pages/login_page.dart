@@ -1,5 +1,4 @@
-import 'package:ekilibra_spa/app/config/helpers/button_helpers.dart';
-import 'package:ekilibra_spa/app/config/helpers/texts.dart';
+import 'package:ekilibra_spa/app/config/exports/helpers/exports_helpers.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
