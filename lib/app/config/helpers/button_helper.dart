@@ -39,11 +39,10 @@ class ButtonHelpers {
     );
   }
 
-  ButtonStyle generalButton({
-    Color? textColor,
-    Color? backgroundColor,
-    required BuildContext context,
-  }) {
+  ButtonStyle generalButton(
+      {Color? textColor,
+      Color? backgroundColor,
+      required BuildContext context}) {
     return TextButton.styleFrom(
       elevation: 1,
       foregroundColor: textColor ?? Colors.white,
