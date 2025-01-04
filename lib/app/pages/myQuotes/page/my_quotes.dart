@@ -23,17 +23,24 @@ class _MyQuotesState extends State<MyQuotes> {
       ),
       body: BlocBuilder<QuoteBloc, QuoteState>(
         buildWhen: (previous, current) {
-          return current is GetQuotesState ||
-              current is UpdateQuotesState ||
-              current is DeleteQuoteState;
+          return current != previous;
         },
         builder: (context, state) {
           if (state is GetQuotesState ||
               state is UpdateQuotesState ||
               state is DeleteQuoteState) {
             return _CardQuotes(myQuotes: state.data.quotes ?? []);
+          } else if (state is ErrorCreateQuoteState) {
+            return Center(
+              child: Text(state.error),
+            );
+          } else if (state is ErrorGetQuoteState) {
+            return Center(
+              child: Text(state.error),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
           }
-          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

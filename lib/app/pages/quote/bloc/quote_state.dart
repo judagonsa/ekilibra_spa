@@ -63,6 +63,12 @@ class ErrorCreateQuoteState extends QuoteState {
   ErrorCreateQuoteState(super.data, this.error);
 }
 
+class ErrorGetQuoteState extends QuoteState {
+  final String error;
+
+  ErrorGetQuoteState(super.data, this.error);
+}
+
 class GetQuotesState extends QuoteState {
   GetQuotesState(super.data);
 }

@@ -56,12 +56,12 @@ class QuoteBloc extends Bloc<QuoteEvent, QuoteState> {
 
     resp.fold(
       (l) =>
-          emit(ErrorCreateQuoteState(state.data, 'Error creando agendamiento')),
+          emit(ErrorGetQuoteState(state.data, 'Error cargando agendamientos')),
       (quotes) {
         if (quotes?.isNotEmpty ?? false) {
           emit(GetQuotesState(state.data.copyWith(quotes: quotes)));
         } else {
-          emit(ErrorCreateQuoteState(state.data, 'No hay agendamientos'));
+          emit(ErrorGetQuoteState(state.data, 'No hay agendamientos'));
         }
       },
     );
