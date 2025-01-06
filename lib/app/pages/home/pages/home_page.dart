@@ -30,19 +30,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ekilibra Spa'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.push(ProfilePage.name, extra: {'isRegister': false});
-            },
-            icon: const Icon(Icons.person),
-            color: Colors.purple,
-          ),
-        ],
         leading: Builder(
           builder: (context) {
             return IconButton(
-              icon: const Icon(Icons.menu),
+              icon: const Icon(Icons.menu, color: Colors.purple),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -73,18 +64,6 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-              ElevatedButton(
-                onPressed: () {
-                  context.push(MyQuotes.name);
-                },
-                child: const Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.calendar_today_outlined),
-                    Text('Mis citas agendadas'),
-                  ],
-                ),
-              )
             ],
           );
         },
