@@ -1,6 +1,7 @@
 import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart';
 import 'package:ekilibra_spa/app/config/exports/pages/exports_pages.dart';
 import 'package:ekilibra_spa/app/config/service_locator/service_locator.dart';
+import 'package:ekilibra_spa/app/pages/home/pages/drawer_view.dart';
 import 'package:ekilibra_spa/app/widgets/banners/banners.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -38,17 +39,19 @@ class _HomePageState extends State<HomePage> {
             color: Colors.purple,
           ),
         ],
-        leading: IconButton(
-          onPressed: () {
-            //TODO: abrir menú lateral
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
           },
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.purple,
-          ),
         ),
         elevation: 10,
       ),
+      drawer: const DrawerView(),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return Column(
