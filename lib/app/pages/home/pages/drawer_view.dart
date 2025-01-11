@@ -1,4 +1,5 @@
 import 'package:ekilibra_spa/app/config/exports/pages/exports_pages.dart';
+import 'package:ekilibra_spa/app/pages/sowInformationPage/show_information_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -52,7 +53,13 @@ class DrawerView extends StatelessWidget {
             leading: const Icon(Icons.privacy_tip_outlined),
             title: const Text('Políticas de privacidad'),
             onTap: () {
-              //TODO: implementar la navegación a la página de políticas de privacidad
+              context.push(ShowInformationPage.name, extra: {
+                'title': 'Políticas de privacidad',
+                'subTitle': 'Subtitulo',
+                'description':
+                    'Aquí se mostrarán las políticas de privacidad, Aquí se mostrarán las políticas de privacidad, Aquí se mostrarán las políticas de privacidad',
+                'phrase': 'Frase'
+              });
             },
           ),
           ListTile(
