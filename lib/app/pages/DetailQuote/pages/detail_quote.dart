@@ -53,7 +53,10 @@ class _DetailQuoteState extends State<DetailQuote> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(service?.description ?? ''),
+                    child: Text(
+                      service?.description ?? '',
+                      textAlign: TextAlign.justify,
+                    ),
                   ),
                   if (service?.phrase != null &&
                       service?.phrase?.isNotEmpty == true)
