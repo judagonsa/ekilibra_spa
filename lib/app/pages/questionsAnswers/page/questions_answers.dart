@@ -6,6 +6,26 @@ class QuestionsAnswers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Preguntas y respuestas'),
+      ),
+      body: const SafeArea(
+        child: _QuestionsAnswersBody(),
+      ),
+    );
+  }
+}
+
+class _QuestionsAnswersBody extends StatelessWidget {
+  const _QuestionsAnswersBody();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        Text('Preguntas y respuestas'),
+      ],
+    );
   }
 }

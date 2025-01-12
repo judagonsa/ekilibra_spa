@@ -75,7 +75,7 @@ class DrawerView extends StatelessWidget {
             leading: const Icon(Icons.question_mark_outlined),
             title: const Text('Preguntas y respuestas'),
             onTap: () {
-              //TODO: implementar la navegación a la página de preguntas y respuestas
+              context.push(QuestionsAnswers.name);
             },
           ),
           ListTile(
