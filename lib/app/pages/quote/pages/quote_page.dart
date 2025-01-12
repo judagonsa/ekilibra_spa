@@ -90,7 +90,9 @@ class _QuotePageState extends State<QuotePage> {
                                 const BorderRadius.all(Radius.circular(10)),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.purple.withOpacity(0.5),
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.5),
                                 blurRadius: 5,
                                 spreadRadius: 1,
                                 offset: const Offset(0, 0),
@@ -160,7 +162,9 @@ class _QuotePageState extends State<QuotePage> {
                                 const BorderRadius.all(Radius.circular(10)),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.purple.withOpacity(0.5),
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.5),
                                 blurRadius: 5,
                                 spreadRadius: 1,
                                 offset: const Offset(0, 0),
@@ -262,7 +266,9 @@ class _QuotePageState extends State<QuotePage> {
                                 const BorderRadius.all(Radius.circular(10)),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.purple.withOpacity(0.5),
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.5),
                                 blurRadius: 5,
                                 spreadRadius: 1,
                                 offset: const Offset(0, 0),
@@ -308,7 +314,7 @@ class _QuotePageState extends State<QuotePage> {
                             onPressed: () => _createQuote(),
                             style: ButtonHelpers().primaryButton(
                               isLogin: false,
-                              backgroundColor: Colors.purple,
+                              backgroundColor: Theme.of(context).primaryColor,
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -404,6 +410,7 @@ class _DaysWeek extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: SizedBox(
@@ -412,15 +419,15 @@ class _DaysWeek extends StatelessWidget {
           children: [
             TextButton(
               style: ButtonHelpers().secondaryButton(
-                borderColor: Colors.purple,
+                borderColor: theme.primaryColor,
                 textColor: dateSelected != null
                     ? date.day == dateSelected?.day
                         ? Colors.white
-                        : Colors.purple
-                    : Colors.purple,
+                        : theme.primaryColor
+                    : theme.primaryColor,
                 backgrounColor: dateSelected != null
                     ? date.day == dateSelected?.day
-                        ? Colors.purple
+                        ? theme.primaryColor
                         : Colors.white
                     : Colors.white,
               ),
@@ -463,12 +470,13 @@ class _ButtonPlace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return TextButton(
       onPressed: action,
       style: ButtonHelpers().secondaryButton(
-        textColor: placeSelected == place ? Colors.white : Colors.purple,
-        borderColor: Colors.purple,
-        backgrounColor: placeSelected == place ? Colors.purple : null,
+        textColor: placeSelected == place ? Colors.white : theme.primaryColor,
+        borderColor: theme.primaryColor,
+        backgrounColor: placeSelected == place ? theme.primaryColor : null,
       ),
       child: Text(place),
     );

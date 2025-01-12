@@ -82,7 +82,7 @@ class _CardQuotesState extends State<_CardQuotes> {
           return _CardQuoteView(
             decoration: BoxDecoration(
               border: Border.all(
-                color: isInTime ? Colors.green : Colors.purple,
+                color: isInTime ? Colors.green : Theme.of(context).primaryColor,
                 width: 2.0,
               ),
               borderRadius: BorderRadius.circular(10),
@@ -218,7 +218,7 @@ class _ButtonHelp extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5),
             child: Icon(
               icon,
-              color: isInTime ? Colors.green : Colors.purple,
+              color: isInTime ? Colors.green : Theme.of(context).primaryColor,
             ),
           ),
         ],

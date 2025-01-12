@@ -11,13 +11,14 @@ class DrawerView extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          const UserAccountsDrawerHeader(
+          UserAccountsDrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.purple,
+              color: Theme.of(context).primaryColor,
             ),
-            currentAccountPicture: CircleAvatar(backgroundColor: Colors.white),
-            accountName: Text("Guillermo García"),
-            accountEmail: Text("email@prueba.es"),
+            currentAccountPicture:
+                const CircleAvatar(backgroundColor: Colors.white),
+            accountName: const Text("Guillermo García"),
+            accountEmail: const Text("email@prueba.es"),
             //TODO: cargar datos y visualizar
           ),
           ListTile(

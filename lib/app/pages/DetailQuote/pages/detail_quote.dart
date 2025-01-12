@@ -27,6 +27,7 @@ class _DetailQuoteState extends State<DetailQuote> {
       context.read<HomeBloc>().getServiceFromId(widget.serviceId);
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(Texts.detailService),
@@ -65,7 +66,7 @@ class _DetailQuoteState extends State<DetailQuote> {
                       padding: const EdgeInsets.all(10),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.purple,
+                          color: theme.primaryColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         width: MediaQuery.of(context).size.width,
@@ -104,7 +105,10 @@ class _DetailQuoteState extends State<DetailQuote> {
                       'serviceId': service?.title,
                     });
                   },
-                  style: ButtonHelpers().secondaryButton(),
+                  style: ButtonHelpers().secondaryButton(
+                    textColor: theme.primaryColor,
+                    borderColor: theme.primaryColor,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Text(

@@ -17,6 +17,8 @@ class PopupHelpers {
     return showDialog(
       context: context,
       builder: (context) {
+        final theme = Theme.of(context);
+
         return AlertDialog(
           title: Stack(
             children: [
@@ -59,14 +61,20 @@ class PopupHelpers {
                 SizedBox(
                   child: TextButton(
                     onPressed: onPressedOne,
-                    style: ButtonHelpers().generalButton(context: context),
+                    style: ButtonHelpers().generalButton(
+                      context: context,
+                      backgroundColor: theme.primaryColor,
+                    ),
                     child: Text(titleButtonOne),
                   ),
                 ),
                 if (titleButtonTwo != null)
                   TextButton(
                     onPressed: onPressedTwo,
-                    style: ButtonHelpers().generalButton(context: context),
+                    style: ButtonHelpers().generalButton(
+                      context: context,
+                      backgroundColor: theme.primaryColor,
+                    ),
                     child: Text(titleButtonTwo),
                   ),
               ],

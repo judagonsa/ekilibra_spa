@@ -26,6 +26,7 @@ class _WelcomeView extends StatefulWidget {
 class _WelcomeViewState extends State<_WelcomeView> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +51,10 @@ class _WelcomeViewState extends State<_WelcomeView> {
                           extra: {'isRegister': true},
                         );
                       },
-                      style: ButtonHelpers().primaryButton(isLogin: true),
+                      style: ButtonHelpers().primaryButton(
+                        isLogin: true,
+                        backgroundColor: theme.primaryColor,
+                      ),
                       child: Text(
                         Texts.register,
                         style: const TextStyle(fontSize: 16),
@@ -65,7 +69,10 @@ class _WelcomeViewState extends State<_WelcomeView> {
                       onPressed: () {
                         context.push(LoginPage.name);
                       },
-                      style: ButtonHelpers().secondaryButton(),
+                      style: ButtonHelpers().secondaryButton(
+                        textColor: theme.primaryColor,
+                        borderColor: theme.primaryColor,
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Text(

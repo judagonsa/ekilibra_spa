@@ -430,8 +430,10 @@ class _ProfileViewState extends State<_ProfileView> {
                                   saveInformation(widget.isRegister);
                                 }
                               },
-                              style:
-                                  ButtonHelpers().primaryButton(isLogin: false),
+                              style: ButtonHelpers().primaryButton(
+                                isLogin: false,
+                                backgroundColor: Theme.of(context).primaryColor,
+                              ),
                               child: SizedBox(
                                 width: 200,
                                 height: 40,

@@ -53,7 +53,7 @@ class ShowInformationPage extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.purple,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: MediaQuery.of(context).size.width,
