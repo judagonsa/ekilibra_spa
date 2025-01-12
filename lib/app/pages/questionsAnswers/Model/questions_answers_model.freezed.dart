@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'question_answer_model.dart';
+part of 'questions_answers_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,35 +14,37 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-QuestionAnswerModel _$QuestionAnswerModelFromJson(Map<String, dynamic> json) {
+QuestionsAnswersModel _$QuestionsAnswersModelFromJson(
+    Map<String, dynamic> json) {
   return _QuestionAnswerModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$QuestionAnswerModel {
+mixin _$QuestionsAnswersModel {
   String? get question => throw _privateConstructorUsedError;
   String? get answer => throw _privateConstructorUsedError;
   String? get enable => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $QuestionAnswerModelCopyWith<QuestionAnswerModel> get copyWith =>
+  $QuestionsAnswersModelCopyWith<QuestionsAnswersModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $QuestionAnswerModelCopyWith<$Res> {
-  factory $QuestionAnswerModelCopyWith(
-          QuestionAnswerModel value, $Res Function(QuestionAnswerModel) then) =
-      _$QuestionAnswerModelCopyWithImpl<$Res, QuestionAnswerModel>;
+abstract class $QuestionsAnswersModelCopyWith<$Res> {
+  factory $QuestionsAnswersModelCopyWith(QuestionsAnswersModel value,
+          $Res Function(QuestionsAnswersModel) then) =
+      _$QuestionsAnswersModelCopyWithImpl<$Res, QuestionsAnswersModel>;
   @useResult
   $Res call({String? question, String? answer, String? enable});
 }
 
 /// @nodoc
-class _$QuestionAnswerModelCopyWithImpl<$Res, $Val extends QuestionAnswerModel>
-    implements $QuestionAnswerModelCopyWith<$Res> {
-  _$QuestionAnswerModelCopyWithImpl(this._value, this._then);
+class _$QuestionsAnswersModelCopyWithImpl<$Res,
+        $Val extends QuestionsAnswersModel>
+    implements $QuestionsAnswersModelCopyWith<$Res> {
+  _$QuestionsAnswersModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -75,7 +77,7 @@ class _$QuestionAnswerModelCopyWithImpl<$Res, $Val extends QuestionAnswerModel>
 
 /// @nodoc
 abstract class _$$QuestionAnswerModelImplCopyWith<$Res>
-    implements $QuestionAnswerModelCopyWith<$Res> {
+    implements $QuestionsAnswersModelCopyWith<$Res> {
   factory _$$QuestionAnswerModelImplCopyWith(_$QuestionAnswerModelImpl value,
           $Res Function(_$QuestionAnswerModelImpl) then) =
       __$$QuestionAnswerModelImplCopyWithImpl<$Res>;
@@ -86,7 +88,7 @@ abstract class _$$QuestionAnswerModelImplCopyWith<$Res>
 
 /// @nodoc
 class __$$QuestionAnswerModelImplCopyWithImpl<$Res>
-    extends _$QuestionAnswerModelCopyWithImpl<$Res, _$QuestionAnswerModelImpl>
+    extends _$QuestionsAnswersModelCopyWithImpl<$Res, _$QuestionAnswerModelImpl>
     implements _$$QuestionAnswerModelImplCopyWith<$Res> {
   __$$QuestionAnswerModelImplCopyWithImpl(_$QuestionAnswerModelImpl _value,
       $Res Function(_$QuestionAnswerModelImpl) _then)
@@ -135,14 +137,14 @@ class _$QuestionAnswerModelImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuestionAnswerModel(question: $question, answer: $answer, enable: $enable)';
+    return 'QuestionsAnswersModel(question: $question, answer: $answer, enable: $enable)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuestionAnswerModel'))
+      ..add(DiagnosticsProperty('type', 'QuestionsAnswersModel'))
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('answer', answer))
       ..add(DiagnosticsProperty('enable', enable));
@@ -178,7 +180,7 @@ class _$QuestionAnswerModelImpl
   }
 }
 
-abstract class _QuestionAnswerModel implements QuestionAnswerModel {
+abstract class _QuestionAnswerModel implements QuestionsAnswersModel {
   const factory _QuestionAnswerModel(
       {final String? question,
       final String? answer,
