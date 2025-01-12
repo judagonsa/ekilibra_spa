@@ -47,7 +47,7 @@ class _QuotePageState extends State<QuotePage> {
     }
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 219, 223, 224),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(Texts.scheduleQuote),
@@ -78,15 +78,24 @@ class _QuotePageState extends State<QuotePage> {
                 child: Form(
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 40),
+                        const EdgeInsets.only(left: 20, right: 20, top: 30),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.purple.withOpacity(0.5),
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                                offset: const Offset(0, 0),
+                              ),
+                            ],
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -142,12 +151,21 @@ class _QuotePageState extends State<QuotePage> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 20),
                         Container(
                           height: 220,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.purple.withOpacity(0.5),
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                                offset: const Offset(0, 0),
+                              ),
+                            ],
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -236,11 +254,20 @@ class _QuotePageState extends State<QuotePage> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 20),
                         Container(
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.purple.withOpacity(0.5),
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                                offset: const Offset(0, 0),
+                              ),
+                            ],
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(15),
@@ -276,7 +303,7 @@ class _QuotePageState extends State<QuotePage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 30),
+                          padding: const EdgeInsets.only(top: 40),
                           child: TextButton(
                             onPressed: () => _createQuote(),
                             style: ButtonHelpers().primaryButton(

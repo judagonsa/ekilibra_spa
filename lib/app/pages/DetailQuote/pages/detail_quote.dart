@@ -73,7 +73,10 @@ class _DetailQuoteState extends State<DetailQuote> {
                           padding: const EdgeInsets.all(10),
                           child: Text(
                             service?.phrase ?? '',
-                            style: const TextStyle(color: Colors.white),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),
