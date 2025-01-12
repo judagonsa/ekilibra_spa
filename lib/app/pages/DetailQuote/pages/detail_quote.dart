@@ -48,6 +48,7 @@ class _DetailQuoteState extends State<DetailQuote> {
                         service?.title ?? '',
                         style: const TextStyle(fontSize: 20),
                         maxLines: 2,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
