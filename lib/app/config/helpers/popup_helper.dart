@@ -65,7 +65,10 @@ class PopupHelpers {
                       context: context,
                       backgroundColor: theme.primaryColor,
                     ),
-                    child: Text(titleButtonOne),
+                    child: Text(
+                      titleButtonOne,
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
                 if (titleButtonTwo != null)

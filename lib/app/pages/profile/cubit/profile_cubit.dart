@@ -31,7 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       final resp = await profileUseCases.updateProfileUseCase.invoke(profile);
 
       resp.fold(
-        (l) => emit(ErrorSaveProfile(state.data, 'error guardando profile')),
+        (l) => emit(ErrorSaveProfile(state.data, 'Error guardando profile')),
         (r) => emit(SaveProfile(state.data)), //retornar data del perfil
       );
     } catch (e) {
@@ -44,7 +44,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       final resp = await profileUseCases.getProfileUseCase.invoke();
 
       resp.fold(
-        (l) => emit(ErrorSaveProfile(state.data, 'error cargando profile')),
+        (l) => emit(ErrorSaveProfile(state.data, 'Error cargando profile')),
         (profile) => emit(GetProfile(profile)),
       );
     } catch (e) {

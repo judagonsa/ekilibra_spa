@@ -44,8 +44,8 @@ class DrawerView extends StatelessWidget {
                 'title': 'Nosotros',
                 'description':
                     '''Ekilibra es tu refugio de bienestar y belleza, donde la armonía del cuerpo y la mente se fusionan en una experiencia rejuvenecedora.
-Nuestro equipo de profesionales altamente capacitados en fisioterapia, estética y cosmetología está dedicado a ofrecerte tratamientos personalizados que nutren, revitalizan y embellecen.
-Sumérgete en un oasis de tranquilidad y deja que nuestros expertos te guíen hacia el equilibrio interior y la belleza radiante que mereces''',
+                    Nuestro equipo de profesionales altamente capacitados en fisioterapia, estética y cosmetología está dedicado a ofrecerte tratamientos personalizados que nutren, revitalizan y embellecen.
+                    Sumérgete en un oasis de tranquilidad y deja que nuestros expertos te guíen hacia el equilibrio interior y la belleza radiante que mereces''',
                 'phrase':
                     'En Ekilibra, tu bienestar es nuestra prioridad absoluta.'
               });

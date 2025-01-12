@@ -46,7 +46,7 @@ class ButtonHelpers {
   }) {
     return TextButton.styleFrom(
       elevation: 1,
-      foregroundColor: textColor ?? Colors.white,
+      foregroundColor: Colors.white,
       backgroundColor: backgroundColor,
       minimumSize: Size(MediaQuery.of(context).size.width, 45),
       shape: const RoundedRectangleBorder(

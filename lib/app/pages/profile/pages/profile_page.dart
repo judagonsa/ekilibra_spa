@@ -92,10 +92,10 @@ class _ProfileViewState extends State<_ProfileView> {
               context: context,
               withIconClose: true,
               title: 'Error',
-              description: 'Descripción del error',
+              description: state.error,
               icon: Icons.error,
               titleButtonOne: "Aceptar",
-              height: 220,
+              height: 140,
             );
           });
         } else if (state is GetProfile) {
