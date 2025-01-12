@@ -28,7 +28,7 @@ class ShowInformationPage extends StatelessWidget {
           children: [
             if (subTitle != null)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.only(top: 15, bottom: 10),
                 child: Text(
                   subTitle!,
                   style: const TextStyle(
@@ -38,21 +38,27 @@ class ShowInformationPage extends StatelessWidget {
                 ),
               ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               child: Text(
                 description,
                 textAlign: TextAlign.justify,
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
               ),
             ),
             if (phrase != null)
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                 child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.purple,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   width: MediaQuery.of(context).size.width,
-                  color: Colors.purple,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(10),
                     child: Text(
                       phrase!,
                       textAlign: TextAlign.center,
