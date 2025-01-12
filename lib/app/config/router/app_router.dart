@@ -1,7 +1,5 @@
-import 'package:ekilibra_spa/app/pages/sowInformationPage/show_information_page.dart';
+import 'package:ekilibra_spa/app/config/exports/pages/exports_pages.dart';
 import 'package:go_router/go_router.dart';
-
-import '../exports/pages/exports_pages.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -65,6 +63,10 @@ final GoRouter appRouter = GoRouter(
           phrase: phrase,
         );
       },
-    )
+    ),
+    GoRoute(
+      path: QuestionsAnswers.name,
+      builder: (context, state) => const QuestionsAnswers(),
+    ),
   ],
 );

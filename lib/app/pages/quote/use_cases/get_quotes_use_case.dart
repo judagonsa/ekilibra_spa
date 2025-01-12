@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:ekilibra_spa/app/pages/quote/model/quote.dart';
 import 'package:ekilibra_spa/app/pages/quote/repositories/quote_repository.dart';
-
-import '../model/quote.dart';
 
 class GetQuotesUseCase {
   final QuoteRepository _quoteRepository;

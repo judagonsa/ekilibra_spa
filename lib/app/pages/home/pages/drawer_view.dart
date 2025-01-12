@@ -1,5 +1,5 @@
 import 'package:ekilibra_spa/app/config/exports/pages/exports_pages.dart';
-import 'package:ekilibra_spa/app/pages/sowInformationPage/show_information_page.dart';
+import 'package:ekilibra_spa/app/pages/showInformationPage/show_information_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

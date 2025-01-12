@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:ekilibra_spa/app/config/exports/blocs/exports_blocs_cubits.dart';
 import 'package:ekilibra_spa/app/config/exports/helpers/exports_helpers.dart';
-import 'package:ekilibra_spa/app/pages/pages.dart';
+import 'package:ekilibra_spa/app/config/exports/pages/exports_pages.dart';
+
 import 'package:ekilibra_spa/app/pages/profile/model/profile.dart';
 import 'package:ekilibra_spa/app/pages/profile/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
