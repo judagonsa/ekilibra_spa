@@ -60,7 +60,6 @@ class _DetailQuoteState extends State<DetailQuote> {
                   ),
                   if (service?.phrase != null &&
                       service?.phrase?.isNotEmpty == true)
-                    //TODO: dejar bien bonita la frase, en un recuadro o algo
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: Container(
@@ -68,11 +67,13 @@ class _DetailQuoteState extends State<DetailQuote> {
                           color: Colors.purple,
                           borderRadius: BorderRadius.circular(10),
                         ),
+                        width: MediaQuery.of(context).size.width,
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
                             service?.phrase ?? '',
                             style: const TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),
